@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using CertificatesSystem.Models.Data.Database;
 using Microsoft.AspNetCore.Mvc;
 using CertificatesSystem.WebUI.ViewModels;
 

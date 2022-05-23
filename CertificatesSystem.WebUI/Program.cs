@@ -1,7 +1,15 @@
+using CertificatesSystem.Models.Data.Database;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// Database context
+var connectionString = builder.Configuration.GetConnectionString("CertificatesSystem");
+
+builder.Services.AddDbContext<CertificatesSystemContext>(options => options.UseSqlServer(connectionString));
 
 var app = builder.Build();
 
