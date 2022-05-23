@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CertificatesSystem.WebUI", "CertificatesSystem.WebUI\CertificatesSystem.WebUI.csproj", "{641C2C84-7687-449F-A83A-208AF7C4CCCA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CertificatesSystem.Models", "CertificatesSystem.Models\CertificatesSystem.Models.csproj", "{B31C327E-38BA-491B-AC80-9702FA848F3F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CertificatesSystem.Services", "CertificatesSystem.Services\CertificatesSystem.Services.csproj", "{377EDDF2-F645-4594-97C5-1F1009340820}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{641C2C84-7687-449F-A83A-208AF7C4CCCA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{641C2C84-7687-449F-A83A-208AF7C4CCCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{641C2C84-7687-449F-A83A-208AF7C4CCCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{641C2C84-7687-449F-A83A-208AF7C4CCCA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B31C327E-38BA-491B-AC80-9702FA848F3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B31C327E-38BA-491B-AC80-9702FA848F3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B31C327E-38BA-491B-AC80-9702FA848F3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B31C327E-38BA-491B-AC80-9702FA848F3F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{377EDDF2-F645-4594-97C5-1F1009340820}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{377EDDF2-F645-4594-97C5-1F1009340820}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{377EDDF2-F645-4594-97C5-1F1009340820}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{377EDDF2-F645-4594-97C5-1F1009340820}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

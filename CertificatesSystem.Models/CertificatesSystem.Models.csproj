@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Folder Include="DataModels" />
+      <Folder Include="Data\Identity" />
+      <Folder Include="Exceptions" />
+      <Folder Include="Interfaces" />
+      <Folder Include="QueryFilters" />
+      <Folder Include="Responses" />
+    </ItemGroup>
+
+</Project>
