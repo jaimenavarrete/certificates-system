@@ -14,5 +14,21 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+  background-attachment: fixed;
+  background-image: url('./../img/background.jpg');
+  background-size: cover;
+
+  min-height: 100vh;
+  position: relative;
+}
+
+body::after {
+  content: "";
+  background-color: rgb(39,128,227);
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  opacity: .9;
+  top: 0;
+  z-index: -1;
 }

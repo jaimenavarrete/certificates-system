@@ -8,7 +8,7 @@ var services = builder.Services;
 var configuration = builder.Configuration;
 
 // Add services to the container.
-services.AddControllersWithViews();
+services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
 // Database context
 var connectionString = configuration.GetConnectionString("CertificatesSystem");
