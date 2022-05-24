@@ -1,4 +1,16 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿// Modal form validations
+const inputsCreate = document.querySelectorAll('.input-create');
 
-// Write your JavaScript code.
+// Clear inputs value
+const clearInputs = () => {
+    inputsCreate.forEach((input) => (input.value = ''));
+
+    // Hide invalid feedback
+    const activeFeedback = document.querySelectorAll('.is-invalid');
+    activeFeedback.forEach((label) => label.classList.remove('is-invalid'));
+}
+
+const clearFeedback = (input, feedback) => {
+    input.classList.remove('is-invalid');
+    feedback.innerHTML = '';
+}

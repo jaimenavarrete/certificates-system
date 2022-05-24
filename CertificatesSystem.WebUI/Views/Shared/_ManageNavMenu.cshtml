@@ -1,7 +1,8 @@
 ﻿<ul class="nav nav-pills flex-column">
-    <li class="nav-item mb-5"><a class="nav-link @ManageNavPages.HomeNavClass(ViewContext)" id="suggestionsApproval" asp-controller="" asp-action=""><i class="las la-check fs-4"></i> Inicio</a></li>
-    <li class="nav-item"><a class="nav-link @ManageNavPages.RejectedSuggestionsNavClass(ViewContext)" id="index" asp-controller="" asp-action=""><i class="las la-times fs-4"></i> Sugerencias rechazadas</a></li>
-    <li class="nav-item"><a class="nav-link @ManageNavPages.CategoriesListNavClass(ViewContext)" id="categoriesList" asp-controller="" asp-action=""><i class="las la-tag fs-4"></i> Categorías</a></li>
-    <li class="nav-item"><a class="nav-link @ManageNavPages.StatesListNavClass(ViewContext)" id="statesList" asp-controller="" asp-action=""><i class="las la-flag fs-4"></i> Estados</a></li>
+    <li class="nav-item mb-4"><a class="nav-link @ManageNavPages.HomeNavClass(ViewContext)" id="indexPage" asp-controller="Home" asp-action="Index"><i class="las la-home fs-4"></i> Inicio</a></li>
+    <li class="nav-item"><a class="nav-link @ManageNavPages.StudentsListNavClass(ViewContext)" id="studentsList" asp-controller="Students" asp-action="Index"><i class="las la-user-graduate fs-4"></i> Estudiantes</a></li>
+    <li class="nav-item"><a class="nav-link @ManageNavPages.ManagersListNavClass(ViewContext)" id="managersList" asp-controller="" asp-action=""><i class="las la-user-lock fs-4"></i> Directivos</a></li>
+    <li class="nav-item"><a class="nav-link @ManageNavPages.GradesListNavClass(ViewContext)" id="gradesList" asp-controller="" asp-action=""><i class="las la-school fs-4"></i> Grados</a></li>
+    <li class="nav-item"><a class="nav-link @ManageNavPages.SectionsListNavClass(ViewContext)" id="sectionsList" asp-controller="" asp-action=""><i class="las la-school fs-4"></i> Secciones</a></li>
     <li class="nav-item"><a class="nav-link @ManageNavPages.UsersListNavClass(ViewContext)" id="usersList" asp-controller="" asp-action=""><i class="las la-user fs-4"></i> Usuarios</a></li>
 </ul>

@@ -5,23 +5,27 @@ namespace CertificatesSystem.WebUI.Views.Shared;
 public static class ManageNavPages
 {
     public static string Home => "Home";
+    
+    public static string StudentsList => "StudentsList";
 
-    public static string RejectedSuggestions => "RejectedSuggestions";
+    public static string ManagersList => "ManagersList";
 
-    public static string CategoriesList => "CategoriesList";
+    public static string GradesList => "GradesList";
 
-    public static string StatesList => "StatesList";
+    public static string SectionsList => "SectionsList";
 
     public static string UsersList => "UsersList";
 
 
     public static string HomeNavClass(ViewContext viewContext) => PageNavClass(viewContext, Home);
+    
+    public static string StudentsListNavClass(ViewContext viewContext) => PageNavClass(viewContext, StudentsList);
 
-    public static string RejectedSuggestionsNavClass(ViewContext viewContext) => PageNavClass(viewContext, RejectedSuggestions);
+    public static string ManagersListNavClass(ViewContext viewContext) => PageNavClass(viewContext, ManagersList);
 
-    public static string CategoriesListNavClass(ViewContext viewContext) => PageNavClass(viewContext, CategoriesList);
+    public static string GradesListNavClass(ViewContext viewContext) => PageNavClass(viewContext, GradesList);
 
-    public static string StatesListNavClass(ViewContext viewContext) => PageNavClass(viewContext, StatesList);
+    public static string SectionsListNavClass(ViewContext viewContext) => PageNavClass(viewContext, SectionsList);
 
     public static string UsersListNavClass(ViewContext viewContext) => PageNavClass(viewContext, UsersList);
 

@@ -1,0 +1,97 @@
+﻿@model StudentsListViewModel
+@{
+    ViewData["ActivePage"] = ManageNavPages.StudentsList;
+}
+
+<!-- Modal -->
+<partial name="_StudentsListModal" model="Model.StudentForm" />
+
+<h3 class="fw-bold display-6 mb-4 border-bottom border-3 border-dark text-center">Listado de estudiantes</h3>
+
+<!-- Status message alert -->
+<partial name="_StatusMessage" />
+
+<button type="button" id="button-create" class="btn btn-success mb-4" data-bs-toggle="modal" data-bs-target="#form-modal">
+    <i class="las la-plus fs-4"></i> Agregar estudiante
+</button>
+
+<div class="table-responsive">
+    <table class="table table-hover table-striped">
+        <thead>
+        <tr class="table-primary">
+            <th scope="col">NIE</th>
+            <th scope="col">Nombres</th>
+            <th scope="col">Apellidos</th>
+            <th scope="col">Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        @if (Model.StudentsList.Count == 0)
+        {
+            <tr>
+                <td class="text-center" colspan="5">Actualmente no existen estudiantes agregados.</td>
+            </tr>
+        }
+
+        @foreach (var student in Model.StudentsList)
+        {
+            <tr>
+                <th scope="row">@student.Nie</th>
+                <td>@student.Name</td>
+                <td>@student.Surname</td>
+                <td>
+                    <div class="d-flex">
+                        <button class="button-edit bg-transparent border-0 p-0" data-bs-toggle="modal" data-bs-target="#form-modal">
+                            <i class="las la-pen text-primary fs-3 px-1"></i>
+                        </button>
+                        <form asp-controller="" asp-action="" method="post" class="delete-element-form">
+                            <input type="hidden" value="@student.Nie" name="id"/>
+                            <button class="bg-transparent border-0 p-0"><i class="las la-trash text-danger fs-3 px-1"></i></button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+    <script>    
+        const btnCreate = document.getElementById('button-create');
+        const btnEdit = document.querySelectorAll('.button-edit');
+        const formCreate = document.getElementById('form-create');
+        const modalLabel = document.getElementById('form-modal-label');
+
+        const getInfo = (e) => {
+            const info = e.currentTarget.closest('tr').children;
+
+            formCreate.action = "/Students/Update";
+            formCreate.elements['Nie'].value = info[0].outerText;
+            formCreate.elements['Name'].value = info[1].outerText;
+            formCreate.elements['Surname'].value = info[2].outerText;
+            modalLabel.innerHTML = `<i class="las la-pen fs-4"></i> Editar estudiante`;
+        };
+
+        btnCreate.addEventListener('click', () => {
+            clearInputs();
+            
+            formCreate.action = "/Students/Create";
+            modalLabel.innerHTML = `<i class="las la-plus-circle fs-4"></i> Crear estudiante`;
+        });
+
+        btnEdit.forEach((btn) => {
+            btn.addEventListener('click', (e) => getInfo(e));
+        });
+        
+        formCreate.addEventListener('submit', (e) => {
+            e.preventDefault();
+    
+            // if (validateForm()) {
+                formCreate.submit();
+            // }
+        });
+        
+    </script>
+}

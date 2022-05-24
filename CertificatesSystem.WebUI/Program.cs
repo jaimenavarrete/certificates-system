@@ -1,4 +1,6 @@
 using CertificatesSystem.Models.Data.Database;
+using CertificatesSystem.Models.Interfaces;
+using CertificatesSystem.Services;
 using Microsoft.EntityFrameworkCore;
 using Rotativa.AspNetCore;
 
@@ -9,6 +11,10 @@ var configuration = builder.Configuration;
 
 // Add services to the container.
 services.AddControllersWithViews().AddRazorRuntimeCompilation();
+
+// Dependency Injection - Services
+services.AddAutoMapper(typeof(Program));
+services.AddTransient<IStudentsService, StudentsService>();
 
 // Database context
 var connectionString = configuration.GetConnectionString("CertificatesSystem");

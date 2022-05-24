@@ -10,8 +10,6 @@
       <Folder Include="Data\Identity" />
       <Folder Include="Data\Database\" />
       <Folder Include="Exceptions" />
-      <Folder Include="Interfaces" />
-      <Folder Include="QueryFilters" />
       <Folder Include="Responses" />
     </ItemGroup>
 
