@@ -1,15 +1,19 @@
 using CertificatesSystem.Models.Data.Database;
 using Microsoft.EntityFrameworkCore;
+using Rotativa.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
+var env = builder.Environment;
+var services = builder.Services;
+var configuration = builder.Configuration;
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+services.AddControllersWithViews();
 
 // Database context
-var connectionString = builder.Configuration.GetConnectionString("CertificatesSystem");
+var connectionString = configuration.GetConnectionString("CertificatesSystem");
 
-builder.Services.AddDbContext<CertificatesSystemContext>(options => options.UseSqlServer(connectionString));
+services.AddDbContext<CertificatesSystemContext>(options => options.UseSqlServer(connectionString));
 
 var app = builder.Build();
 
@@ -31,5 +35,8 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+// Rotativa configuration
+RotativaConfiguration.Setup(env.WebRootPath,"../Rotativa");
 
 app.Run();

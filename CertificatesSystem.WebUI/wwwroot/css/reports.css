@@ -1,0 +1,49 @@
+body {
+    font-family: "Arial Narrow", "Helvetica", "Arial", "sans-serif";
+    font-size: 13px;
+    margin: 20px 70px;
+    text-align: center;
+}
+
+.logo {
+    display: block;
+    margin: 15px auto;
+    width: 125px;
+}
+
+.letterhead {
+    margin-bottom: 40px;
+}
+
+.letterhead p {
+    margin: 0;
+}
+
+.main_content {
+    font-size: 20px;
+    line-height: 1.5;
+    text-align: justify;
+}
+
+.main_footer {
+    margin-top: 80px;
+    font-size: 18px;
+}
+
+.main_footer .signature {
+    border-bottom: 2px solid black;
+    margin: 0 auto;
+    position: relative;
+    text-align: left;
+    width: 350px;
+}
+
+.main_footer .signature span {
+    top: -20px;
+    left: -20px;
+    position: absolute;
+}
+
+.main_footer .manager_name {
+    margin: 5px;
+}

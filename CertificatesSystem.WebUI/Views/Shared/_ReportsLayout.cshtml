@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - SuggestionsApp</title>
+
+    <link rel="stylesheet" href="~/css/reports.css" asp-append-version="true" />
+    <link rel="shortcut icon" type="image/png" href="~/favicon.ico"/>
+</head>
+<body>
+
+<header class="main_header">
+    <img src="/img/logo.png" class="logo"/>
+    <section class="letterhead">
+        <p>Complejo Educativo Católico “Presbítero René Valle”</p>
+        <p>Bo. El Centro. San Esteban Catarina. Depto. San Vicente.</p>
+        <p>El Salvador, C.A. Telefax: 2362-7133-2362-7019</p>
+        <p>Email: cecrenevalle@gmail.com</p>
+    </section>
+</header>
+
+<main role="main" class="main_content">
+    @RenderBody()
+</main>
+
+<footer class="main_footer">
+    <div class="signature"><span>F:</span></div>
+    <p class="manager_name">Lic. Miguel Ángel Barahona Cornejo</p>
+    <strong class="manager_role">DIRECTOR</strong>
+</footer>
+
+</body>
+</html>
