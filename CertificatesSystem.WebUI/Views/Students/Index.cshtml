@@ -45,8 +45,8 @@
                         <button class="button-edit bg-transparent border-0 p-0" data-bs-toggle="modal" data-bs-target="#form-modal">
                             <i class="las la-pen text-primary fs-3 px-1"></i>
                         </button>
-                        <form asp-controller="" asp-action="" method="post" class="delete-element-form">
-                            <input type="hidden" value="@student.Nie" name="id"/>
+                        <form asp-controller="Students" asp-action="Delete" method="post" class="delete-element-form">
+                            <input type="hidden" value="@student.Nie" name="nie" />
                             <button class="bg-transparent border-0 p-0"><i class="las la-trash text-danger fs-3 px-1"></i></button>
                         </form>
                     </div>

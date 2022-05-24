@@ -40,7 +40,7 @@ public class StudentsService : IStudentsService
 
     public async Task<bool> Delete(int nie)
     {
-        var student = GetByNie(nie);
+        var student = await GetByNie(nie);
         _context.Remove(student);
         var rows = await _context.SaveChangesAsync();
         return rows > 0;
