@@ -15,6 +15,7 @@ services.AddControllersWithViews().AddRazorRuntimeCompilation();
 // Dependency Injection - Services
 services.AddAutoMapper(typeof(Program));
 services.AddTransient<IStudentsService, StudentsService>();
+services.AddTransient<IManagersService, ManagersService>();
 
 // Database context
 var connectionString = configuration.GetConnectionString("CertificatesSystem");

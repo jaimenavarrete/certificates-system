@@ -24,5 +24,4 @@
       <ProjectReference Include="..\CertificatesSystem.Models\CertificatesSystem.Models.csproj" />
       <ProjectReference Include="..\CertificatesSystem.Services\CertificatesSystem.Services.csproj" />
     </ItemGroup>
-
 </Project>

@@ -1,0 +1,103 @@
+﻿@model ManagersListViewModel
+@{
+    ViewData["ActivePage"] = ManageNavPages.ManagersList;
+}
+
+<!-- Modal -->
+<partial name="_ManagersListModal" model="Model.ManagerForm" />
+
+<h3 class="fw-bold display-6 mb-4 border-bottom border-3 border-dark text-center">Listado de directivos</h3>
+
+<!-- Status message alert -->
+<partial name="_StatusMessage" />
+
+<button type="button" id="button-create" class="btn btn-success mb-4" data-bs-toggle="modal" data-bs-target="#form-modal">
+    <i class="las la-plus fs-4"></i> Agregar directivo
+</button>
+
+<div class="table-responsive">
+    <table class="table table-hover table-striped">
+        <thead>
+        <tr class="table-primary">
+            <th scope="col">Id</th>
+            <th scope="col">Nombres</th>
+            <th scope="col">Apellidos</th>
+            <th scope="col">Rol</th>
+            <th scope="col">Género</th>
+            <th scope="col">Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        @if (Model.ManagersList.Count == 0)
+        {
+            <tr>
+                <td class="text-center" colspan="5">Actualmente no existen directivos agregados.</td>
+            </tr>
+        }
+
+        @foreach (var manager in Model.ManagersList)
+        {
+            <tr>
+                <th scope="row">@manager.Id</th>
+                <td>@manager.Name</td>
+                <td>@manager.Surname</td>
+                <td>@manager.Role</td>
+                <td>@(manager.Gender.ToUpper() == "M" ? "Masculino" : "Femenino")</td>
+                <td>
+                    <div class="d-flex">
+                        <button class="button-edit bg-transparent border-0 p-0" data-bs-toggle="modal" data-bs-target="#form-modal">
+                            <i class="las la-pen text-primary fs-3 px-1"></i>
+                        </button>
+                        <form asp-controller="Managers" asp-action="Delete" method="post" class="delete-element-form">
+                            <input type="hidden" value="@manager.Id" name="id" />
+                            <button class="bg-transparent border-0 p-0"><i class="las la-trash text-danger fs-3 px-1"></i></button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+    <script>    
+        const btnCreate = document.getElementById('button-create');
+        const btnEdit = document.querySelectorAll('.button-edit');
+        const formCreate = document.getElementById('form-create');
+        const modalLabel = document.getElementById('form-modal-label');
+
+        const getInfo = (e) => {
+            const info = e.currentTarget.closest('tr').children;
+
+            formCreate.action = "/Managers/Update";
+            formCreate.elements['Id'].value = info[0].outerText;
+            formCreate.elements['Name'].value = info[1].outerText;
+            formCreate.elements['Surname'].value = info[2].outerText;
+            formCreate.elements['Role'].value = info[3].outerText;
+            formCreate.elements['Gender'].value = info[4].outerText.charAt(0);
+            modalLabel.innerHTML = `<i class="las la-pen fs-4"></i> Editar directivo`;
+        };
+
+        btnCreate.addEventListener('click', () => {
+            clearInputs();
+            
+            formCreate.action = "/Managers/Create";
+            modalLabel.innerHTML = `<i class="las la-plus-circle fs-4"></i> Crear directivo`;
+        });
+
+        btnEdit.forEach((btn) => {
+            btn.addEventListener('click', (e) => getInfo(e));
+        });
+        
+        formCreate.addEventListener('submit', (e) => {
+            e.preventDefault();
+    
+            // if (validateForm()) {
+                formCreate.submit();
+            // }
+        });
+        
+    </script>
+}
