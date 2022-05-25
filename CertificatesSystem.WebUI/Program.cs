@@ -16,6 +16,7 @@ services.AddControllersWithViews().AddRazorRuntimeCompilation();
 services.AddAutoMapper(typeof(Program));
 services.AddTransient<IStudentsService, StudentsService>();
 services.AddTransient<IManagersService, ManagersService>();
+services.AddTransient<IUsualService, UsualService>();
 
 // Database context
 var connectionString = configuration.GetConnectionString("CertificatesSystem");
@@ -38,6 +39,16 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+
+app.MapControllerRoute(
+    name: "enrollment",
+    pattern: "Enrollment/{year}",
+    defaults: new { controller = "Enrollment", action = "Index", year = DateTime.Now.Year });
+
+app.MapControllerRoute(
+    name: "enrollment",
+    pattern: "Enrollment/{action}/{year}",
+    defaults: new { controller = "Enrollment", action = "Index", year = DateTime.Now.Year });
 
 app.MapControllerRoute(
     name: "default",
