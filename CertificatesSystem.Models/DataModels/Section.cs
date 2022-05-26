@@ -7,12 +7,12 @@ namespace CertificatesSystem.Models.DataModels
     {
         public Section()
         {
-            StudentGrades = new HashSet<StudentGrade>();
+            Enrollments = new HashSet<Enrollment>();
         }
 
         public int Id { get; set; }
         public string Name { get; set; } = null!;
 
-        public virtual ICollection<StudentGrade> StudentGrades { get; set; }
+        public virtual ICollection<Enrollment> Enrollments { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CertificatesSystem.Models.DataModels;
 using CertificatesSystem.Models.Interfaces;
 using CertificatesSystem.WebUI.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -31,7 +32,7 @@ public class EnrollmentController : Controller
         var studentsListB = await _enrollmentService.GetEnrolledStudentsByGradeAndSection(year, grade, 2);
         var studentsListBViewModel = _mapper.Map<List<EnrollViewModel>>(studentsListB);
         
-        var viewModel = new EnrollmentViewModel
+        var viewModel = new EnrollmentsViewModel
         {
             CurrentYear = DateTime.Now.Year,
             SelectedYear = year,
@@ -42,5 +43,17 @@ public class EnrollmentController : Controller
         };
         
         return View(viewModel);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> EnrollStudents(EnrollmentsViewModel viewModel)
+    {
+        var enrollment = _mapper.Map<Enrollment>(viewModel.EnrollmentForm);
+
+        var result = await _enrollmentService.EnrollStudentsInGrade(enrollment, viewModel.EnrollmentForm.StudentsNie);
+
+        if (result) TempData["Success"] = "Los estudiantes fueron matriculados con éxito.";
+
+        return RedirectToAction("Index", new { year = enrollment.Year, grade = enrollment.GradeId });
     }
 }

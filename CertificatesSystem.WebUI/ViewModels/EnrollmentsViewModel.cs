@@ -2,7 +2,7 @@
 
 namespace CertificatesSystem.WebUI.ViewModels;
 
-public class EnrollmentViewModel
+public class EnrollmentsViewModel
 {
     public int CurrentYear { get; set; }
 
@@ -21,7 +21,11 @@ public class EnrollmentViewModel
 
 public class EnrollmentFormViewModel
 {
+    public int GradeId { get; set; }
+
+    public int SectionId { get; set; }
+    
     public int Year { get; set; }
     
-    public int Grade { get; set; }
+    public string StudentsNie { get; set; }
 }

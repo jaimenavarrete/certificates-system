@@ -18,7 +18,7 @@ namespace CertificatesSystem.Models.Data.Database
         public virtual DbSet<Manager> Managers { get; set; } = null!;
         public virtual DbSet<Section> Sections { get; set; } = null!;
         public virtual DbSet<Student> Students { get; set; } = null!;
-        public virtual DbSet<StudentGrade> StudentGrades { get; set; } = null!;
+        public virtual DbSet<Enrollment> Enrollments { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -80,27 +80,29 @@ namespace CertificatesSystem.Models.Data.Database
                     .IsUnicode(false);
             });
 
-            modelBuilder.Entity<StudentGrade>(entity =>
+            modelBuilder.Entity<Enrollment>(entity =>
             {
+                entity.ToTable("StudentGrades");
+                
                 entity.HasKey(e => e.Id);
                 
                 entity.Property(e => e.Nie)
                     .HasColumnName("NIE");
 
                 entity.HasOne(d => d.Grade)
-                    .WithMany(p => p.StudentGrades)
+                    .WithMany(p => p.Enrollments)
                     .HasForeignKey(d => d.GradeId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Grades");
 
                 entity.HasOne(d => d.Student)
-                    .WithMany(p => p.StudentGrades)
+                    .WithMany(p => p.Enrollments)
                     .HasForeignKey(d => d.Nie)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Students");
 
                 entity.HasOne(d => d.Section)
-                    .WithMany(p => p.StudentGrades)
+                    .WithMany(p => p.Enrollments)
                     .HasForeignKey(d => d.SectionId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Sections");

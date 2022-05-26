@@ -12,25 +12,25 @@
                 <input type="hidden" asp-for="Id" id="input-id">
 
                 <div class="form-group has-danger mb-3">
-                    <label class="col-form-label" for="input-name">Nombres:</label>
+                    <label class="col-form-label fw-bold" for="input-name">Nombres:</label>
                     <input type="text" asp-for="Name" id="input-name" class="form-control input-create">
                     <div id="feedback-name" class="invalid-feedback"></div>
                 </div>
 
                 <div class="form-group has-danger mb-3">
-                    <label class="col-form-label" for="input-surname">Apellidos:</label>
+                    <label class="col-form-label fw-bold" for="input-surname">Apellidos:</label>
                     <input type="text" asp-for="Surname" id="input-surname" class="form-control input-create">
                     <div id="feedback-surname" class="invalid-feedback"></div>
                 </div>
                 
                 <div class="form-group has-danger mb-3">
-                    <label class="col-form-label" for="input-role">Rol:</label>
+                    <label class="col-form-label fw-bold" for="input-role">Rol:</label>
                     <input type="text" asp-for="Role" id="input-role" class="form-control input-create">
                     <div id="feedback-role" class="invalid-feedback"></div>
                 </div>
 
                 <div class="form-group has-danger mb-3">
-                    <label for="select-gender" class="form-label mt-4">Género</label>
+                    <label for="select-gender" class="form-label fw-bold mt-4">Género</label>
                     <select asp-for="Gender" class="form-select" id="select-gender">
                         <option>Seleccionar género</option>
                         <option value="M">Masculino</option>

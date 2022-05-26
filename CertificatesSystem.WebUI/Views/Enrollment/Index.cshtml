@@ -1,12 +1,12 @@
-﻿@model EnrollmentViewModel
+﻿@model EnrollmentsViewModel
 @{
     ViewData["ActivePage"] = ManageNavPages.Enrollment;
 }
 
 <!-- Modal -->
-@* <partial name="_ManagersListModal" model="Model.ManagerForm" /> *@
+<partial name="_EnrollmentModal" model="Model" />
 
-<h3 class="fw-bold display-6 mb-4 border-bottom border-3 border-dark text-center">Matrícula de estudiantes</h3>
+<h3 class="fw-bold display-6 mb-4 border-bottom border-3 border-dark text-center">Matrícula de estudiantes @Model.SelectedYear</h3>
 
 <!-- Status message alert -->
 <partial name="_StatusMessage" />
@@ -16,7 +16,7 @@
 <div class="border border-2 border-gray rounded px-1 py-2 overflow-auto text-nowrap mb-4" style="direction: rtl">
     @for (var year = Model.CurrentYear + 1; year >= 2015; year--)
     {
-        <a asp-route-year="@year" class="btn btn-outline-primary rounded px-5 fw-bold @(year == Model.SelectedYear ? "active" : "")">
+        <a asp-route-year="@year" asp-route-grade="@Model.SelectedGrade.Id" class="btn btn-outline-primary rounded px-5 fw-bold @(year == Model.SelectedYear ? "active" : "")">
             @(year == Model.CurrentYear ? "(Actual)" : "") @year
         </a>
     }
@@ -33,28 +33,10 @@
     }
 </div>
 
-@* <form class="border border-2 border-gray rounded px-1 py-2 mx-auto mb-5"> *@
-@*     <div class="form-group"> *@
-@*         <div class="input-group"> *@
-@*             <select name="grade" class="form-select"> *@
-@*                 @foreach (var grade in Model.GradesList) *@
-@*                 { *@
-@*                     @if (Model.SelectedYear != grade.Id) *@
-@*                     { *@
-@*                         <option value="@grade.Id"><a asp-controller="Enrollment" asp-action="Index" asp-route-year="@Model.SelectedYear" asp-route-grade="@grade.Id">@grade.Name</a></option> *@
-@*                     } *@
-@*                     else *@
-@*                     { *@
-@*                         <option value="@grade.Id" selected><a asp-route-year="@Model.SelectedYear" asp-route-grade="@grade.Id">@grade.Name</a></option> *@
-@*                     } *@
-@*                 } *@
-@*             </select> *@
-@*             <button class="btn btn-secondary"><i class="las la-search"></i> Buscar</button> *@
-@*         </div> *@
-@*     </div> *@
-@* </form> *@
-
 <h4 class="h5 text-dark fw-bold mb-4">@Model.SelectedGrade.Name - Sección "A"</h4>
+<button type="button" id="button-enroll-section-a" class="btn btn-success mb-4" data-bs-toggle="modal" data-bs-target="#form-modal">
+    <i class="las la-plus fs-4"></i> Matricular estudiantes por NIE
+</button>
 
 <div class="table-responsive mb-4">
     <table class="table table-hover table-striped">
@@ -71,7 +53,7 @@
         @if (Model.StudentsListA.Count == 0)
         {
             <tr>
-                <td class="text-center" colspan="4">Actualmente no existen estudiantes agregados.</td>
+                <td class="text-center" colspan="4">Actualmente no existen estudiantes matriculados.</td>
             </tr>
         }
 
@@ -99,6 +81,9 @@
 </div>
 
 <h4 class="h5 text-dark fw-bold mb-4">@Model.SelectedGrade.Name - Sección "B"</h4>
+<button type="button" id="button-enroll-section-b" class="btn btn-success mb-4" data-bs-toggle="modal" data-bs-target="#form-modal">
+    <i class="las la-plus fs-4"></i> Matricular estudiantes por NIE
+</button>
 
 <div class="table-responsive">
     <table class="table table-hover table-striped">
@@ -115,7 +100,7 @@
         @if (Model.StudentsListB.Count == 0)
         {
             <tr>
-                <td class="text-center" colspan="4">Actualmente no existen estudiantes agregados.</td>
+                <td class="text-center" colspan="4">Actualmente no existen estudiantes matriculados.</td>
             </tr>
         }
 
@@ -142,3 +127,33 @@
         </tbody>
     </table>
 </div>
+
+@section Scripts {
+    <script>    
+        const btnEnrollSectionA = document.getElementById('button-enroll-section-a');
+        const btnEnrollSectionB = document.getElementById('button-enroll-section-b');
+        const formCreate = document.getElementById('form-create');
+        const modalSectionContent = document.getElementById('modal-section-content');
+
+        btnEnrollSectionA.addEventListener('click', () => {
+            clearInputs();
+            formCreate.elements['EnrollmentForm.SectionId'].value = "1";
+            modalSectionContent.textContent = "Sección A";
+        });
+        
+        btnEnrollSectionB.addEventListener('click', () => {
+            clearInputs();
+            formCreate.elements['EnrollmentForm.SectionId'].value = "1";
+            modalSectionContent.textContent = "Sección B";
+        });
+        
+        formCreate.addEventListener('submit', (e) => {
+            e.preventDefault();
+    
+            // if (validateForm()) {
+                formCreate.submit();
+            // }
+        });
+        
+    </script>
+}

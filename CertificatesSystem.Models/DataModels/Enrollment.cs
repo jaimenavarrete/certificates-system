@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace CertificatesSystem.Models.DataModels
 {
-    public partial class StudentGrade
+    public partial class Enrollment
     {
         public int Id { get; set; }
         public int Nie { get; set; }

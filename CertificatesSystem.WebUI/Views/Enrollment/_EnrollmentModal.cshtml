@@ -1,0 +1,35 @@
+﻿@model EnrollmentsViewModel
+
+<div class="modal fade" id="form-modal" tabindex="-1" aria-labelledby="form-modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <form asp-controller="Enrollment" asp-action="EnrollStudents" method="post" id="form-create" class="modal-content" novalidate>
+            <div class="modal-header">
+                <h5 id="form-modal-label" class="modal-title text-primary fw-bold"><i class="las la-plus-circle fs-4"></i> Matricular estudiantes por NIE</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <p class="fw-bold text-dark">Año de matrícula: <span class="text-primary">@Model.SelectedYear</span></p>
+                <p class="fw-bold text-dark">Grado: <span class="text-primary">@Model.SelectedGrade.Name</span></p>
+                <p class="fw-bold text-dark">Sección: <span class="text-primary" id="modal-section-content"></span></p>
+                
+                <input type="hidden" asp-for="EnrollmentForm.Year" value="@Model.SelectedYear" id="input-year">
+                <input type="hidden" asp-for="EnrollmentForm.GradeId" value="@Model.SelectedGrade.Id" id="input-grade">
+                <input type="hidden" asp-for="EnrollmentForm.SectionId" id="input-section">
+
+                <div class="form-group has-danger mb-3">
+                    <label class="col-form-label fw-bold" for="input-nies">NIEs de estudiantes:</label>
+                    <small class="text-secondary d-block">* Se deben separar los NIEs por una coma</small>
+                    <textarea asp-for="EnrollmentForm.StudentsNie" id="input-nies" class="form-control input-create"></textarea>
+                    <div id="feedback-nies" class="invalid-feedback"></div>
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="submit" class="btn btn-primary"><i class="las la-save fs-4"></i> Guardar</button>
+            </div>
+        </form>
+    </div>
+</div>
