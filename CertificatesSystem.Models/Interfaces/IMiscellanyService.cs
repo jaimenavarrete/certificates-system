@@ -2,7 +2,7 @@
 
 namespace CertificatesSystem.Models.Interfaces;
 
-public interface IUsualService
+public interface IMiscellanyService
 {
     Task<List<Grade>> GetGrades();
 }

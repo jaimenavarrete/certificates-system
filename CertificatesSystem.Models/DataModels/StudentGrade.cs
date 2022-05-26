@@ -12,7 +12,7 @@ namespace CertificatesSystem.Models.DataModels
         public int Year { get; set; }
 
         public virtual Grade Grade { get; set; } = null!;
-        public virtual Student NieNavigation { get; set; } = null!;
+        public virtual Student Student { get; set; } = null!;
         public virtual Section Section { get; set; } = null!;
     }
 }

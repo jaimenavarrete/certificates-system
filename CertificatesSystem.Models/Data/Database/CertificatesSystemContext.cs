@@ -93,7 +93,7 @@ namespace CertificatesSystem.Models.Data.Database
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Grades");
 
-                entity.HasOne(d => d.NieNavigation)
+                entity.HasOne(d => d.Student)
                     .WithMany(p => p.StudentGrades)
                     .HasForeignKey(d => d.Nie)
                     .OnDelete(DeleteBehavior.ClientSetNull)

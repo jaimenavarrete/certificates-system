@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CertificatesSystem.Services;
 
-public class UsualService : IUsualService
+public class MiscellanyService : IMiscellanyService
 {
     private readonly CertificatesSystemContext _context;
 
-    public UsualService(CertificatesSystemContext context)
+    public MiscellanyService(CertificatesSystemContext context)
     {
         _context = context;
     }
