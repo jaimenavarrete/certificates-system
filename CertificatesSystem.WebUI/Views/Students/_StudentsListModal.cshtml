@@ -2,29 +2,43 @@
 
 <div class="modal fade" id="form-modal" tabindex="-1" aria-labelledby="form-modal" aria-hidden="true">
     <div class="modal-dialog">
-        <form method="post" id="form-create" class="modal-content" novalidate>
+        <form method="post" id="form-create" class="modal-content" enctype="multipart/form-data" novalidate>
             <div class="modal-header">
                 <h5 id="form-modal-label" class="modal-title text-primary fw-bold"><i class="las la-plus-circle fs-4"></i> Crear estudiante</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
             <div class="modal-body">
-                <input type="hidden" asp-for="LastNie" id="input-last-nie" class="input-create" />
+                <input type="hidden" asp-for="LastNie" id="input-last-nie" />
+
+                <div class="form-group mb-3">
+                    <input type="hidden" asp-for="Photo" id="input-photo"/>
+                    <img src="" alt="Foto de estudiante" id="photo-preview" class="text-primary d-flex justify-content-center align-items-center border border-2 border-primary rounded d-block mx-auto" width="150" height="150"/>
+                </div>
+
+                <div class="form-group has-danger mb-3">
+                    <button type="button" id="button-add-photo" class="btn btn-primary mb-4" data-bs-toggle="modal" data-bs-target="#webcam-modal">
+                        <i class="las la-camera fs-4"></i> Tomar foto
+                    </button>
+
+                    <input type="file" asp-for="PhotoFile" accept="image/*" id="input-photo-file" class="form-control input-create">
+                    <div id="feedback-photo" class="invalid-feedback"></div>
+                </div>
                 
                 <div class="form-group has-danger mb-3">
-                    <label class="col-form-label fw-bold" for="input-name">NIE:</label>
+                    <label class="col-form-label fw-bold" for="input-nie">NIE:</label>
                     <input type="text" asp-for="Nie" id="input-nie" class="form-control input-create">
                     <div id="feedback-nie" class="invalid-feedback"></div>
                 </div>
 
                 <div class="form-group has-danger mb-3">
-                    <label class="col-form-label fw-bold" for="input-name">Nombres del estudiante:</label>
+                    <label class="col-form-label fw-bold" for="input-name">Nombres:</label>
                     <input type="text" asp-for="Name" id="input-name" class="form-control input-create">
                     <div id="feedback-name" class="invalid-feedback"></div>
                 </div>
 
                 <div class="form-group has-danger mb-3">
-                    <label class="col-form-label fw-bold" for="input-name">Apellidos del estudiante:</label>
+                    <label class="col-form-label fw-bold" for="input-surname">Apellidos:</label>
                     <input type="text" asp-for="Surname" id="input-surname" class="form-control input-create">
                     <div id="feedback-surname" class="invalid-feedback"></div>
                 </div>

@@ -1,0 +1,30 @@
+﻿<div class="modal fade" id="webcam-modal" tabindex="-1" aria-labelledby="webcam-modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div id="webcam-create" class="modal-content" novalidate>
+            <div class="modal-header">
+                <h5 id="webcam-modal-label" class="modal-title text-primary fw-bold"><i class="las la-camera fs-4"></i> Tomar fotografía</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <button id="change-webcam-status" class="btn btn-success mb-2"><i class="las la-power-off"></i> <span>Encender</span> webcam</button>
+
+                <div>
+                    <video class="mx-auto border border-1 border-dark" id="webcam" autoplay width="375" height="350"></video>
+                    <canvas id="canvas" class="d-none"></canvas>
+                    <audio id="snap-sound" src="audio/snap.wav" preload = "auto"></audio>
+                </div>
+                
+                <button id="take-snapshot" class="btn btn-primary mb-2"><i class="las la-plus"></i> Tomar foto</button>
+                
+                <p class="text-secondary fw-bold">Foto tomada:</p>
+                <img src="" id="student-photo" />
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button id="save-photo" class="btn btn-primary" data-bs-dismiss="modal"><i class="las la-save fs-4"></i> Guardar foto</button>
+            </div>
+        </div>
+    </div>
+</div>
