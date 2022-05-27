@@ -78,6 +78,10 @@ namespace CertificatesSystem.Models.Data.Database
                 entity.Property(e => e.Surname)
                     .HasMaxLength(50)
                     .IsUnicode(false);
+
+                entity.Property(e => e.PhotoId)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<Enrollment>(entity =>

@@ -14,6 +14,8 @@ namespace CertificatesSystem.Models.DataModels
         public string Name { get; set; } = null!;
         public string Surname { get; set; } = null!;
 
+        public string? PhotoId { get; set; }
+
         public virtual ICollection<Enrollment> Enrollments { get; set; }
     }
 }
