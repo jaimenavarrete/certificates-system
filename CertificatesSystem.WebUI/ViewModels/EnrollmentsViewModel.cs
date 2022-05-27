@@ -12,11 +12,9 @@ public class EnrollmentsViewModel
 
     public List<GradeViewModel> GradesList { get; set; }
     
-    public List<EnrollViewModel> StudentsListA { get; set; }
+    public List<EnrolledStudentsListViewModel> StudentsListA { get; set; }
     
-    public List<EnrollViewModel> StudentsListB { get; set; }
-    
-    public EnrollmentFormViewModel EnrollmentForm { get; set; }
+    public List<EnrolledStudentsListViewModel> StudentsListB { get; set; }
 }
 
 public class EnrollmentFormViewModel
@@ -28,4 +26,13 @@ public class EnrollmentFormViewModel
     public int Year { get; set; }
     
     public string StudentsNie { get; set; }
+}
+
+public class EnrollmentRemoveFormViewModel
+{
+    public int Nie { get; set; }
+    
+    public int GradeId { get; set; }
+
+    public int Year { get; set; }
 }

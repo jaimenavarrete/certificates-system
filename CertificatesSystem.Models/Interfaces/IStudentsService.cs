@@ -13,7 +13,7 @@ public interface IStudentsService
     
     Task<bool> Create(Student student);
 
-    Task<bool> Update(Student student);
+    Task<bool> Update(int lastNie, Student student);
 
     Task<bool> Delete(int nie);
 }

@@ -13,7 +13,14 @@ public class EnrollmentService : IEnrollmentService
     {
         _context = context;
     }
-    
+
+    public async Task<Enrollment> GetEnrolledStudent(int nie, int year)
+    {
+        return await _context.Enrollments
+            .Where(e => e.Nie == nie && e.Year == year)
+            .FirstOrDefaultAsync();
+    }
+
     public async Task<List<Enrollment>> GetEnrolledStudentsByGradeAndSection(int year, int gradeId, int sectionId)
     {
         return await _context.Enrollments
@@ -28,10 +35,19 @@ public class EnrollmentService : IEnrollmentService
 
         foreach (var nie in nies)
         {
-            var enrollStudent = CreateANewEnrollment(enrollment, nie);
-            _context.Add(enrollStudent);
+            var studentEnrollment = CreateANewEnrollment(enrollment, nie);
+            _context.Add(studentEnrollment);
         }
 
+        var rows = await _context.SaveChangesAsync();
+        return rows > 0;
+    }
+
+    public async Task<bool> RemoveEnrolledStudent(int nie, int year)
+    {
+        var enrolledStudent = await GetEnrolledStudent(nie, year);
+
+        _context.Remove(enrolledStudent);
         var rows = await _context.SaveChangesAsync();
         return rows > 0;
     }

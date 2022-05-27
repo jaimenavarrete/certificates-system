@@ -27,10 +27,10 @@ public class EnrollmentController : Controller
         var selectedGradeViewModel = gradesViewModel.FirstOrDefault(g => g.Id == grade);
 
         var studentsListA = await _enrollmentService.GetEnrolledStudentsByGradeAndSection(year, grade, 1);
-        var studentsListAViewModel = _mapper.Map<List<EnrollViewModel>>(studentsListA);
+        var studentsListAViewModel = _mapper.Map<List<EnrolledStudentsListViewModel>>(studentsListA);
         
         var studentsListB = await _enrollmentService.GetEnrolledStudentsByGradeAndSection(year, grade, 2);
-        var studentsListBViewModel = _mapper.Map<List<EnrollViewModel>>(studentsListB);
+        var studentsListBViewModel = _mapper.Map<List<EnrolledStudentsListViewModel>>(studentsListB);
         
         var viewModel = new EnrollmentsViewModel
         {
@@ -46,14 +46,24 @@ public class EnrollmentController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> EnrollStudents(EnrollmentsViewModel viewModel)
+    public async Task<IActionResult> EnrollStudentsInGrade(EnrollmentFormViewModel viewModel)
     {
-        var enrollment = _mapper.Map<Enrollment>(viewModel.EnrollmentForm);
+        var enrollment = _mapper.Map<Enrollment>(viewModel);
 
-        var result = await _enrollmentService.EnrollStudentsInGrade(enrollment, viewModel.EnrollmentForm.StudentsNie);
+        var result = await _enrollmentService.EnrollStudentsInGrade(enrollment, viewModel.StudentsNie);
 
         if (result) TempData["Success"] = "Los estudiantes fueron matriculados con éxito.";
 
         return RedirectToAction("Index", new { year = enrollment.Year, grade = enrollment.GradeId });
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> RemoveEnrolledStudent(EnrollmentRemoveFormViewModel viewModel)
+    {
+        var result = await _enrollmentService.RemoveEnrolledStudent(viewModel.Nie, viewModel.Year);
+        
+        if (result) TempData["Success"] = "El estudiante fue quitado de la matrícula con éxito.";
+
+        return RedirectToAction("Index", new { year = viewModel.Year, grade = viewModel.GradeId });
     }
 }

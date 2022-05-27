@@ -31,11 +31,12 @@ public class StudentsService : IStudentsService
         return rows > 0;
     }
 
-    public async Task<bool> Update(Student student)
+    public async Task<bool> Update(int lastNie, Student newStudentInfo)
     {
-        _context.Update(student);
-        var rows = await _context.SaveChangesAsync();
-        return rows > 0;
+        var result = await Delete(lastNie);
+        result = await Create(newStudentInfo);
+
+        return result;
     }
 
     public async Task<bool> Delete(int nie)

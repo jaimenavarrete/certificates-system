@@ -68,6 +68,7 @@
             const info = e.currentTarget.closest('tr').children;
 
             formCreate.action = "/Students/Update";
+            formCreate.elements['LastNie'].value = info[0].outerText;
             formCreate.elements['Nie'].value = info[0].outerText;
             formCreate.elements['Name'].value = info[1].outerText;
             formCreate.elements['Surname'].value = info[2].outerText;

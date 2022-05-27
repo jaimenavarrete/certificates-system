@@ -8,8 +8,8 @@ public class EnrollmentMapping : Profile
 {
     public EnrollmentMapping()
     {
-        CreateMap<Enrollment, EnrollViewModel>();
-        CreateMap<EnrollViewModel, Enrollment>();
+        CreateMap<Enrollment, EnrolledStudentsListViewModel>();
+        CreateMap<EnrolledStudentsListViewModel, Enrollment>();
     }
 }
 
