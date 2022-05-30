@@ -2,6 +2,7 @@
 using CertificatesSystem.Models.DataModels;
 using CertificatesSystem.Models.Interfaces;
 using CertificatesSystem.Models.QueryFilters;
+using CertificatesSystem.Services.Common;
 using Microsoft.EntityFrameworkCore;
 
 namespace CertificatesSystem.Services;
@@ -24,17 +25,28 @@ public class StudentsService : IStudentsService
 
     public async Task<Student?> GetByNie(int nie) => await _context.Students.FindAsync(nie);
 
-    public async Task<bool> Create(Student student)
+    public async Task<string> GetPhotoByNie(int nie)
     {
+        var student = await GetByNie(nie);
+        var base64Photo = await PhotoService.GetPhotoAsBase64(student.PhotoId);
+        
+        return base64Photo;
+    }
+
+    public async Task<bool> Create(Student student, string photoBase64)
+    {
+        var photoId = await PhotoService.SavePhotoAsFile(photoBase64);
+        student.PhotoId = photoId;
+        
         _context.Add(student);
         var rows = await _context.SaveChangesAsync();
         return rows > 0;
     }
 
-    public async Task<bool> Update(int lastNie, Student newStudentInfo)
+    public async Task<bool> Update(Student newStudentInfo, int lastNie, string photoBase64)
     {
         var result = await Delete(lastNie);
-        result = await Create(newStudentInfo);
+        result = await Create(newStudentInfo, photoBase64);
 
         return result;
     }

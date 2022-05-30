@@ -10,8 +10,4 @@
       <ProjectReference Include="..\CertificatesSystem.Models\CertificatesSystem.Models.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Common" />
-    </ItemGroup>
-
 </Project>

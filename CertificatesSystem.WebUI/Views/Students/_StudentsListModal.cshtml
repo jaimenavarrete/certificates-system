@@ -9,11 +9,11 @@
             </div>
 
             <div class="modal-body">
-                <input type="hidden" asp-for="LastNie" id="input-last-nie" />
+                <input type="hidden" asp-for="LastNie" id="input-last-nie" class="input-create" />
 
                 <div class="form-group mb-3">
-                    <input type="hidden" asp-for="Photo" id="input-photo"/>
-                    <img src="" alt="Foto de estudiante" id="photo-preview" class="text-primary d-flex justify-content-center align-items-center border border-2 border-primary rounded d-block mx-auto" width="150" height="150"/>
+                    <input type="hidden" asp-for="Photo" id="input-photo" class="input-create" />
+                    <img src="~/img/unknown.png" alt="Foto de estudiante" id="photo-preview" class="text-primary d-flex justify-content-center align-items-center border border-2 border-primary rounded d-block mx-auto" width="150" height="125"/>
                 </div>
 
                 <div class="form-group has-danger mb-3">
@@ -21,7 +21,7 @@
                         <i class="las la-camera fs-4"></i> Tomar foto
                     </button>
 
-                    <input type="file" asp-for="PhotoFile" accept="image/*" id="input-photo-file" class="form-control input-create">
+                    <input type="file" name="PhotoFile" accept="image/png,image/jpg,image/jpeg" id="input-photo-file" class="form-control input-create">
                     <div id="feedback-photo" class="invalid-feedback"></div>
                 </div>
                 

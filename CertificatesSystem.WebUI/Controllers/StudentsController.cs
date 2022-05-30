@@ -31,12 +31,19 @@ public class StudentsController : Controller
         return View(viewModel);
     }
 
+    [HttpGet]
+    public async Task<string> GetPhotoByNie(int nie)
+    {
+        var photoBase64 = await _studentsService.GetPhotoByNie(nie);
+        return photoBase64;
+    }
+
     [HttpPost]
     public async Task<IActionResult> Create(StudentFormViewModel input)
     {
         var student = _mapper.Map<Student>(input);
         
-        var result = await _studentsService.Create(student);
+        var result = await _studentsService.Create(student, input.Photo);
 
         if (result) TempData["Success"] = "El estudiante se creó correctamente.";
 
@@ -48,7 +55,7 @@ public class StudentsController : Controller
     {
         var student = _mapper.Map<Student>(input);
 
-        var result = await _studentsService.Update(input.LastNie, student);
+        var result = await _studentsService.Update(student, input.LastNie, input.Photo);
 
         if (result) TempData["Success"] = "El estudiante se editó correctamente.";
 

@@ -25,6 +25,7 @@
             <th scope="col">NIE</th>
             <th scope="col">Nombres</th>
             <th scope="col">Apellidos</th>
+            <th scope="col">¿Tiene foto?</th>
             <th scope="col">Acciones</th>
         </tr>
         </thead>
@@ -43,6 +44,16 @@
                 <th scope="row">@student.Nie</th>
                 <td>@student.Name</td>
                 <td>@student.Surname</td>
+                <td class="fw-bold">
+                    @if (string.IsNullOrEmpty(student.PhotoId))
+                    {
+                        <span class='text-danger'>No</span>
+                    }
+                    else
+                    {
+                        <span class='text-success'>Si</span>
+                    }
+                </td>
                 <td>
                     <div class="d-flex">
                         <button class="button-edit bg-transparent border-0 p-0" data-bs-toggle="modal" data-bs-target="#form-modal">
@@ -70,7 +81,6 @@
         
         const webcamElement = document.getElementById('webcam');
         const canvasElement = document.getElementById('canvas');
-        const snapSoundElement = document.getElementById('snap-sound');
         const btnTakeSnapshot = document.getElementById('take-snapshot');
         const btnChangeWebcamStatus = document.getElementById('change-webcam-status');
         const textWebcamStatus = document.querySelector("#change-webcam-status span");
@@ -80,7 +90,41 @@
         const inputPhotoFile = formCreate.elements['PhotoFile'];
         
         let webcamStatus = false;
-        const webcam = new Webcam(webcamElement, 'user', canvasElement, snapSoundElement);
+        const webcam = new Webcam(webcamElement, 'user', canvasElement);
+        
+        const getBase64Photo = (nie) => {
+            const baseUrl = window.location.origin;
+            const url = `${baseUrl}/Students/GetPhotoByNie?nie=${nie}`;
+            
+            fetch(url)
+                .then(data => data.text())
+                .then(res => photoPreview.src = res);
+        }
+        
+        const getInfo = (e) => {
+            const info = e.currentTarget.closest('tr').children;
+
+            formCreate.action = "/Students/Update";
+            formCreate.elements['LastNie'].value = info[0].outerText;
+            formCreate.elements['Nie'].value = info[0].outerText;
+            formCreate.elements['Name'].value = info[1].outerText;
+            formCreate.elements['Surname'].value = info[2].outerText;
+            getBase64Photo(info[0].outerText);
+            
+            modalLabel.innerHTML = `<i class="las la-pen fs-4"></i> Editar estudiante`;
+        };
+        
+        const convertToBase64 = (file) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            
+            reader.onload = function () {
+                formCreate.elements['Photo'].value = reader.result;
+            };
+            reader.onerror = function (error) {
+                console.log('Error: ', error);
+            };
+        }
                 
         btnChangeWebcamStatus.addEventListener('click', () => {
             if (webcamStatus) {
@@ -109,31 +153,22 @@
             photoPreview.src = studentPhoto.src;
             formCreate.elements['Photo'].value = studentPhoto.src;
             formCreate.elements['PhotoFile'].value = "";
+            btnChangeWebcamStatus.click();
         });
         
         inputPhotoFile.addEventListener('change', () => {
             const [file] = inputPhotoFile.files
             if (file) {
-                photoPreview.src = URL.createObjectURL(file)
-                formCreate.elements['Photo'].value = "";
+                photoPreview.src = URL.createObjectURL(file);
+                convertToBase64(file);
             }
         });
-
-        const getInfo = (e) => {
-            const info = e.currentTarget.closest('tr').children;
-
-            formCreate.action = "/Students/Update";
-            formCreate.elements['LastNie'].value = info[0].outerText;
-            formCreate.elements['Nie'].value = info[0].outerText;
-            formCreate.elements['Name'].value = info[1].outerText;
-            formCreate.elements['Surname'].value = info[2].outerText;
-            modalLabel.innerHTML = `<i class="las la-pen fs-4"></i> Editar estudiante`;
-        };
 
         btnCreate.addEventListener('click', () => {
             clearInputs();
             
-            formCreate.action = "/Students/Create";
+            photoPreview.src = '/img/unknown.png';
+            formCreate.action = '/Students/Create';
             modalLabel.innerHTML = `<i class="las la-plus-circle fs-4"></i> Crear estudiante`;
         });
 
