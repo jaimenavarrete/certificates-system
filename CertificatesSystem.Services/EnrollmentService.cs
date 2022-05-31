@@ -8,16 +8,18 @@ namespace CertificatesSystem.Services;
 public class EnrollmentService : IEnrollmentService
 {
     private readonly CertificatesSystemContext _context;
+    private readonly IStudentsService _studentsService;
     
-    public EnrollmentService(CertificatesSystemContext context)
+    public EnrollmentService(CertificatesSystemContext context, IStudentsService studentsService)
     {
         _context = context;
+        _studentsService = studentsService;
     }
 
-    public async Task<Enrollment> GetEnrolledStudent(int nie, int year)
+    public async Task<Enrollment?> GetEnrolledStudent(int studentId, int year)
     {
         return await _context.Enrollments
-            .Where(e => e.Nie == nie && e.Year == year)
+            .Where(e => e.StudentId == studentId && e.Year == year)
             .FirstOrDefaultAsync();
     }
 
@@ -35,7 +37,8 @@ public class EnrollmentService : IEnrollmentService
 
         foreach (var nie in nies)
         {
-            var studentEnrollment = CreateANewEnrollment(enrollment, nie);
+            var student = await _studentsService.GetByNie(nie);
+            var studentEnrollment = CreateANewEnrollment(enrollment, student.Id);
             _context.Add(studentEnrollment);
         }
 
@@ -43,9 +46,9 @@ public class EnrollmentService : IEnrollmentService
         return rows > 0;
     }
 
-    public async Task<bool> RemoveEnrolledStudent(int nie, int year)
+    public async Task<bool> RemoveEnrolledStudent(int studentId, int year)
     {
-        var enrolledStudent = await GetEnrolledStudent(nie, year);
+        var enrolledStudent = await GetEnrolledStudent(studentId, year);
 
         _context.Remove(enrolledStudent);
         var rows = await _context.SaveChangesAsync();
@@ -61,11 +64,11 @@ public class EnrollmentService : IEnrollmentService
         return niesArray;
     }
 
-    private Enrollment CreateANewEnrollment(Enrollment enrollment, int nie)
+    private Enrollment CreateANewEnrollment(Enrollment enrollment, int studentId)
     {
         return new Enrollment()
         {
-            Nie = nie,
+            StudentId = studentId,
             GradeId = enrollment.GradeId,
             SectionId = enrollment.SectionId,
             Year = enrollment.Year

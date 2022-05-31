@@ -23,7 +23,10 @@ public class StudentsService : IStudentsService
         throw new NotImplementedException();
     }
 
-    public async Task<Student?> GetByNie(int nie) => await _context.Students.FindAsync(nie);
+    public async Task<Student?> GetById(int id) => await _context.Students.FindAsync(id);
+
+    public async Task<Student?> GetByNie(int nie) => 
+        await _context.Students.FirstOrDefaultAsync(s => s.Nie == nie);
 
     public async Task<string> GetPhotoByNie(int nie)
     {
@@ -37,25 +40,41 @@ public class StudentsService : IStudentsService
     {
         var photoId = await PhotoService.SavePhotoAsFile(photoBase64);
         student.PhotoId = photoId;
+        student.Birthdate = DateTime.Now;
+        student.Address = "Dirección al azar";
         
         _context.Add(student);
         var rows = await _context.SaveChangesAsync();
         return rows > 0;
     }
 
-    public async Task<bool> Update(Student newStudentInfo, int lastNie, string photoBase64)
+    public async Task<bool> Update(Student student, string photoBase64)
     {
-        var result = await Delete(lastNie);
-        result = await Create(newStudentInfo, photoBase64);
+        var oldStudent = await GetById(student.Id);
+        
+        PhotoService.DeletePhoto(oldStudent.PhotoId);
+        var photoId = await PhotoService.SavePhotoAsFile(photoBase64);
+        
+        oldStudent.PhotoId = photoId;
+        oldStudent.Nie = student.Nie;
+        oldStudent.Name = student.Name;
+        oldStudent.Surname = student.Surname;
+        // oldStudent.Birthdate = student.Birthdate;
+        // oldStudent.Address = student.Address;
 
-        return result;
+        _context.Update(oldStudent);
+        var rows = await _context.SaveChangesAsync();
+        return rows > 0;
     }
 
-    public async Task<bool> Delete(int nie)
+    public async Task<bool> Delete(int id)
     {
-        var student = await GetByNie(nie);
+        var student = await GetById(id);
+        PhotoService.DeletePhoto(student.PhotoId);
+
         _context.Remove(student);
         var rows = await _context.SaveChangesAsync();
+
         return rows > 0;
     }
 }

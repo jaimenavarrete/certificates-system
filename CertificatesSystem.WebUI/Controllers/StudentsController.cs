@@ -55,7 +55,7 @@ public class StudentsController : Controller
     {
         var student = _mapper.Map<Student>(input);
 
-        var result = await _studentsService.Update(student, input.LastNie, input.Photo);
+        var result = await _studentsService.Update(student, input.Photo);
 
         if (result) TempData["Success"] = "El estudiante se editó correctamente.";
 
@@ -63,9 +63,9 @@ public class StudentsController : Controller
     }
     
     [HttpPost]
-    public async Task<IActionResult> Delete(int nie)
+    public async Task<IActionResult> Delete(int id)
     {
-        var result = await _studentsService.Delete(nie);
+        var result = await _studentsService.Delete(id);
 
         if (result) TempData["Success"] = "El estudiante se borró correctamente.";
 

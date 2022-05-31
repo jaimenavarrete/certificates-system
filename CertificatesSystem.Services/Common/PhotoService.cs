@@ -4,10 +4,12 @@ namespace CertificatesSystem.Services.Common;
 
 public static class PhotoService
 {
-    const string BasePhotoPath = @"C:\Documentos";
-    
-    public static async Task<string> SavePhotoAsFile(string photoBase64)
+    private const string BasePhotoPath = @"C:\Documentos";
+
+    public static async Task<string?> SavePhotoAsFile(string photoBase64)
     {
+        if (string.IsNullOrEmpty(photoBase64)) return null;
+        
         var photoId = Guid.NewGuid().ToString();
         var photoPath = $@"{BasePhotoPath}\{photoId}.png";
 
@@ -30,8 +32,17 @@ public static class PhotoService
         
         var binData = await File.ReadAllBytesAsync(photoPath);
         var base64Data = Convert.ToBase64String(binData);
-        var base64Image = $"data:image/jpeg;base64,{base64Data}";
+        var base64Image = $"data:image/png;base64,{base64Data}";
 
         return base64Image;
+    }
+
+    public static void DeletePhoto(string photoId)
+    {
+        var photoPath = $@"{BasePhotoPath}\{photoId}.png";
+
+        if (string.IsNullOrEmpty(photoId)) return;
+        
+        File.Delete(photoPath);
     }
 }

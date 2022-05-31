@@ -22,6 +22,7 @@
     <table class="table table-hover table-striped">
         <thead>
         <tr class="table-primary">
+            <th scope="col">Id</th>
             <th scope="col">NIE</th>
             <th scope="col">Nombres</th>
             <th scope="col">Apellidos</th>
@@ -41,6 +42,7 @@
         @foreach (var student in Model.StudentsList)
         {
             <tr>
+                <th>@student.Id</th>
                 <th scope="row">@student.Nie</th>
                 <td>@student.Name</td>
                 <td>@student.Surname</td>
@@ -60,7 +62,7 @@
                             <i class="las la-pen text-primary fs-3 px-1"></i>
                         </button>
                         <form asp-controller="Students" asp-action="Delete" method="post" class="delete-element-form">
-                            <input type="hidden" value="@student.Nie" name="nie" />
+                            <input type="hidden" value="@student.Id" name="id"/>
                             <button class="bg-transparent border-0 p-0"><i class="las la-trash text-danger fs-3 px-1"></i></button>
                         </form>
                     </div>
@@ -105,11 +107,11 @@
             const info = e.currentTarget.closest('tr').children;
 
             formCreate.action = "/Students/Update";
-            formCreate.elements['LastNie'].value = info[0].outerText;
-            formCreate.elements['Nie'].value = info[0].outerText;
-            formCreate.elements['Name'].value = info[1].outerText;
-            formCreate.elements['Surname'].value = info[2].outerText;
-            getBase64Photo(info[0].outerText);
+            formCreate.elements['Id'].value = info[0].outerText;
+            formCreate.elements['Nie'].value = info[1].outerText;
+            formCreate.elements['Name'].value = info[2].outerText;
+            formCreate.elements['Surname'].value = info[3].outerText;
+            getBase64Photo(info[1].outerText);
             
             modalLabel.innerHTML = `<i class="las la-pen fs-4"></i> Editar estudiante`;
         };

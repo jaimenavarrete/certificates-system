@@ -60,13 +60,13 @@
         @foreach (var student in Model.StudentsListA)
         {
             <tr>
-                <th scope="row">@student.Nie</th>
+                <th scope="row">@student.StudentNie</th>
                 <td>@student.StudentName</td>
                 <td>@student.StudentSurname</td>
                 <td>
                     <div class="d-flex">
                         <form asp-controller="Enrollment" asp-action="RemoveEnrolledStudent" method="post" class="delete-element-form">
-                            <input type="hidden" name="Nie" value="@student.Nie">
+                            <input type="hidden" name="StudentId" value="@student.StudentId">
                             <input type="hidden" name="GradeId" value="@Model.SelectedGrade.Id">
                             <input type="hidden" name="Year" value="@Model.SelectedYear">
                             <button class="bg-transparent border-0 p-0"><i class="las la-minus text-danger fs-4 border border-2 border-danger rounded"></i></button>
@@ -106,13 +106,13 @@
         @foreach (var student in Model.StudentsListB)
         {
             <tr>
-                <th scope="row">@student.Nie</th>
+                <th scope="row">@student.StudentNie</th>
                 <td>@student.StudentName</td>
                 <td>@student.StudentSurname</td>
                 <td>
                     <div class="d-flex">
                         <form asp-controller="Enrollment" asp-action="RemoveEnrolledStudent" method="post" class="delete-element-form">
-                            <input type="hidden" name="Nie" value="@student.Nie">
+                            <input type="hidden" name="StudentId" value="@student.StudentId">
                             <input type="hidden" name="GradeId" value="@Model.SelectedGrade.Id">
                             <input type="hidden" name="Year" value="@Model.SelectedYear">
                             <button class="bg-transparent border-0 p-0"><i class="las la-minus text-danger fs-4 border border-2 border-danger rounded"></i></button>

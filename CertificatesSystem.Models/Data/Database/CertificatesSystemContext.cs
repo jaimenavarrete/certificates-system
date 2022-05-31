@@ -14,20 +14,43 @@ namespace CertificatesSystem.Models.Data.Database
         {
         }
 
+        public virtual DbSet<Enrollment> Enrollments { get; set; } = null!;
         public virtual DbSet<Grade> Grades { get; set; } = null!;
         public virtual DbSet<Manager> Managers { get; set; } = null!;
         public virtual DbSet<Section> Sections { get; set; } = null!;
         public virtual DbSet<Student> Students { get; set; } = null!;
-        public virtual DbSet<Enrollment> Enrollments { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Enrollment>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.HasOne(d => d.Grade)
+                    .WithMany(p => p.Enrollments)
+                    .HasForeignKey(d => d.GradeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Grades");
+
+                entity.HasOne(d => d.Section)
+                    .WithMany(p => p.Enrollments)
+                    .HasForeignKey(d => d.SectionId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Sections");
+
+                entity.HasOne(d => d.Student)
+                    .WithMany(p => p.Enrollments)
+                    .HasForeignKey(d => d.StudentId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Students");
+            });
+            
             modelBuilder.Entity<Grade>(entity =>
             {
                 entity.HasKey(e => e.Id);
                 
                 entity.Property(e => e.Name)
-                    .HasMaxLength(100)
+                    .HasMaxLength(50)
                     .IsUnicode(false);
             });
 
@@ -65,51 +88,28 @@ namespace CertificatesSystem.Models.Data.Database
 
             modelBuilder.Entity<Student>(entity =>
             {
-                entity.HasKey(e => e.Nie);
+                entity.HasIndex(e => e.Nie, "UQ_Nie_Students")
+                    .IsUnique();
 
-                entity.Property(e => e.Nie)
-                    .ValueGeneratedNever()
-                    .HasColumnName("NIE");
+                entity.HasKey(e => e.Id);
 
-                entity.Property(e => e.Name)
-                    .HasMaxLength(50)
+                entity.Property(e => e.Address)
+                    .HasMaxLength(100)
                     .IsUnicode(false);
 
-                entity.Property(e => e.Surname)
+                entity.Property(e => e.Birthdate).HasColumnType("datetime");
+
+                entity.Property(e => e.Name)
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
                 entity.Property(e => e.PhotoId)
                     .HasMaxLength(50)
                     .IsUnicode(false);
-            });
 
-            modelBuilder.Entity<Enrollment>(entity =>
-            {
-                entity.ToTable("StudentGrades");
-                
-                entity.HasKey(e => e.Id);
-                
-                entity.Property(e => e.Nie)
-                    .HasColumnName("NIE");
-
-                entity.HasOne(d => d.Grade)
-                    .WithMany(p => p.Enrollments)
-                    .HasForeignKey(d => d.GradeId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Grades");
-
-                entity.HasOne(d => d.Student)
-                    .WithMany(p => p.Enrollments)
-                    .HasForeignKey(d => d.Nie)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Students");
-
-                entity.HasOne(d => d.Section)
-                    .WithMany(p => p.Enrollments)
-                    .HasForeignKey(d => d.SectionId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Sections");
+                entity.Property(e => e.Surname)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
             });
         }
     }

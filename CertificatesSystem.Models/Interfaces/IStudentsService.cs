@@ -9,13 +9,15 @@ public interface IStudentsService
 
     Task<Student> GetSearch(StudentQueryFilter filters);
 
+    Task<Student?> GetById(int id);
+
     Task<Student?> GetByNie(int nie);
 
     Task<string> GetPhotoByNie(int nie);
     
     Task<bool> Create(Student student, string photoBase64);
 
-    Task<bool> Update(Student student, int lastNie, string photoBase64);
+    Task<bool> Update(Student student, string photoBase64);
 
-    Task<bool> Delete(int nie);
+    Task<bool> Delete(int id);
 }

@@ -9,7 +9,5 @@ public class StudentsListViewModel
 
 public class StudentFormViewModel : StudentViewModel
 {
-    public int LastNie { get; set; }
-
     public string Photo { get; set; }
 }

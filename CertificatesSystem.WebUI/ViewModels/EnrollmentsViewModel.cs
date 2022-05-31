@@ -30,7 +30,7 @@ public class EnrollmentFormViewModel
 
 public class EnrollmentRemoveFormViewModel
 {
-    public int Nie { get; set; }
+    public int StudentId { get; set; }
     
     public int GradeId { get; set; }
 
