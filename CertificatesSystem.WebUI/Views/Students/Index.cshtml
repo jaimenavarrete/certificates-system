@@ -75,7 +75,9 @@
 
 @section Scripts {
     <script type="text/javascript" src="~/lib/webcam-easy/webcam-easy.min.js"></script>
-    <script>    
+    <script>
+        const baseUrl = window.location.origin;
+    
         const btnCreate = document.getElementById('button-create');
         const btnEdit = document.querySelectorAll('.button-edit');
         const formCreate = document.getElementById('form-create');
@@ -94,27 +96,39 @@
         let webcamStatus = false;
         const webcam = new Webcam(webcamElement, 'user', canvasElement);
         
-        const getBase64Photo = (nie) => {
-            const baseUrl = window.location.origin;
-            const url = `${baseUrl}/Students/GetPhotoByNie?nie=${nie}`;
+        const getStudentInfo = (e) => {
+            const studentRow = e.currentTarget.closest('tr').children;
+            const nie = studentRow[1].outerText;
+            const url = `${baseUrl}/Students/GetByNie?nie=${nie}`;
             
             fetch(url)
-                .then(data => data.text())
-                .then(res => photoPreview.src = res);
+                .then(data => data.json())
+                .then(res => {
+                    modalLabel.innerHTML = `<i class="las la-pen fs-4"></i> Editar estudiante`;
+                    formCreate.action = "/Students/Update";
+                    formCreate.elements['Id'].value = res.id;
+                    formCreate.elements['Nie'].value = res.nie;
+                    formCreate.elements['Name'].value = res.name;
+                    formCreate.elements['Surname'].value = res.surname;
+                    formCreate.elements['Birthdate'].value = res.birthdate.split('T')[0];
+                    formCreate.elements['Address'].value = res.address;
+                    formCreate.elements['Photo'].value = res.photoId;
+                    photoPreview.src = res.photoId;
+                });
         }
         
-        const getInfo = (e) => {
-            const info = e.currentTarget.closest('tr').children;
-
-            formCreate.action = "/Students/Update";
-            formCreate.elements['Id'].value = info[0].outerText;
-            formCreate.elements['Nie'].value = info[1].outerText;
-            formCreate.elements['Name'].value = info[2].outerText;
-            formCreate.elements['Surname'].value = info[3].outerText;
-            getBase64Photo(info[1].outerText);
-            
-            modalLabel.innerHTML = `<i class="las la-pen fs-4"></i> Editar estudiante`;
-        };
+        // const getInfo = (e) => {
+        //     const info = e.currentTarget.closest('tr').children;
+        //
+        //     formCreate.action = "/Students/Update";
+        //     formCreate.elements['Id'].value = info[0].outerText;
+        //     formCreate.elements['Nie'].value = info[1].outerText;
+        //     formCreate.elements['Name'].value = info[2].outerText;
+        //     formCreate.elements['Surname'].value = info[3].outerText;
+        //     getBase64Photo(info[1].outerText);
+        //    
+        //     modalLabel.innerHTML = `<i class="las la-pen fs-4"></i> Editar estudiante`;
+        // };
         
         const convertToBase64 = (file) => {
             const reader = new FileReader();
@@ -175,7 +189,7 @@
         });
 
         btnEdit.forEach((btn) => {
-            btn.addEventListener('click', (e) => getInfo(e));
+            btn.addEventListener('click', (e) => getStudentInfo(e));
         });
         
         formCreate.addEventListener('submit', (e) => {

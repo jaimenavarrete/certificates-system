@@ -40,9 +40,7 @@ public class StudentsService : IStudentsService
     {
         var photoId = await PhotoService.SavePhotoAsFile(photoBase64);
         student.PhotoId = photoId;
-        student.Birthdate = DateTime.Now;
-        student.Address = "Dirección al azar";
-        
+
         _context.Add(student);
         var rows = await _context.SaveChangesAsync();
         return rows > 0;
@@ -59,8 +57,8 @@ public class StudentsService : IStudentsService
         oldStudent.Nie = student.Nie;
         oldStudent.Name = student.Name;
         oldStudent.Surname = student.Surname;
-        // oldStudent.Birthdate = student.Birthdate;
-        // oldStudent.Address = student.Address;
+        oldStudent.Birthdate = student.Birthdate;
+        oldStudent.Address = student.Address;
 
         _context.Update(oldStudent);
         var rows = await _context.SaveChangesAsync();

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CertificatesSystem.Models.DataModels;
 using CertificatesSystem.Models.Interfaces;
+using CertificatesSystem.Services.Common;
 using CertificatesSystem.WebUI.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
@@ -30,12 +31,16 @@ public class StudentsController : Controller
         
         return View(viewModel);
     }
-
+    
     [HttpGet]
-    public async Task<string> GetPhotoByNie(int nie)
+    public async Task<StudentViewModel> GetByNie(int nie)
     {
-        var photoBase64 = await _studentsService.GetPhotoByNie(nie);
-        return photoBase64;
+        var student = await _studentsService.GetByNie(nie);
+        student.PhotoId = await _studentsService.GetPhotoByNie(nie);
+
+        var studentViewModel = _mapper.Map<StudentViewModel>(student);
+        
+        return studentViewModel;
     }
 
     [HttpPost]
