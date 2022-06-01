@@ -4,7 +4,7 @@ namespace CertificatesSystem.Models.Interfaces;
 
 public interface IEnrollmentService
 {
-    Task<Enrollment?> GetEnrolledStudent(int nie, int year);
+    Task<Enrollment?> GetEnrolledStudent(int studentId, int year);
 
     Task<List<Enrollment>> GetEnrolledStudentsByGradeAndSection(int year, int gradeId, int sectionId);
 

@@ -19,6 +19,8 @@ public class EnrollmentService : IEnrollmentService
     public async Task<Enrollment?> GetEnrolledStudent(int studentId, int year)
     {
         return await _context.Enrollments
+            .Include(e => e.Grade)
+            .Include(e => e.Section)
             .Where(e => e.StudentId == studentId && e.Year == year)
             .FirstOrDefaultAsync();
     }

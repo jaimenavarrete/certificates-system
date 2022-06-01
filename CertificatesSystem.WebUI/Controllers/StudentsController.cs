@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using CertificatesSystem.Models.DataModels;
 using CertificatesSystem.Models.Interfaces;
-using CertificatesSystem.Services.Common;
 using CertificatesSystem.WebUI.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 

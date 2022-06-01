@@ -75,6 +75,7 @@
 
 @section Scripts {
     <script type="text/javascript" src="~/lib/webcam-easy/webcam-easy.min.js"></script>
+    <script type="text/javascript" src="~/js/webcam-easy-config.js"></script>
     <script>
         const baseUrl = window.location.origin;
     
@@ -83,18 +84,9 @@
         const formCreate = document.getElementById('form-create');
         const modalLabel = document.getElementById('form-modal-label');
         
-        const webcamElement = document.getElementById('webcam');
-        const canvasElement = document.getElementById('canvas');
-        const btnTakeSnapshot = document.getElementById('take-snapshot');
-        const btnChangeWebcamStatus = document.getElementById('change-webcam-status');
-        const textWebcamStatus = document.querySelector("#change-webcam-status span");
-        const photoPreview = document.getElementById('photo-preview');
-        const studentPhoto = document.getElementById('student-photo');
         const btnSavePhoto = document.getElementById('save-photo');
+        const photoPreview = document.getElementById('photo-preview');
         const inputPhotoFile = formCreate.elements['PhotoFile'];
-        
-        let webcamStatus = false;
-        const webcam = new Webcam(webcamElement, 'user', canvasElement);
         
         const getStudentInfo = (e) => {
             const studentRow = e.currentTarget.closest('tr').children;
@@ -117,19 +109,6 @@
                 });
         }
         
-        // const getInfo = (e) => {
-        //     const info = e.currentTarget.closest('tr').children;
-        //
-        //     formCreate.action = "/Students/Update";
-        //     formCreate.elements['Id'].value = info[0].outerText;
-        //     formCreate.elements['Nie'].value = info[1].outerText;
-        //     formCreate.elements['Name'].value = info[2].outerText;
-        //     formCreate.elements['Surname'].value = info[3].outerText;
-        //     getBase64Photo(info[1].outerText);
-        //    
-        //     modalLabel.innerHTML = `<i class="las la-pen fs-4"></i> Editar estudiante`;
-        // };
-        
         const convertToBase64 = (file) => {
             const reader = new FileReader();
             reader.readAsDataURL(file);
@@ -141,29 +120,6 @@
                 console.log('Error: ', error);
             };
         }
-                
-        btnChangeWebcamStatus.addEventListener('click', () => {
-            if (webcamStatus) {
-                webcam.stop();
-                webcamStatus = false;
-                textWebcamStatus.textContent = "Encender";
-                btnChangeWebcamStatus.classList.remove("btn-danger");
-                btnChangeWebcamStatus.classList.add("btn-success");
-                return;
-            }
-            
-            webcam.start()
-                .then(result => {
-                    webcamStatus = true;
-                    textWebcamStatus.textContent = "Apagar";
-                    btnChangeWebcamStatus.classList.add("btn-danger");
-                    btnChangeWebcamStatus.classList.remove("btn-success");
-                });
-        });
-
-        btnTakeSnapshot.addEventListener('click', () => {
-            studentPhoto.src = webcam.snap();
-        });
         
         btnSavePhoto.addEventListener('click', () => {
             photoPreview.src = studentPhoto.src;

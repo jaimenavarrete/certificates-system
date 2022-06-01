@@ -1,0 +1,52 @@
+﻿@model StudyCertificateViewModel
+@{
+    ViewData["ActivePage"] = ManageNavPages.Certificates;
+}
+
+<h3 class="fw-bold display-6 mb-4 border-bottom border-3 border-dark text-center">Creación de Constancias</h3>
+
+<!-- Status message alert -->
+<partial name="_StatusMessage" />
+
+<h4 class="text-primary text-center fw-bold mb-3">Tipo de constancia</h4>
+
+<div class="border border-2 border-gray rounded px-1 py-2 overflow-auto text-nowrap mb-4">
+    <a asp-controller="Certificates" asp-action="Index" class="btn btn-outline-primary rounded px-5 fw-bold active">
+        Constancia de estudio
+    </a>
+    <a asp-controller="Certificates" asp-action="Index" class="btn btn-outline-primary rounded px-5 fw-bold">
+        Constancia de ejemplo
+    </a>
+    <a asp-controller="Certificates" asp-action="Index" class="btn btn-outline-primary rounded px-5 fw-bold">
+        Constancia de ejemplo
+    </a>
+</div>
+
+<form asp-controller="Certificates" asp-action="Index" method="post" target="_blank" class="border border-2 border-primary rounded px-1 py-2 overflow-auto text-nowrap mb-4">
+    <div class="form-group has-danger p-2 mb-3">
+        <label class="col-form-label fw-bold" for="input-nie">NIE:</label>
+        <input type="text" name="Nie" id="input-nie" class="form-control input-create">
+        <div id="feedback-nie" class="invalid-feedback"></div>
+    </div>
+
+    <div class="form-group has-danger p-2 mb-3">
+        <label class="col-form-label fw-bold" for="input-year">Año de estudio:</label>
+        <input type="number" name="Year" id="input-year" class="form-control input-create" value="@Model.CurrentYear">
+        <div id="feedback-year" class="invalid-feedback"></div>
+    </div>
+
+    <div class="form-group has-danger p-2 mb-3">
+        <label class="col-form-label fw-bold" for="input-manager">Directivo que firmará:</label>
+        <select name="ManagerId" id="input-manager" class="form-select input-create">
+            @foreach (var manager in Model.ManagersList)
+            {
+                <option value="@manager.Id">@manager.Name @manager.Surname</option>
+            }
+        </select>
+        <div id="feedback-manager" class="invalid-feedback"></div>
+    </div>
+    
+    <div class="d-flex justify-content-end">
+        <button type="submit" class="btn btn-success m-2"><i class="las la-folder-plus fs-4"></i> Crear constancia</button>
+    </div>
+</form>

@@ -5,6 +5,8 @@ namespace CertificatesSystem.WebUI.Views.Shared;
 public static class ManageNavPages
 {
     public static string Home => "Home";
+
+    public static string Certificates => "Certificates";
     
     public static string Enrollment => "Enrollment";
     
@@ -18,6 +20,8 @@ public static class ManageNavPages
 
 
     public static string HomeNavClass(ViewContext viewContext) => PageNavClass(viewContext, Home);
+    
+    public static string CertificatesNavClass(ViewContext viewContext) => PageNavClass(viewContext, Certificates);
     
     public static string EnrollmentNavClass(ViewContext viewContext) => PageNavClass(viewContext, Enrollment);
     

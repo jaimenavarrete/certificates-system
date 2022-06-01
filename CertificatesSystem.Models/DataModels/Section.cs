@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace CertificatesSystem.Models.DataModels
+﻿namespace CertificatesSystem.Models.DataModels
 {
     public partial class Section
     {

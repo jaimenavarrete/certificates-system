@@ -25,8 +25,12 @@ body {
     text-align: justify;
 }
 
+.main_content p {
+    margin-bottom: 50px;
+}
+
 .main_footer {
-    margin-top: 80px;
+    margin-top: 150px;
     font-size: 18px;
 }
 

@@ -20,4 +20,8 @@
       <ProjectReference Include="..\CertificatesSystem.Models\CertificatesSystem.Models.csproj" />
       <ProjectReference Include="..\CertificatesSystem.Services\CertificatesSystem.Services.csproj" />
     </ItemGroup>
+
+    <ItemGroup>
+      <AdditionalFiles Include="Views\Shared\Reports\Index.cshtml" />
+    </ItemGroup>
 </Project>
