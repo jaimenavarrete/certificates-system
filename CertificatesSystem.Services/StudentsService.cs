@@ -1,4 +1,5 @@
-﻿using CertificatesSystem.Models.Data.Database;
+﻿using System.Globalization;
+using CertificatesSystem.Models.Data.Database;
 using CertificatesSystem.Models.DataModels;
 using CertificatesSystem.Models.Interfaces;
 using CertificatesSystem.Models.QueryFilters;
@@ -40,10 +41,26 @@ public class StudentsService : IStudentsService
     {
         var photoId = await PhotoService.SavePhotoAsFile(photoBase64);
         student.PhotoId = photoId;
+        student.Name = MakeFirstWordLetterUppercase(student.Name);
+        student.Surname = MakeFirstWordLetterUppercase(student.Surname);
 
         _context.Add(student);
         var rows = await _context.SaveChangesAsync();
         return rows > 0;
+    }
+
+    private string MakeFirstWordLetterUppercase(string sentence)
+    {
+        var lowerCaseSentence = sentence.ToLower();
+        var words = lowerCaseSentence.Split(" ");
+
+        for (var index = 0; index < words.Length; index++)
+        {
+            var firstLetterUpper = char.ToUpper(words[index][0]);
+            words[index] =  firstLetterUpper + words[index].ToLower()[1..];
+        }
+
+        return string.Join(" ", words);
     }
 
     public async Task<bool> Update(Student student, string photoBase64)
@@ -55,8 +72,8 @@ public class StudentsService : IStudentsService
         
         oldStudent.PhotoId = photoId;
         oldStudent.Nie = student.Nie;
-        oldStudent.Name = student.Name;
-        oldStudent.Surname = student.Surname;
+        oldStudent.Name = student.Name.ToUpper();
+        oldStudent.Surname = student.Surname.ToUpper();
         oldStudent.Birthdate = student.Birthdate;
         oldStudent.Address = student.Address;
 

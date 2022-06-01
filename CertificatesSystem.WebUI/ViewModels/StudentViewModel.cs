@@ -10,7 +10,7 @@ public class StudentViewModel
 
     public string Surname { get; set; }
     
-    public DateTime Birthdate { get; set; }
+    public DateTime? Birthdate { get; set; }
 
     public string Address { get; set; }
 

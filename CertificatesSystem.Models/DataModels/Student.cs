@@ -11,8 +11,8 @@
         public int Nie { get; set; }
         public string Name { get; set; } = null!;
         public string Surname { get; set; } = null!;
-        public DateTime Birthdate { get; set; }
-        public string Address { get; set; } = null!;
+        public DateTime? Birthdate { get; set; }
+        public string? Address { get; set; } = null!;
         public string? PhotoId { get; set; }
 
         public virtual ICollection<Enrollment> Enrollments { get; set; }
