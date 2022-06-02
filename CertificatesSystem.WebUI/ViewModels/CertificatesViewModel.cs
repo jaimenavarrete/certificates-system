@@ -12,6 +12,10 @@ public class StudyCertificateViewModel
 public class StudyCertificateFormViewModel
 {
     public int Nie { get; set; }
+
+    public string AcademicPerformance { get; set; }
+
+    public string Behaviour { get; set; }
     public int Year { get; set; }
     public int ManagerId { get; set; }
 }
@@ -19,6 +23,8 @@ public class StudyCertificateFormViewModel
 public class StudyCertificateReportViewModel
 {
     public StudentViewModel Student { get; set; }
+    public string AcademicPerformance { get; set; }
+    public string Behaviour { get; set; }
     public ManagerViewModel Manager { get; set; }
     public string Grade { get; set; }
     public string Section { get; set; }

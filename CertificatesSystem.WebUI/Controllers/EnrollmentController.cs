@@ -60,7 +60,7 @@ public class EnrollmentController : Controller
     [HttpPost]
     public async Task<IActionResult> RemoveEnrolledStudent(EnrollmentRemoveFormViewModel viewModel)
     {
-        var result = await _enrollmentService.RemoveEnrolledStudent(viewModel.StudentId, viewModel.Year);
+        var result = await _enrollmentService.RemoveEnrolledStudent(viewModel.StudentsId, viewModel.Year);
         
         if (result) TempData["Success"] = "El estudiante fue quitado de la matrícula con éxito.";
 

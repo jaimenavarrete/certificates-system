@@ -7,32 +7,24 @@
 
 <main role="main" class="main_content">
     <p>
-        @(Model.Manager.Gender == "M" ? "El infrascrito" : "La infrascrita") @Model.Manager.Role del Complejo 
-        Educativo Católico “Presbítero René Valle”, Código 88087, de la Villa de San Esteban Catarina, 
-        Departamento de San Vicente, por medio de la presente HACE CONSTAR QUE: @Model.Student.Surname.ToUpper(), @Model.Student.Name.ToUpper(),
-        con Número de Identificación de Estudiante (NIE) @Model.Student.Nie, 
+        @(Model.Manager.Gender == "M" ? "El infrascrito" : "La infrascrita") @Model.Manager.Role del Complejo Educativo Católico “Presbítero René Valle”, Código 88087, de la Villa de San Esteban Catarina, Departamento de San Vicente, por medio de la presente HACE CONSTAR QUE: @Model.Student.Surname.ToUpper(), @Model.Student.Name.ToUpper(), con Número de Identificación de Estudiante (NIE) @Model.Student.Nie, 
         @if (Model.IsCurrentYear)
         {
-            <text>se encuentra estudiando @Model.Grade, Sección @Model.Section, de Educación Básica de este 
-                Centro Educativo durante el presente año @Model.Year, asistiendo normalmente a clases, 
-                obteniendo Muy Buena Conducta y un rendimiento Académico aceptable.</text>
+            <text>&nbsp;se encuentra estudiando @Model.Grade, Sección @Model.Section, de Educación Básica de este Centro Educativo durante el presente año @Model.Year, asistiendo normalmente a clases, obteniendo una @Model.Behaviour Conducta y un Rendimiento Académico @Model.AcademicPerformance</text>
         }
         else
         {
-            <text>estudió @Model.Grade, Sección @Model.Section, de Educación Básica de este 
-                Centro Educativo durante el año @Model.Year, y durante su permanencia se le observó una Excelente 
-                Conducta y un rendimiento Académico aceptable.</text>
+            <text>&nbsp;estudió @Model.Grade, Sección @Model.Section, de Educación Básica de este Centro Educativo durante el año @Model.Year, y durante su permanencia se le observó una @Model.Behaviour Conducta y un Rendimiento Académico @Model.AcademicPerformance.</text>
         }
     </p>
     
     <p>
-        Y para los usos que el interesado estime conveniente, se le extiende la presente Constancia de Estudios
-        a los @Model.CurrentDateInLetters.
+        Y para los usos que el interesado estime conveniente, se le extiende la presente Constancia de Estudios a los @Model.CurrentDateInLetters.
     </p>
 </main>
 
 <footer class="main_footer">
     <div class="signature"><span>F:</span></div>
-    <p class="manager_name">Lic. @Model.Manager.Name @Model.Manager.Surname</p>
+    <p class="manager_name">@Model.Manager.Name @Model.Manager.Surname</p>
     <strong class="manager_role">@Model.Manager.Role.ToUpper()</strong>
 </footer>

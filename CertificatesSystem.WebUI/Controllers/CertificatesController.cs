@@ -55,6 +55,8 @@ public class CertificatesController : Controller
         var viewModel = new StudyCertificateReportViewModel
         {
             Student = studentViewModel,
+            AcademicPerformance = model.AcademicPerformance,
+            Behaviour = model.Behaviour,
             Manager = managerViewModel,
             Grade = enrollment.Grade.Name,
             Section = enrollment.Section.Name,

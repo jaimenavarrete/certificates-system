@@ -48,19 +48,22 @@ public class EnrollmentService : IEnrollmentService
         return rows > 0;
     }
 
-    public async Task<bool> RemoveEnrolledStudent(int studentId, int year)
+    public async Task<bool> RemoveEnrolledStudent(int[] studentsId, int year)
     {
-        var enrolledStudent = await GetEnrolledStudent(studentId, year);
-
-        _context.Remove(enrolledStudent);
+        foreach (var studentId in studentsId)
+        {
+            var enrolledStudent = await GetEnrolledStudent(studentId, year);
+            _context.Remove(enrolledStudent);
+        }
+        
         var rows = await _context.SaveChangesAsync();
         return rows > 0;
     }
 
     private int[] ConvertNiesStringToIntArray(string stringNies)
     {
-        var stringNiesWithoutSpaces = stringNies.Replace(" ", "");
-        var stringNiesArray = stringNiesWithoutSpaces.Split(",");
+        var stringNiesWithCommas = stringNies.Replace(" ", "").Replace("\r\n", ",").Replace("\n", ",");
+        var stringNiesArray = stringNiesWithCommas.Split(",");
         var niesArray = Array.ConvertAll(stringNiesArray, int.Parse);
 
         return niesArray;

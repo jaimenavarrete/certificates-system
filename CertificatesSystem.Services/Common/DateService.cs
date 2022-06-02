@@ -14,7 +14,7 @@ public static class DateService
         var yearInLetters = YearToLetters(date.Date.Year);
 
         var dateInLetters = $"{dayInLetters} días del mes de {monthInLetters} del año {yearInLetters}";
-        var dateInLettersReplaced = dateInLetters.Replace("  ", " ");
+        var dateInLettersReplaced = dateInLetters.Replace("  ", " ").Trim();
 
         return isUpper ? dateInLettersReplaced.ToUpper() : dateInLettersReplaced;
     }

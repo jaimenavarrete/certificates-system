@@ -34,14 +34,24 @@
 </div>
 
 <h4 class="text-dark fw-bold mb-4">@Model.SelectedGrade.Name - Sección "A"</h4>
-<button type="button" id="button-enroll-section-a" class="btn btn-success mb-4" data-bs-toggle="modal" data-bs-target="#form-modal">
-    <i class="las la-plus fs-4"></i> Matricular estudiantes por NIE
-</button>
+<div class="d-flex justify-content-between">
+    <button type="button" id="button-enroll-section-a" class="btn btn-success mb-4" data-bs-toggle="modal" data-bs-target="#form-modal">
+        <i class="las la-plus fs-4"></i> Matricular por NIE
+    </button>
+    <form asp-controller="Enrollment" asp-action="RemoveEnrolledStudent" id="form-remove-selected-students-a" class="delete-element-form">
+        <input type="hidden" name="Year" value="@Model.SelectedYear">
+        <input type="hidden" name="GradeId" value="@Model.SelectedGrade.Id">
+        <button id="button-remove-selected-students-a" class="btn btn-outline-danger border-2 mb-4">
+            <i class="las la-minus fs-4"></i> Remover seleccionados
+        </button>
+    </form>
+</div>
 
 <div class="table-responsive mb-4">
     <table class="table table-hover table-striped">
         <thead>
         <tr class="table-primary">
+            <th scope="col"></th>
             <th scope="col">NIE</th>
             <th scope="col">Nombres</th>
             <th scope="col">Apellidos</th>
@@ -53,41 +63,55 @@
         @if (Model.StudentsListA.Count == 0)
         {
             <tr>
-                <td class="text-center" colspan="4">Actualmente no existen estudiantes matriculados.</td>
+                <td class="text-center" colspan="5">Actualmente no existen estudiantes matriculados.</td>
             </tr>
         }
-
-        @foreach (var student in Model.StudentsListA)
-        {
-            <tr>
-                <th scope="row">@student.StudentNie</th>
-                <td>@student.StudentName</td>
-                <td>@student.StudentSurname</td>
-                <td>
-                    <div class="d-flex">
-                        <form asp-controller="Enrollment" asp-action="RemoveEnrolledStudent" method="post" class="delete-element-form">
-                            <input type="hidden" name="StudentId" value="@student.StudentId">
-                            <input type="hidden" name="GradeId" value="@Model.SelectedGrade.Id">
+        
+            @foreach (var enrollment in Model.StudentsListA)
+            {
+                <tr>
+                    <th>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" name="StudentsId[]" value="@enrollment.StudentId" form="form-remove-selected-students-a" />
+                        </div>
+                    </th>
+                    <th scope="row">@enrollment.StudentNie</th>
+                    <td>@enrollment.StudentName</td>
+                    <td>@enrollment.StudentSurname</td>
+                    <td>
+                        <form asp-controller="Enrollment" asp-action="RemoveEnrolledStudent" method="post" id="btn-remove-student-a" class="delete-element-form">
+                            <input type="hidden" name="StudentsId[]" value="@enrollment.StudentId">
                             <input type="hidden" name="Year" value="@Model.SelectedYear">
+                            <input type="hidden" name="GradeId" value="@Model.SelectedGrade.Id">
                             <button class="bg-transparent border-0 p-0"><i class="las la-minus text-danger fs-4 border border-2 border-danger rounded"></i></button>
                         </form>
-                    </div>
-                </td>
-            </tr>
-        }
+                    </td>
+                </tr>
+            }
         </tbody>
     </table>
 </div>
 
 <h4 class="text-dark fw-bold mb-4">@Model.SelectedGrade.Name - Sección "B"</h4>
-<button type="button" id="button-enroll-section-b" class="btn btn-success mb-4" data-bs-toggle="modal" data-bs-target="#form-modal">
-    <i class="las la-plus fs-4"></i> Matricular estudiantes por NIE
-</button>
+<div class="d-flex justify-content-between">
+    <button type="button" id="button-enroll-section-b" class="btn btn-success mb-4" data-bs-toggle="modal" data-bs-target="#form-modal">
+        <i class="las la-plus fs-4"></i> Matricular por NIE
+    </button>
+    <form asp-controller="Enrollment" asp-action="RemoveEnrolledStudent" id="form-remove-selected-students-b" class="delete-element-form">
+        <input type="hidden" name="Year" value="@Model.SelectedYear">
+        <input type="hidden" name="GradeId" value="@Model.SelectedGrade.Id">
+        <button id="button-remove-selected-students-b" class="btn btn-outline-danger border-2 mb-4">
+            <i class="las la-minus fs-4"></i> Remover seleccionados
+        </button>
+    </form>
+</div>
+
 
 <div class="table-responsive">
     <table class="table table-hover table-striped">
         <thead>
         <tr class="table-primary">
+            <th scope="col"></th>
             <th scope="col">NIE</th>
             <th scope="col">Nombres</th>
             <th scope="col">Apellidos</th>
@@ -99,25 +123,28 @@
         @if (Model.StudentsListB.Count == 0)
         {
             <tr>
-                <td class="text-center" colspan="4">Actualmente no existen estudiantes matriculados.</td>
+                <td class="text-center" colspan="5">Actualmente no existen estudiantes matriculados.</td>
             </tr>
         }
 
-        @foreach (var student in Model.StudentsListB)
+        @foreach (var enrollment in Model.StudentsListB)
         {
             <tr>
-                <th scope="row">@student.StudentNie</th>
-                <td>@student.StudentName</td>
-                <td>@student.StudentSurname</td>
-                <td>
-                    <div class="d-flex">
-                        <form asp-controller="Enrollment" asp-action="RemoveEnrolledStudent" method="post" class="delete-element-form">
-                            <input type="hidden" name="StudentId" value="@student.StudentId">
-                            <input type="hidden" name="GradeId" value="@Model.SelectedGrade.Id">
-                            <input type="hidden" name="Year" value="@Model.SelectedYear">
-                            <button class="bg-transparent border-0 p-0"><i class="las la-minus text-danger fs-4 border border-2 border-danger rounded"></i></button>
-                        </form>
+                <th>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" name="StudentsId[]" value="@enrollment.StudentId" form="form-remove-selected-students-b" />
                     </div>
+                </th>
+                <th scope="row">@enrollment.StudentNie</th>
+                <td>@enrollment.StudentName</td>
+                <td>@enrollment.StudentSurname</td>
+                <td>
+                    <form asp-controller="Enrollment" asp-action="RemoveEnrolledStudent" method="post" id="btn-remove-student-b" class="delete-element-form">
+                        <input type="hidden" name="StudentsId[]" value="@enrollment.StudentId">
+                        <input type="hidden" name="Year" value="@Model.SelectedYear">
+                        <input type="hidden" name="GradeId" value="@Model.SelectedGrade.Id">
+                        <button class="bg-transparent border-0 p-0"><i class="las la-minus text-danger fs-4 border border-2 border-danger rounded"></i></button>
+                    </form>
                 </td>
             </tr>
         }

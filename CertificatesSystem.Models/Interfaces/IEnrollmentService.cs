@@ -10,5 +10,5 @@ public interface IEnrollmentService
 
     Task<bool> EnrollStudentsInGrade(Enrollment enrollment, string studentsNie);
 
-    Task<bool> RemoveEnrolledStudent(int nie, int year);
+    Task<bool> RemoveEnrolledStudent(int[] studentsId, int year);
 }
