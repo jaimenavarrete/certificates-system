@@ -26,33 +26,37 @@
                 </div>
                 
                 <div class="form-group has-danger mb-3">
-                    <label class="col-form-label fw-bold" for="input-nie">NIE:</label>
-                    <input type="text" asp-for="Nie" id="input-nie" class="form-control input-create">
+                    <label class="col-form-label fw-bold" for="input-nie"><span class="text-danger">*</span> NIE:</label>
+                    <input type="number" asp-for="Nie" id="input-nie" class="form-control input-create">
                     <div id="feedback-nie" class="invalid-feedback"></div>
                 </div>
 
                 <div class="form-group has-danger mb-3">
-                    <label class="col-form-label fw-bold" for="input-name">Nombres:</label>
+                    <label class="col-form-label fw-bold" for="input-name"><span class="text-danger">*</span> Nombres:</label>
                     <input type="text" asp-for="Name" id="input-name" class="form-control input-create">
                     <div id="feedback-name" class="invalid-feedback"></div>
                 </div>
 
                 <div class="form-group has-danger mb-3">
-                    <label class="col-form-label fw-bold" for="input-surname">Apellidos:</label>
+                    <label class="col-form-label fw-bold" for="input-surname"><span class="text-danger">*</span> Apellidos:</label>
                     <input type="text" asp-for="Surname" id="input-surname" class="form-control input-create">
                     <div id="feedback-surname" class="invalid-feedback"></div>
                 </div>
                 
                 <div class="form-group has-danger mb-3">
-                    <label class="col-form-label fw-bold" for="input-birthdate"><span class="text-warning">(Opcional)</span> Fecha de nacimiento:</label>
+                    <label class="col-form-label fw-bold" for="input-birthdate">Fecha de nacimiento:</label>
                     <input type="date" asp-for="Birthdate" id="input-birthdate" class="form-control input-create">
                     <div id="feedback-birthdate" class="invalid-feedback"></div>
                 </div>
                 
                 <div class="form-group has-danger mb-3">
-                    <label class="col-form-label fw-bold" for="input-address"><span class="text-warning">(Opcional)</span> Dirección:</label>
+                    <label class="col-form-label fw-bold" for="input-address">Dirección:</label>
                     <textarea asp-for="Address" id="input-address" class="form-control input-create"></textarea>
                     <div id="feedback-address" class="invalid-feedback"></div>
+                </div>
+                
+                <div class="form-group text-dark mb-3">
+                    <small><span class="text-danger fw-bold">*</span> Campos requeridos</small>
                 </div>
 
             </div>

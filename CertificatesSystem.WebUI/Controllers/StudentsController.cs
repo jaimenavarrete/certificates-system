@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CertificatesSystem.Models.DataModels;
+using CertificatesSystem.Models.Exceptions;
 using CertificatesSystem.Models.Interfaces;
 using CertificatesSystem.WebUI.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -32,9 +33,12 @@ public class StudentsController : Controller
     }
     
     [HttpGet]
-    public async Task<StudentViewModel> GetByNie(int nie)
+    public async Task<StudentViewModel?> GetByNie(int nie)
     {
         var student = await _studentsService.GetByNie(nie);
+
+        if (student is null) return null;
+        
         student.PhotoId = await _studentsService.GetPhotoByNie(nie);
 
         var studentViewModel = _mapper.Map<StudentViewModel>(student);
@@ -45,25 +49,41 @@ public class StudentsController : Controller
     [HttpPost]
     public async Task<IActionResult> Create(StudentFormViewModel input)
     {
-        var student = _mapper.Map<Student>(input);
-        
-        var result = await _studentsService.Create(student, input.Photo);
+        try
+        {
+            var student = _mapper.Map<Student>(input);
 
-        if (result) TempData["Success"] = "El estudiante se creó correctamente.";
+            var result = await _studentsService.Create(student, input.Photo);
 
-        return RedirectToAction("Index");
+            if (result) TempData["Success"] = "El estudiante se creó correctamente.";
+
+            return RedirectToAction("Index");
+        }
+        catch(BusinessException ex)
+        {
+            TempData["Error"] = ex.Message;
+            return RedirectToAction("Index");
+        }
     }
     
     [HttpPost]
     public async Task<IActionResult> Update(StudentFormViewModel input)
     {
-        var student = _mapper.Map<Student>(input);
+        try
+        {
+            var student = _mapper.Map<Student>(input);
 
-        var result = await _studentsService.Update(student, input.Photo);
+            var result = await _studentsService.Update(student, input.Photo);
 
-        if (result) TempData["Success"] = "El estudiante se editó correctamente.";
+            if (result) TempData["Success"] = "El estudiante se editó correctamente.";
 
-        return RedirectToAction("Index");
+            return RedirectToAction("Index");
+        }
+        catch(BusinessException ex)
+        {
+            TempData["Error"] = ex.Message;
+            return RedirectToAction("Index");
+        }
     }
     
     [HttpPost]

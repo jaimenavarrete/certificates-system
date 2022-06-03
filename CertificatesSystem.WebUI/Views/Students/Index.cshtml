@@ -102,10 +102,10 @@
                     formCreate.elements['Nie'].value = res.nie;
                     formCreate.elements['Name'].value = res.name;
                     formCreate.elements['Surname'].value = res.surname;
-                    formCreate.elements['Birthdate'].value = res.birthdate.split('T')[0];
+                    formCreate.elements['Birthdate'].value = res.birthdate == null ? "" : res.birthdate.split('T')[0];
                     formCreate.elements['Address'].value = res.address;
                     formCreate.elements['Photo'].value = res.photoId;
-                    photoPreview.src = res.photoId;
+                    photoPreview.src = res.photoId != null ? res.photoId : "/img/unknown.png";
                 });
         }
         

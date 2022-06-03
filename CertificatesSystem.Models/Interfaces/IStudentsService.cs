@@ -13,7 +13,7 @@ public interface IStudentsService
 
     Task<Student?> GetByNie(int nie);
 
-    Task<string> GetPhotoByNie(int nie);
+    Task<string?> GetPhotoByNie(int nie);
     
     Task<bool> Create(Student student, string photoBase64);
 
