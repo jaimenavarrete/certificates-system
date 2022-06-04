@@ -48,7 +48,7 @@ public class StudentsService : IStudentsService
         var studentByNie = await GetByNie(student.Nie);
 
         if (studentByNie is not null)
-            throw new BusinessException("El NIE que ha ingresado ya existe.");
+            throw new BusinessException("El NIE que ha ingresado ya pertenece a otro estudiante.");
 
         student.PhotoId = await PhotoService.SavePhotoAsFile(photoBase64);
         student.Name = MakeFirstWordLetterUppercase(student.Name);
@@ -65,7 +65,7 @@ public class StudentsService : IStudentsService
             throw new LogicException();
 
         if (student.Nie == 0 || string.IsNullOrEmpty(student.Name) || string.IsNullOrEmpty(student.Surname))
-            throw new BusinessException("El NIE que ha ingresado ya pertenece a otro estudiante.");
+            throw new BusinessException("Debe rellenar todos los campos requeridos.");
         
         var oldStudent = await GetById(student.Id);
 

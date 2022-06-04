@@ -1,6 +1,8 @@
 ﻿@model EnrollmentsViewModel
 @{
     ViewData["ActivePage"] = ManageNavPages.Enrollment;
+    var indexSectionA = 1;
+    var indexSectionB = 1;
 }
 
 <!-- Modal -->
@@ -51,19 +53,20 @@
     <table class="table table-hover table-striped">
         <thead>
         <tr class="table-primary">
-            <th scope="col"></th>
+            <th scope="col"><input type="checkbox" id="select-all-student-rows-a" class="form-check-input" data-bs-toggle="tooltip" data-bs-placement="top" title="Seleccionar a todos" /></th>
+            <th scope="col">N°</th>
             <th scope="col">NIE</th>
             <th scope="col">Nombres</th>
             <th scope="col">Apellidos</th>
             <th scope="col">Acciones</th>
         </tr>
         </thead>
-        <tbody>
+        <tbody id="student-rows-a">
 
         @if (Model.StudentsListA.Count == 0)
         {
             <tr>
-                <td class="text-center" colspan="5">Actualmente no existen estudiantes matriculados.</td>
+                <td class="text-center" colspan="6">Actualmente no existen estudiantes matriculados.</td>
             </tr>
         }
         
@@ -75,6 +78,7 @@
                             <input type="checkbox" class="form-check-input" name="StudentsId[]" value="@enrollment.StudentId" form="form-remove-selected-students-a" />
                         </div>
                     </th>
+                    <th class="fw-normal">@(indexSectionA++)</th>
                     <th scope="row">@enrollment.StudentNie</th>
                     <td>@enrollment.StudentName</td>
                     <td>@enrollment.StudentSurname</td>
@@ -111,19 +115,20 @@
     <table class="table table-hover table-striped">
         <thead>
         <tr class="table-primary">
-            <th scope="col"></th>
+            <th scope="col"><input type="checkbox" id="select-all-student-rows-b" class="form-check-input" data-bs-toggle="tooltip" data-bs-placement="top" title="Seleccionar a todos" /></th>
+            <th scope="col">N°</th>
             <th scope="col">NIE</th>
             <th scope="col">Nombres</th>
             <th scope="col">Apellidos</th>
             <th scope="col">Acciones</th>
         </tr>
         </thead>
-        <tbody>
+        <tbody id="student-rows-b">
         
         @if (Model.StudentsListB.Count == 0)
         {
             <tr>
-                <td class="text-center" colspan="5">Actualmente no existen estudiantes matriculados.</td>
+                <td class="text-center" colspan="6">Actualmente no existen estudiantes matriculados.</td>
             </tr>
         }
 
@@ -135,6 +140,7 @@
                         <input type="checkbox" class="form-check-input" name="StudentsId[]" value="@enrollment.StudentId" form="form-remove-selected-students-b" />
                     </div>
                 </th>
+                <th class="fw-normal">@(indexSectionB++)</th>
                 <th scope="row">@enrollment.StudentNie</th>
                 <td>@enrollment.StudentName</td>
                 <td>@enrollment.StudentSurname</td>
@@ -159,6 +165,21 @@
         const btnEnrollSectionB = document.getElementById('button-enroll-section-b');
         const formCreate = document.getElementById('form-create');
         const modalSectionContent = document.getElementById('modal-section-content');
+        
+        const selectAllStudentsRowsA = document.getElementById('select-all-student-rows-a');
+        const studentRowsACheckboxes = document.querySelectorAll('#student-rows-a input[type="checkbox"]');
+        const selectAllStudentsRowsB = document.getElementById('select-all-student-rows-b');
+        const studentRowsBCheckboxes = document.querySelectorAll('#student-rows-b input[type="checkbox"]');
+        
+        selectAllStudentsRowsA.addEventListener('change', () => {
+            let currentState = selectAllStudentsRowsA.checked;
+            studentRowsACheckboxes.forEach(checkbox => checkbox.checked = currentState);
+        });
+        
+        selectAllStudentsRowsB.addEventListener('change', () => {
+            let currentState = selectAllStudentsRowsB.checked;
+            studentRowsBCheckboxes.forEach(checkbox => checkbox.checked = currentState);
+        });
 
         btnEnrollSectionA.addEventListener('click', () => {
             clearInputs();
