@@ -106,6 +106,29 @@ public class StudentsService : IStudentsService
         return rows > 0;
     }
     
+    public List<Student> ConvertStudentsInfoToStudentsList(string[] studentsInfo)
+    {
+        var studentList = new List<Student>();
+
+        foreach (var studentInfo in studentsInfo)
+        {
+            var studentInfoArray = studentInfo.Split(" ");
+            var nie = int.Parse(studentInfoArray[0]);
+            var commaSeparatorPosition = Array.IndexOf(studentInfoArray, ",");
+
+            var student = new Student
+            {
+                Nie = nie,
+                Name = string.Join(" ", studentInfoArray[(commaSeparatorPosition + 1)..]),
+                Surname = string.Join(" ", studentInfoArray[1..commaSeparatorPosition])
+            };
+            
+            studentList.Add(student);
+        }
+
+        return studentList;
+    }
+    
     private string MakeFirstWordLetterUppercase(string? sentence)
     {
         var lowerCaseSentence = sentence?.ToLower();

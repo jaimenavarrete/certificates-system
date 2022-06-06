@@ -20,4 +20,6 @@ public interface IStudentsService
     Task<bool> Update(Student student, string photoBase64);
 
     Task<bool> Delete(int id);
+
+    public List<Student> ConvertStudentsInfoToStudentsList(string[] studentsInfo);
 }

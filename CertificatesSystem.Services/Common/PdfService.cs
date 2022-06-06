@@ -6,10 +6,10 @@ namespace CertificatesSystem.Services.Common;
 
 public static class PdfService
 {
-    public static void ExtractPdfNies()
+    public static string[] ExtractStudentsInfoFromPdf(Stream pdfStream)
     {
         var pdfDocument = new PdfDocument();
-        pdfDocument.LoadFromFile(@"C:\Documentos\matriculasSecciones.pdf");
+        pdfDocument.LoadFromStream(pdfStream);
 
         var text = new StringBuilder();
         foreach (PdfPageBase page in pdfDocument.Pages)
@@ -38,8 +38,6 @@ public static class PdfService
             studentsInfo.Add(string.Join(" ", info));
         }
 
-        var fileName = @"C:\Documentos\TextInPdf.txt";
-
-        File.WriteAllText(fileName, string.Join("\n", studentsInfo));
+        return studentsInfo.ToArray();
     }
 }

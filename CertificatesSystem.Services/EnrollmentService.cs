@@ -33,9 +33,9 @@ public class EnrollmentService : IEnrollmentService
             .ToListAsync();
     }
 
-    public async Task<bool> EnrollStudentsInGrade(Enrollment enrollment, string studentsNieString)
+    public async Task<bool> EnrollStudentsInGrade(Enrollment enrollment, string studentsNie)
     {
-        var nies = ConvertNiesStringToIntArray(studentsNieString);
+        var nies = ConvertNiesStringToIntArray(studentsNie);
 
         foreach (var nie in nies)
         {
@@ -46,6 +46,37 @@ public class EnrollmentService : IEnrollmentService
 
         var rows = await _context.SaveChangesAsync();
         return rows > 0;
+    }
+    
+    public async Task<bool> EnrollStudentsInGradeByPdf(Enrollment enrollment, string[] studentsInfo)
+    {
+        var studentsList = _studentsService.ConvertStudentsInfoToStudentsList(studentsInfo);
+        var success = true;
+        
+        foreach (var student in studentsList)
+        {
+            var studentByNie = await _studentsService.GetByNie(student.Nie);
+
+            if (studentByNie is null)
+            {
+                var result = await _studentsService.Create(student, "");
+                if (!result)
+                {
+                    success = false;
+                    continue;
+                }
+                
+                studentByNie = await _studentsService.GetByNie(student.Nie);
+            }
+
+            var studentEnrollment = CreateANewEnrollment(enrollment, studentByNie.Id);
+            _context.Add(studentEnrollment);
+        }
+        
+        var rows = await _context.SaveChangesAsync();
+        if (rows == 0) success = false;
+
+        return success;
     }
 
     public async Task<bool> RemoveEnrolledStudent(int[] studentsId, int year)

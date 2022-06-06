@@ -1,8 +1,11 @@
-﻿using AutoMapper;
+﻿using System.Text;
+using AutoMapper;
 using CertificatesSystem.Models.DataModels;
 using CertificatesSystem.Models.Interfaces;
+using CertificatesSystem.Services.Common;
 using CertificatesSystem.WebUI.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Spire.Pdf;
 
 namespace CertificatesSystem.WebUI.Controllers;
 
@@ -54,6 +57,19 @@ public class EnrollmentController : Controller
 
         if (result) TempData["Success"] = "Los estudiantes fueron matriculados con éxito.";
 
+        return RedirectToAction("Index", new { year = enrollment.Year, grade = enrollment.GradeId });
+    }
+    
+    [HttpPost]
+    public async Task<IActionResult> EnrollStudentsInGradeByPdf(EnrollmentByPdfFormViewModel viewModel)
+    {
+        var enrollment = _mapper.Map<Enrollment>(viewModel);
+        var studentsInfo = PdfService.ExtractStudentsInfoFromPdf(viewModel.PdfDocument.OpenReadStream());
+
+        var result = await _enrollmentService.EnrollStudentsInGradeByPdf(enrollment, studentsInfo);
+
+        if (result) TempData["Success"] = "Los estudiantes fueron matriculados con éxito.";
+        
         return RedirectToAction("Index", new { year = enrollment.Year, grade = enrollment.GradeId });
     }
 

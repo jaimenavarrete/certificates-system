@@ -28,6 +28,18 @@ public class EnrollmentFormViewModel
     public string StudentsNie { get; set; }
 }
 
+public class EnrollmentByPdfFormViewModel
+{
+    public int GradeId { get; set; }
+
+    public int SectionId { get; set; }
+    
+    public int Year { get; set; }
+
+    public IFormFile PdfDocument { get; set; }
+}
+
+
 public class EnrollmentRemoveFormViewModel
 {
     public int[] StudentsId { get; set; }

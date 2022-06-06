@@ -1,0 +1,32 @@
+﻿@model EnrollmentsViewModel
+
+<div class="modal fade" id="form-pdf-modal" tabindex="-1" aria-labelledby="form-modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <form asp-controller="Enrollment" asp-action="EnrollStudentsInGradeByPdf" method="post" enctype="multipart/form-data" id="form-pdf-create" class="modal-content">
+            <div class="modal-header">
+                <h5 id="form-modal-label" class="modal-title text-primary fw-bold"><i class="las la-plus-circle fs-4"></i> Matricular estudiantes desde PDF</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <p class="fw-bold text-dark">Año de matrícula: <span class="text-primary">@Model.SelectedYear</span></p>
+                <p class="fw-bold text-dark">Grado: <span class="text-primary">@Model.SelectedGrade.Name</span></p>
+                <p class="fw-bold text-dark">Sección: <span class="text-primary" id="modal-section-content"></span></p>
+                
+                <input type="hidden" name="Year" value="@Model.SelectedYear" id="input-year-pdf">
+                <input type="hidden" name="GradeId" value="@Model.SelectedGrade.Id" id="input-grade-pdf">
+                <input type="hidden" name="SectionId" id="input-section-pdf">
+
+                <div class="form-group mb-3">
+                    <label class="col-form-label fw-bold" for="input-nies-pdf">PDF con formato del SIGES:</label>
+                    <input class="form-control" type="file" name="PdfDocument" accept="application/pdf" id="input-nies-pdf" required>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="submit" class="btn btn-primary"><i class="las la-save fs-4"></i> Guardar</button>
+            </div>
+        </form>
+    </div>
+</div>
