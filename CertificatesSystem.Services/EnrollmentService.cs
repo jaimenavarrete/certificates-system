@@ -36,16 +36,35 @@ public class EnrollmentService : IEnrollmentService
     public async Task<bool> EnrollStudentsInGrade(Enrollment enrollment, string studentsNie)
     {
         var nies = ConvertNiesStringToIntArray(studentsNie);
+        var success = true;
 
         foreach (var nie in nies)
         {
             var student = await _studentsService.GetByNie(nie);
+
+            if (student is null)
+            {
+                success = false;
+                continue;
+            }
+            
+            var currentStudentEnrollment = await GetEnrolledStudent(student.Id, enrollment.Year);
+
+            if (currentStudentEnrollment is not null)
+            {
+                success = false;
+                continue;
+            }
+
             var studentEnrollment = CreateANewEnrollment(enrollment, student.Id);
             _context.Add(studentEnrollment);
         }
 
         var rows = await _context.SaveChangesAsync();
-        return rows > 0;
+
+        if (rows == 0) success = false;
+        
+        return success;
     }
     
     public async Task<bool> EnrollStudentsInGradeByPdf(Enrollment enrollment, string[] studentsInfo)
@@ -68,12 +87,21 @@ public class EnrollmentService : IEnrollmentService
                 
                 studentByNie = await _studentsService.GetByNie(student.Nie);
             }
+            
+            var currentStudentEnrollment = await GetEnrolledStudent(studentByNie!.Id, enrollment.Year);
+
+            if (currentStudentEnrollment is not null)
+            {
+                success = false;
+                continue;
+            }
 
             var studentEnrollment = CreateANewEnrollment(enrollment, studentByNie.Id);
             _context.Add(studentEnrollment);
         }
         
         var rows = await _context.SaveChangesAsync();
+        
         if (rows == 0) success = false;
 
         return success;

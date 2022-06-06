@@ -26,7 +26,7 @@ public class StudyCertificateReportViewModel
     public string AcademicPerformance { get; set; }
     public string Behaviour { get; set; }
     public ManagerViewModel Manager { get; set; }
-    public string Grade { get; set; }
+    public GradeViewModel Grade { get; set; }
     public string Section { get; set; }
     public bool IsCurrentYear { get; set; }
     public int Year { get; set; }

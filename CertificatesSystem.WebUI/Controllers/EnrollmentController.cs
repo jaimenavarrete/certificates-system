@@ -55,7 +55,10 @@ public class EnrollmentController : Controller
 
         var result = await _enrollmentService.EnrollStudentsInGrade(enrollment, viewModel.StudentsNie);
 
-        if (result) TempData["Success"] = "Los estudiantes fueron matriculados con éxito.";
+        if (result)
+            TempData["Success"] = "Todos los estudiantes fueron matriculados con éxito.";
+        else
+            TempData["Warning"] = "Se matricularon los alumnos que están registrados y que no están matriculados en otra sección de este año.";
 
         return RedirectToAction("Index", new { year = enrollment.Year, grade = enrollment.GradeId });
     }
@@ -68,7 +71,10 @@ public class EnrollmentController : Controller
 
         var result = await _enrollmentService.EnrollStudentsInGradeByPdf(enrollment, studentsInfo);
 
-        if (result) TempData["Success"] = "Los estudiantes fueron matriculados con éxito.";
+        if (result)
+            TempData["Success"] = "Los estudiantes fueron matriculados con éxito.";
+        else
+            TempData["Warning"] = "Se matricularon los alumnos que no están matriculados en otra sección de este año.";
         
         return RedirectToAction("Index", new { year = enrollment.Year, grade = enrollment.GradeId });
     }

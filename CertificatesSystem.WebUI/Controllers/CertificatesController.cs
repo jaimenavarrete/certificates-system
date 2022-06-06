@@ -52,13 +52,15 @@ public class CertificatesController : Controller
         
         var enrollment = await _enrollmentService.GetEnrolledStudent(student.Id, model.Year);
 
+        var gradeViewModel = _mapper.Map<GradeViewModel>(enrollment.Grade);
+
         var viewModel = new StudyCertificateReportViewModel
         {
             Student = studentViewModel,
             AcademicPerformance = model.AcademicPerformance,
             Behaviour = model.Behaviour,
             Manager = managerViewModel,
-            Grade = enrollment.Grade.Name,
+            Grade = gradeViewModel,
             Section = enrollment.Section.Name,
             Year = model.Year,
             IsCurrentYear = model.Year >= DateTime.Now.Year,

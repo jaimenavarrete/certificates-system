@@ -17,7 +17,7 @@
 <h4 class="text-primary text-center fw-bold mb-2">Año</h4>
 
 <div class="border border-2 border-gray rounded px-1 py-2 overflow-auto text-nowrap mb-4" style="direction: rtl">
-    @for (var year = Model.CurrentYear + 1; year >= 2015; year--)
+    @for (var year = Model.CurrentYear; year >= 2015; year--)
     {
         <a asp-route-year="@year" asp-route-grade="@Model.SelectedGrade.Id" class="btn btn-outline-primary rounded px-5 fw-bold @(year == Model.SelectedYear ? "active" : "")">
             @(year == Model.CurrentYear ? "(Actual)" : "") @year
