@@ -118,11 +118,12 @@ public class StudentsService : IStudentsService
 
             var student = new Student
             {
-                Nie = nie,
-                Name = string.Join(" ", studentInfoArray[(commaSeparatorPosition + 1)..]),
-                Surname = string.Join(" ", studentInfoArray[1..commaSeparatorPosition])
+                Nie = nie
             };
-            
+
+            student.Name = studentInfoArray.Length > 1 ? string.Join(" ", studentInfoArray[(commaSeparatorPosition + 1)..]) : "Anónimo";
+            student.Surname = studentInfoArray.Length > 1 ? string.Join(" ", studentInfoArray[1..commaSeparatorPosition]) : "Anónimo";
+
             studentList.Add(student);
         }
 
