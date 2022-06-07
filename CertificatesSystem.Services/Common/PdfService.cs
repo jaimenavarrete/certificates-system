@@ -1,13 +1,17 @@
 ﻿using System.Text;
 using System.Text.RegularExpressions;
+using CertificatesSystem.Models.Exceptions;
 using Spire.Pdf;
 
 namespace CertificatesSystem.Services.Common;
 
 public static class PdfService
 {
-    public static string[] ExtractStudentsInfoFromPdf(Stream pdfStream)
+    public static string[] ExtractStudentsInfoFromPdf(Stream? pdfStream)
     {
+        if (pdfStream is null)
+            throw new BusinessException("Debe agregar un PDF válido.");
+        
         var pdfDocument = new PdfDocument();
         pdfDocument.LoadFromStream(pdfStream);
 

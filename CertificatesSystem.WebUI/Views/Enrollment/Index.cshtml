@@ -46,7 +46,7 @@
             <i class="las la-file-upload fs-4"></i>
         </button>
     </div>
-    <form asp-controller="Enrollment" asp-action="RemoveEnrolledStudent" id="form-remove-selected-students-a" class="delete-element-form">
+    <form asp-controller="Enrollment" asp-action="RemoveEnrolledStudent" id="form-remove-selected-students-a" class="delete-element-form d-none">
         <input type="hidden" name="Year" value="@Model.SelectedYear">
         <input type="hidden" name="GradeId" value="@Model.SelectedGrade.Id">
         <button id="button-remove-selected-students-a" class="btn btn-outline-danger mb-4">
@@ -112,7 +112,7 @@
             <i class="las la-file-upload fs-4"></i>
         </button>
     </div>
-    <form asp-controller="Enrollment" asp-action="RemoveEnrolledStudent" id="form-remove-selected-students-b" class="delete-element-form">
+    <form asp-controller="Enrollment" asp-action="RemoveEnrolledStudent" id="form-remove-selected-students-b" class="delete-element-form d-none">
         <input type="hidden" name="Year" value="@Model.SelectedYear">
         <input type="hidden" name="GradeId" value="@Model.SelectedGrade.Id">
         <button id="button-remove-selected-students-b" class="btn btn-outline-danger mb-4">
@@ -179,31 +179,54 @@
         const formCreate = document.getElementById('form-create');
         const formPdfCreate = document.getElementById('form-pdf-create');
         const modalSectionContent = document.getElementById('modal-section-content');
+        const modalPdfSectionContent = document.getElementById('modal-pdf-section-content');
         
         const selectAllStudentsRowsA = document.getElementById('select-all-student-rows-a');
         const studentRowsACheckboxes = document.querySelectorAll('#student-rows-a input[type="checkbox"]');
+        const formRemoveSelectedStudentsA = document.getElementById('form-remove-selected-students-a');
         const selectAllStudentsRowsB = document.getElementById('select-all-student-rows-b');
         const studentRowsBCheckboxes = document.querySelectorAll('#student-rows-b input[type="checkbox"]');
+        const formRemoveSelectedStudentsB = document.getElementById('form-remove-selected-students-b');
+        
+        const checkSelectedStudents = (studentCheckboxes, formRemoveSelectedStudents) => {
+            let studentCheckboxesArray = Array.from(studentCheckboxes);
+            let selectedStudents = studentCheckboxesArray.filter(checkbox => checkbox.checked).length;
+            
+            if (selectedStudents > 0) {
+                formRemoveSelectedStudents.classList.add('d-block');
+                formRemoveSelectedStudents.classList.remove('d-none');
+                return;
+            }
+            
+            formRemoveSelectedStudents.classList.add('d-none');
+            formRemoveSelectedStudents.classList.remove('d-block');
+        };
         
         selectAllStudentsRowsA.addEventListener('change', () => {
             let currentState = selectAllStudentsRowsA.checked;
             studentRowsACheckboxes.forEach(checkbox => checkbox.checked = currentState);
+            checkSelectedStudents(studentRowsACheckboxes, formRemoveSelectedStudentsA);
         });
         
         selectAllStudentsRowsB.addEventListener('change', () => {
             let currentState = selectAllStudentsRowsB.checked;
             studentRowsBCheckboxes.forEach(checkbox => checkbox.checked = currentState);
+            checkSelectedStudents(studentRowsBCheckboxes, formRemoveSelectedStudentsB);
+        });
+        
+        studentRowsACheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', () => 
+                checkSelectedStudents(studentRowsACheckboxes, formRemoveSelectedStudentsA));
+        });
+        
+        studentRowsBCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', () => 
+                checkSelectedStudents(studentRowsBCheckboxes, formRemoveSelectedStudentsB));
         });
 
         btnEnrollSectionA.addEventListener('click', () => {
             clearInputs();
             formCreate.elements['SectionId'].value = "1";
-            modalSectionContent.textContent = "Sección A";
-        });
-        
-        btnEnrollSectionAByPdf.addEventListener('click', () => {
-            clearInputs();
-            formPdfCreate.elements['SectionId'].value = "1";
             modalSectionContent.textContent = "Sección A";
         });
         
@@ -213,10 +236,16 @@
             modalSectionContent.textContent = "Sección B";
         });
         
+        btnEnrollSectionAByPdf.addEventListener('click', () => {
+            clearInputs();
+            formPdfCreate.elements['SectionId'].value = "1";
+            modalPdfSectionContent.textContent = "Sección A";
+        });
+        
         btnEnrollSectionBByPdf.addEventListener('click', () => {
             clearInputs();
             formPdfCreate.elements['SectionId'].value = "2";
-            modalSectionContent.textContent = "Sección B";
+            modalPdfSectionContent.textContent = "Sección B";
         });
         
         formCreate.addEventListener('submit', (e) => {

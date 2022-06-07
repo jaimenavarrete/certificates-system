@@ -1,5 +1,6 @@
 ﻿using CertificatesSystem.Models.Data.Database;
 using CertificatesSystem.Models.DataModels;
+using CertificatesSystem.Models.Exceptions;
 using CertificatesSystem.Models.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -35,6 +36,9 @@ public class EnrollmentService : IEnrollmentService
 
     public async Task<bool> EnrollStudentsInGrade(Enrollment enrollment, string studentsNie)
     {
+        if (string.IsNullOrEmpty(studentsNie))
+            throw new BusinessException("Debe ingresar al menos un NIE.");
+        
         var nies = ConvertNiesStringToIntArray(studentsNie);
         var success = true;
 
@@ -69,6 +73,12 @@ public class EnrollmentService : IEnrollmentService
     
     public async Task<bool> EnrollStudentsInGradeByPdf(Enrollment enrollment, string[] studentsInfo)
     {
+        if (enrollment.Year == 0 || enrollment.GradeId == 0 || enrollment.SectionId == 0)
+            throw new BusinessException("Ocurrió un problema al obtener la información del grado y año de la matrícula.");
+
+        if (studentsInfo is null || studentsInfo.Length == 0)
+            throw new BusinessException("Ocurrió un problema al obtener los datos de los estudiantes del documentos.");
+
         var studentsList = _studentsService.ConvertStudentsInfoToStudentsList(studentsInfo);
         var success = true;
         
@@ -109,9 +119,16 @@ public class EnrollmentService : IEnrollmentService
 
     public async Task<bool> RemoveEnrolledStudent(int[] studentsId, int year)
     {
+        if (studentsId is null || studentsId.Length == 0)
+            throw new LogicException();
+    
         foreach (var studentId in studentsId)
         {
             var enrolledStudent = await GetEnrolledStudent(studentId, year);
+
+            if (enrolledStudent is null)
+                throw new LogicException();
+            
             _context.Remove(enrolledStudent);
         }
         
@@ -123,9 +140,12 @@ public class EnrollmentService : IEnrollmentService
     {
         var stringNiesWithCommas = stringNies.Replace(" ", "").Replace("\r\n", ",").Replace("\n", ",");
         var stringNiesArray = stringNiesWithCommas.Split(",");
+        
         var niesArray = Array.ConvertAll(stringNiesArray, int.Parse);
 
-        return niesArray;
+        var niesArrayWithoutDuplicates = niesArray.Distinct().ToArray();
+
+        return niesArrayWithoutDuplicates;
     }
 
     private Enrollment CreateANewEnrollment(Enrollment enrollment, int studentId)
