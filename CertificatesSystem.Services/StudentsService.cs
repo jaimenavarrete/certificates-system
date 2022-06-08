@@ -121,8 +121,8 @@ public class StudentsService : IStudentsService
                 Nie = nie
             };
 
-            student.Name = studentInfoArray.Length > 1 ? string.Join(" ", studentInfoArray[(commaSeparatorPosition + 1)..]) : "Anónimo";
-            student.Surname = studentInfoArray.Length > 1 ? string.Join(" ", studentInfoArray[1..commaSeparatorPosition]) : "Anónimo";
+            student.Name = studentInfoArray.Length > 1 ? string.Join(" ", studentInfoArray[(commaSeparatorPosition + 1)..]) : "[]";
+            student.Surname = studentInfoArray.Length > 1 ? string.Join(" ", studentInfoArray[1..commaSeparatorPosition]) : "[]";
 
             studentList.Add(student);
         }

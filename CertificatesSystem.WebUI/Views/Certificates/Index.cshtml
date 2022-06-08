@@ -5,9 +5,6 @@
 
 <h3 class="fw-bold display-6 mb-4 border-bottom border-3 border-dark text-center">Creación de Constancias</h3>
 
-<!-- Status message alert -->
-<partial name="_StatusMessage" />
-
 <h4 class="text-primary text-center fw-bold mb-3">Tipo de constancia</h4>
 
 <div class="border border-2 border-gray rounded px-1 py-2 overflow-auto text-nowrap mb-4">
@@ -23,9 +20,12 @@
 </div>
 
 <form asp-controller="Certificates" asp-action="Index" method="post" target="_blank" class="border border-2 border-primary rounded px-1 py-2 overflow-auto text-nowrap mb-4">
+    <!-- Status message alert -->
+    <partial name="_StatusMessage" />
+    
     <div class="form-group has-danger p-2 mb-3">
         <label class="col-form-label fw-bold" for="input-nie">NIE:</label>
-        <input type="text" name="Nie" id="input-nie" class="form-control input-create">
+        <input type="number" name="Nie" id="input-nie" class="form-control input-create">
         <div id="feedback-nie" class="invalid-feedback"></div>
     </div>
     
