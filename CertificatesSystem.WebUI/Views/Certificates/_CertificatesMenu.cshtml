@@ -1,0 +1,15 @@
+﻿<h3 class="fw-bold display-6 mb-4 border-bottom border-3 border-dark text-center">Creación de Constancias</h3>
+
+<h4 class="text-primary text-center fw-bold mb-3">Tipo de constancia</h4>
+
+<div class="border border-2 border-gray rounded px-1 py-2 overflow-auto text-nowrap mb-4">
+    <a asp-controller="Certificates" asp-action="Index" class="btn btn-outline-primary rounded px-5 fw-bold @((string?)ViewData["CertificateMenu"] == "StudyCertificate" ? "active" : "")">
+        Constancia de estudio
+    </a>
+    <a asp-controller="Certificates" asp-action="Index" class="btn btn-outline-primary rounded px-5 fw-bold @((string?)ViewData["CertificateMenu"] == "EnrollmentCertificate" ? "active" : "")">
+        Constancia de matrícula
+    </a>
+    <a asp-controller="Certificates" asp-action="GradesCertificate" class="btn btn-outline-primary rounded px-5 fw-bold @((string?)ViewData["CertificateMenu"] == "GradesCertificate" ? "active" : "")">
+        Constancia de notas
+    </a>
+</div>

@@ -10,11 +10,11 @@
         @(Model.Manager.Gender == "M" ? "El infrascrito" : "La infrascrita") @Model.Manager.Role del Complejo Educativo Católico “Presbítero René Valle”, Código 88087, de la Villa de San Esteban Catarina, Departamento de San Vicente, por medio de la presente HACE CONSTAR QUE: @Model.Student.Surname.ToUpper(), @Model.Student.Name.ToUpper(), con Número de Identificación de Estudiante (NIE) @Model.Student.Nie, &nbsp; 
         @if (Model.IsCurrentYear)
         {
-            <text>se encuentra estudiando @Model.Grade.Name, Sección @Model.Section, @(Model.Grade.Id is > 3 and < 13 ? "de Educación Básica " : "")@(Model.Grade.Id >= 13 ? "de Educación Media " : "")de este Centro Educativo durante el presente año @Model.Year, asistiendo normalmente a clases, obteniendo una @Model.Behaviour Conducta y un Rendimiento Académico @(Model.AcademicPerformance).</text>
+            <text>se encuentra estudiando @Model.Grade.Name, Sección @Model.Section, @(Model.Grade.Id is > 3 and < 13 ? "de Educación Básica " : "")@(Model.Grade.Id >= 13 ? "de Educación Media " : "")de este Centro Educativo durante el presente año @Model.Year, asistiendo normalmente a clases, obteniendo @Model.Behaviour Conducta y un Rendimiento Académico @(Model.AcademicPerformance).</text>
         }
         else
         {
-            <text>estudió @Model.Grade.Name, Sección @Model.Section, @(Model.Grade.Id is > 3 and < 13 ? "de Educación Básica " : "")de este Centro Educativo durante el año @Model.Year, y durante su permanencia se le observó una @Model.Behaviour Conducta y un Rendimiento Académico @(Model.AcademicPerformance).</text>
+            <text>estudió @Model.Grade.Name, Sección @Model.Section, @(Model.Grade.Id is > 3 and < 13 ? "de Educación Básica " : "")de este Centro Educativo durante el año @Model.Year, y durante su permanencia se le observó @Model.Behaviour Conducta y un Rendimiento Académico @(Model.AcademicPerformance).</text>
         }
     </p>
     

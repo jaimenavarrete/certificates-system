@@ -6,6 +6,7 @@ using CertificatesSystem.Services.Common;
 using CertificatesSystem.WebUI.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Rotativa.AspNetCore;
+using Spire.Pdf.Exporting.XPS.Schema;
 
 namespace CertificatesSystem.WebUI.Controllers;
 
@@ -34,7 +35,7 @@ public class CertificatesController : Controller
         var managers = await _managersService.GetAll();
         var managersViewModel = _mapper.Map<List<ManagerViewModel>>(managers);
 
-        var viewModel = new StudyCertificateViewModel
+        var viewModel = new CertificateViewModel
         {
             CurrentYear = DateTime.Now.Year,
             ManagersList = managersViewModel
@@ -66,7 +67,7 @@ public class CertificatesController : Controller
                 CurrentDateInLetters = DateService.Convert(DateTime.Now, false)
             };
 
-            return new ViewAsPdf("Reports/Index", viewModel);
+            return new ViewAsPdf("Reports/StudyCertificate", viewModel);
         }
         catch (BusinessException ex)
         {
@@ -75,6 +76,50 @@ public class CertificatesController : Controller
         }
     }
     
+    [HttpGet]
+    public async Task<IActionResult> GradesCertificate()
+    {
+        var managers = await _managersService.GetAll();
+        var managersViewModel = _mapper.Map<List<ManagerViewModel>>(managers);
+
+        var viewModel = new CertificateViewModel
+        {
+            CurrentYear = DateTime.Now.Year,
+            ManagersList = managersViewModel
+        };
+        
+        return View("GradesCertificate", viewModel);
+    }
+    
+    [HttpPost]
+    public async Task<IActionResult> GradesCertificate(GradesCertificateSearchFormViewModel model)
+    {
+        try
+        {
+            var studentViewModel = await GetStudentViewModel(model.Nie);
+            var managerViewModel = await GetManagerViewModel(model.ManagerId);
+            var enrollment = await GetEnrollment(studentViewModel.Id ?? 0, model.Year);
+            var gradeViewModel = _mapper.Map<GradeViewModel>(enrollment.Grade);
+
+            var viewModel = new GradesCertificateReportViewModel
+            {
+                Student = studentViewModel,
+                Manager = managerViewModel,
+                Grade = gradeViewModel,
+                Section = enrollment.Section.Name,
+                Year = model.Year,
+                CurrentDateInLetters = DateService.Convert(DateTime.Now, false)
+            };
+
+            return new ViewAsPdf("Reports/GradesCertificate", viewModel);
+        }
+        catch (BusinessException ex)
+        {
+            TempData["Error"] = ex.Message;
+            return RedirectToAction("GradesCertificate");
+        }
+    }
+
     private async Task<StudentViewModel> GetStudentViewModel(int nie)
     {
         if (nie == 0)

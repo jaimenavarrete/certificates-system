@@ -1,23 +1,10 @@
-﻿@model StudyCertificateViewModel
+﻿@model CertificateViewModel
 @{
     ViewData["ActivePage"] = ManageNavPages.Certificates;
+    ViewData["CertificateMenu"] = "StudyCertificate";
 }
 
-<h3 class="fw-bold display-6 mb-4 border-bottom border-3 border-dark text-center">Creación de Constancias</h3>
-
-<h4 class="text-primary text-center fw-bold mb-3">Tipo de constancia</h4>
-
-<div class="border border-2 border-gray rounded px-1 py-2 overflow-auto text-nowrap mb-4">
-    <a asp-controller="Certificates" asp-action="Index" class="btn btn-outline-primary rounded px-5 fw-bold active">
-        Constancia de estudio
-    </a>
-    <a asp-controller="Certificates" asp-action="Index" class="btn btn-outline-primary rounded px-5 fw-bold">
-        Constancia de ejemplo
-    </a>
-    <a asp-controller="Certificates" asp-action="Index" class="btn btn-outline-primary rounded px-5 fw-bold">
-        Constancia de ejemplo
-    </a>
-</div>
+<partial name="_CertificatesMenu"/>
 
 <form asp-controller="Certificates" asp-action="Index" method="post" target="_blank" class="border border-2 border-primary rounded px-1 py-2 overflow-auto text-nowrap mb-4">
     <!-- Status message alert -->
