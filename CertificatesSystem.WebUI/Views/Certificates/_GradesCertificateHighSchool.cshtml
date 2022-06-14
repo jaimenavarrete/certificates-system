@@ -1,4 +1,11 @@
-﻿<form asp-controller="Certificates" asp-action="GradesCertificate" method="post" target="_blank" class="border border-2 border-primary rounded px-1 py-2 overflow-hidden text-nowrap mb-4">
+﻿@model GradesCertificateViewModel
+
+<form asp-controller="Certificates" asp-action="GradesCertificate" method="post" target="_blank" class="border border-2 border-primary rounded px-1 py-2 overflow-hidden text-nowrap mb-4">
+    <input type="hidden" name="Nie" value="@Model.GradesCertificateInfo.Student.Nie" />
+    <input type="hidden" name="Year" value="@Model.GradesCertificateInfo.Year" />
+    <input type="hidden" name="GradeId" value="@Model.GradesCertificateInfo.Grade.Id" />
+    <input type="hidden" name="SectionId" value="@Model.GradesCertificateInfo.Section.Id" />
+    
     <div class="row p-2">
             <p class="col-form-label fw-bold">Notas de área básica:</p>
             
@@ -106,6 +113,17 @@
         </div>
     </div>
     
+    <div class="form-group has-danger p-2 mb-3">
+        <label class="col-form-label fw-bold" for="input-manager">Directivo que firmará:</label>
+        <select name="ManagerId" id="input-manager" class="form-select input-create">
+            @foreach (var manager in Model.ManagersList)
+            {
+                <option value="@manager.Id">@manager.Name @manager.Surname</option>
+            }
+        </select>
+        <div id="feedback-manager" class="invalid-feedback"></div>
+    </div>
+
     <div class="d-flex justify-content-end">
         <button type="submit" class="btn btn-success m-2"><i class="las la-folder-plus fs-4"></i> Crear constancia</button>
     </div>

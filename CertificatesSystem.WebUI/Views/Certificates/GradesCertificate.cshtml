@@ -1,4 +1,4 @@
-﻿@model CertificateViewModel
+﻿@model GradesCertificateViewModel
 @{
     ViewData["ActivePage"] = ManageNavPages.Certificates;
     ViewData["CertificateMenu"] = "GradesCertificate";
@@ -12,7 +12,7 @@
     
     <div class="form-group has-danger p-2 mb-3">
         <label class="col-form-label fw-bold" for="input-nie">NIE:</label>
-        <input type="number" name="Nie" id="input-nie" class="form-control input-create">
+        <input type="number" name="Nie" id="input-nie" class="form-control input-create" value="@Model.GradesCertificateInfo?.Student.Nie">
         <div id="feedback-nie" class="invalid-feedback"></div>
     </div>
 
@@ -22,20 +22,30 @@
         <div id="feedback-year" class="invalid-feedback"></div>
     </div>
 
-    <div class="form-group has-danger p-2 mb-3">
-        <label class="col-form-label fw-bold" for="input-manager">Directivo que firmará:</label>
-        <select name="ManagerId" id="input-manager" class="form-select input-create">
-            @foreach (var manager in Model.ManagersList)
-            {
-                <option value="@manager.Id">@manager.Name @manager.Surname</option>
-            }
-        </select>
-        <div id="feedback-manager" class="invalid-feedback"></div>
-    </div>
-    
     <div class="d-flex justify-content-end">
         <button type="submit" class="btn btn-primary m-2"><i class="las la-search fs-4"></i> Buscar estudiante</button>
     </div>
 </form>
 
-<partial name="_GradesCertificateBasic" />
+@if (Model.GradesCertificateInfo is not null)
+{
+    <section class="border border-2 border-primary rounded p-2 mb-4">
+        <h5 class="text-primary fw-bold mb-4">Información del estudiante</h5>
+
+        <p class="col-form-label fw-bold">NIE: <span class="text-primary">@Model.GradesCertificateInfo?.Student.Nie</span></p>
+        <p class="col-form-label fw-bold">Nombre completo: <span class="text-primary">@Model.GradesCertificateInfo?.Student.Name @Model.GradesCertificateInfo?.Student.Surname</span></p>
+        <p class="col-form-label fw-bold">Año de estudio: <span class="text-primary">@Model.GradesCertificateInfo?.Year</span></p>
+        <p class="col-form-label fw-bold">Grado: <span class="text-primary">@Model.GradesCertificateInfo?.Grade.Name</span></p>
+        <p class="col-form-label fw-bold">Sección: <span class="text-primary">@Model.GradesCertificateInfo?.Section.Name</span></p>
+    </section>
+}
+
+
+@if (Model.GradesCertificateType == 1)
+{
+    <partial name="_GradesCertificateBasic" model="Model" />
+}
+else if (Model.GradesCertificateType == 2)
+{
+    <partial name="_GradesCertificateHighSchool" model="Model" />
+}

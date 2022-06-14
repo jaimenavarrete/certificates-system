@@ -15,17 +15,20 @@ public class CertificatesController : Controller
     private readonly IEnrollmentService _enrollmentService;
     private readonly IStudentsService _studentsService;
     private readonly IManagersService _managersService;
+    private readonly IMiscellanyService _miscellanyService;
     private readonly IMapper _mapper;
 
     public CertificatesController(
         IStudentsService studentsService,
         IEnrollmentService enrollmentService,
         IManagersService managersService,
+        IMiscellanyService miscellanyService,
         IMapper mapper)
     {
         _studentsService = studentsService;
         _enrollmentService = enrollmentService;
         _managersService = managersService;
+        _miscellanyService = miscellanyService;
         _mapper = mapper;
     }
 
@@ -77,15 +80,11 @@ public class CertificatesController : Controller
     }
     
     [HttpGet]
-    public async Task<IActionResult> GradesCertificate()
+    public IActionResult GradesCertificate()
     {
-        var managers = await _managersService.GetAll();
-        var managersViewModel = _mapper.Map<List<ManagerViewModel>>(managers);
-
-        var viewModel = new CertificateViewModel
+        var viewModel = new GradesCertificateViewModel
         {
-            CurrentYear = DateTime.Now.Year,
-            ManagersList = managersViewModel
+            CurrentYear = DateTime.Now.Year
         };
         
         return View("GradesCertificate", viewModel);
@@ -96,17 +95,55 @@ public class CertificatesController : Controller
     {
         try
         {
+            var managers = await _managersService.GetAll();
+            var managersViewModel = _mapper.Map<List<ManagerViewModel>>(managers);
+            
+            var studentViewModel = await GetStudentViewModel(model.Nie);
+            var enrollment = await GetEnrollment(studentViewModel.Id ?? 0, model.Year);
+            
+            var gradeViewModel = _mapper.Map<GradeViewModel>(enrollment.Grade);
+            var sectionViewModel = _mapper.Map<SectionViewModel>(enrollment.Section);
+
+            var gradesCertificateInfo = new GradesCertificateInfoViewModel
+            {
+                Student = studentViewModel,
+                Grade = gradeViewModel,
+                Section = sectionViewModel,
+                Year = model.Year
+            };
+
+            var viewModel = new GradesCertificateViewModel
+            {
+                CurrentYear = DateTime.Now.Year,
+                ManagersList = managersViewModel,
+                GradesCertificateInfo = gradesCertificateInfo,
+                GradesCertificateType = 1
+            };
+
+            return View("GradesCertificate", viewModel);
+        }
+        catch (BusinessException ex)
+        {
+            TempData["Error"] = ex.Message;
+            return RedirectToAction("GradesCertificate");
+        }
+    }
+    
+    [HttpPost]
+    public async Task<IActionResult> GradesCertificateBasic(GradesCertificateFormViewModel model)
+    {
+        try
+        {
             var studentViewModel = await GetStudentViewModel(model.Nie);
             var managerViewModel = await GetManagerViewModel(model.ManagerId);
-            var enrollment = await GetEnrollment(studentViewModel.Id ?? 0, model.Year);
-            var gradeViewModel = _mapper.Map<GradeViewModel>(enrollment.Grade);
+            var gradeViewModel = await GetGradeViewModel(model.GradeId);
 
             var viewModel = new GradesCertificateReportViewModel
             {
                 Student = studentViewModel,
                 Manager = managerViewModel,
                 Grade = gradeViewModel,
-                Section = enrollment.Section.Name,
+                Section = model.Section,
                 Year = model.Year,
                 CurrentDateInLetters = DateService.Convert(DateTime.Now, false)
             };
@@ -146,6 +183,20 @@ public class CertificatesController : Controller
             throw new BusinessException("El directivo que ha colocado no se encuentra registrado.");
 
         return managerViewModel;
+    }
+    
+    private async Task<GradeViewModel> GetGradeViewModel(int gradeId)
+    {
+        if (gradeId == 0)
+            throw new BusinessException("Ocurrió un error al obtener el grado del estudiante.");
+        
+        var grade = await _miscellanyService.GetGradeById(gradeId);
+        var gradeViewModel = _mapper.Map<GradeViewModel>(grade);
+
+        if (grade is null)
+            throw new BusinessException("El directivo que ha colocado no se encuentra registrado.");
+
+        return gradeViewModel;
     }
     
     private async Task<Enrollment> GetEnrollment(int studentId, int year)

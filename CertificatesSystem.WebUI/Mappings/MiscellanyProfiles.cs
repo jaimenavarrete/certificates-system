@@ -12,3 +12,12 @@ public class GradeMapping : Profile
         CreateMap<GradeViewModel, Grade>();
     }
 }
+
+public class SectionMapping : Profile
+{
+    public SectionMapping()
+    {
+        CreateMap<Section, SectionViewModel>();
+        CreateMap<SectionViewModel, Section>();
+    }
+}

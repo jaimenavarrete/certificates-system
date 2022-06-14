@@ -15,4 +15,5 @@ public class MiscellanyService : IMiscellanyService
     }
 
     public async Task<List<Grade>> GetGrades() => await _context.Grades.ToListAsync();
+    public async Task<Grade?> GetGradeById(int id) => await _context.Grades.FindAsync(id);
 }
