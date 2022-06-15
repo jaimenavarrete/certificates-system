@@ -11,6 +11,10 @@ body {
     width: 125px;
 }
 
+.logo_grades_certificate {
+    width: 100px;
+}
+
 .letterhead {
     margin-bottom: 40px;
 }
@@ -29,9 +33,51 @@ body {
     margin-bottom: 50px;
 }
 
+.main_content_grades_certificate {
+    font-size: 17px;
+    line-height: 1.5;
+    text-align: justify;
+}
+
+.main_content_grades_certificate p {
+    text-rendering: geometricPrecision;
+}
+
+.main_content_grades_certificate .table {
+    border-collapse: collapse;
+    font-size: 15px;
+    text-align: center;
+    width: 100%;
+}
+
+.main_content_grades_certificate .table .main_row {
+    background: #A9AAAB;
+}
+
+.main_content_grades_certificate .table,
+.main_content_grades_certificate th,
+.main_content_grades_certificate td {
+    border: 1px solid #212121;
+    padding: 3px;
+}
+
+.main_content_grades_certificate .table .area_title {
+    background: #E8E5E5;
+    font-weight: bold;
+    text-align: left;
+}
+
+.main_content_grades_certificate .table .name_column {
+    text-align: left;
+}
+
 .main_footer {
     margin-top: 150px;
     font-size: 18px;
+}
+
+.main_footer_grades_certificate {
+    margin-top: 100px;
 }
 
 .main_footer .signature {

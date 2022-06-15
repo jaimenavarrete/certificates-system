@@ -5,6 +5,16 @@
     ViewData["Title"] = $"{Model.Student.Surname.ToUpper()}, {Model.Student.Name.ToUpper()} - {Model.Year}";
 }
 
+<header class="main_header">
+    <img src="/img/logo.png" class="logo"/>
+    <section class="letterhead">
+        <p>Complejo Educativo Católico “Presbítero René Valle”</p>
+        <p>Bo. El Centro. San Esteban Catarina. Depto. San Vicente.</p>
+        <p>El Salvador, C.A. Telefax: 2362-7133-2362-7019</p>
+        <p>Email: cecrenevalle@gmail.com</p>
+    </section>
+</header>
+
 <main role="main" class="main_content">
     <p>
         @(Model.Manager.Gender == "M" ? "El infrascrito" : "La infrascrita") @Model.Manager.Role del Complejo Educativo Católico “Presbítero René Valle”, Código 88087, de la Villa de San Esteban Catarina, Departamento de San Vicente, por medio de la presente HACE CONSTAR QUE: @Model.Student.Surname.ToUpper(), @Model.Student.Name.ToUpper(), con Número de Identificación de Estudiante (NIE) @Model.Student.Nie, &nbsp; 

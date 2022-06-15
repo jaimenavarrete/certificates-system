@@ -6,17 +6,27 @@
     ViewData["Title"] = $"{Model.Student.Surname.ToUpper()}, {Model.Student.Name.ToUpper()} - {Model.Year}";
 }
 
-<main role="main" class="main_content">
+<header class="main_header">
+    <img src="/img/logo.png" class="logo logo_grades_certificate"/>
+    <section class="letterhead">
+        <p>Complejo Educativo Católico “Presbítero René Valle”</p>
+        <p>Bo. El Centro. San Esteban Catarina. Depto. San Vicente.</p>
+        <p>El Salvador, C.A. Telefax: 2362-7133-2362-7019</p>
+        <p>Email: cecrenevalle@gmail.com</p>
+    </section>
+</header>
+
+<main role="main" class="main_content_grades_certificate">
     <p>
         @(Model.Manager.Gender == "M" ? "El infrascrito" : "La infrascrita") @Model.Manager.Role del Complejo Educativo &nbsp;
         Católico “Presbítero René Valle”, Código 88087, de la Villa de San Esteban Catarina, Departamento de San Vicente, &nbsp;
         por medio de la presente HACE CONSTAR QUE: @Model.Student.Surname.ToUpper(), @Model.Student.Name.ToUpper(), con &nbsp;
-        Número de Identificación de Estudiante (NIE) @Model.Student.Nie, ha cursado y aprobado @Model.Grade.Name, &nbsp;
-        obteniendo las siguientes calificaciones:
+        Número de Identificación de Estudiante (NIE) @Model.Student.Nie, ha cursado y aprobado @Model.Grade.Name, Sección &nbsp;
+        @Model.Section, obteniendo las siguientes calificaciones:
     </p>
     
     <table class="table table-hover">
-        <thead>
+        <thead class="main_row">
             <tr>
                 <th scope="col" rowspan="2">Componente plan de estudio</th>
                 <th scope="col" colspan="2">Nota final</th>
@@ -29,11 +39,41 @@
         </thead>
         <tbody>
             <tr>
-                <th scope="row">LENGUAJE</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td></td>
+                <td colspan="4" class="area_title">ÁREA BÁSICA</td>
             </tr>
+            @foreach (var subject in Model.BasicsSubjects)
+            {
+                <tr>
+                    <td class="name_column">@subject.Name.ToUpper()</td>
+                    <td>@subject.Mark</td>
+                    <td>@subject.MarkInLetters.ToUpper()</td>
+                    <td>@subject.IsApproved</td>
+                </tr>
+            }
+            <tr>
+                <td colspan="4" class="area_title">ÁREA COMPLEMENTARIA</td>
+            </tr>
+            @foreach (var subject in Model.ComplementarySubjects)
+            {
+                <tr>
+                    <td class="name_column">@subject.Name.ToUpper()</td>
+                    <td>@subject.Mark</td>
+                    <td>@subject.MarkInLetters.ToUpper()</td>
+                    <td>@subject.IsApproved</td>
+                </tr>
+            }
+            <tr>
+                <td colspan="4" class="area_title">ÁREA DE COMPETENCIAS</td>
+            </tr>
+            @foreach (var subject in Model.CompetenciesSubjects)
+            {
+                <tr>
+                    <td class="name_column">@subject.Name.ToUpper()</td>
+                    <td>@subject.Mark</td>
+                    <td>@subject.MarkInLetters.ToUpper()</td>
+                    <td>@subject.IsApproved</td>
+                </tr>
+            }
         </tbody>
     </table>
     
@@ -43,7 +83,7 @@
     </p>
 </main>
 
-<footer class="main_footer">
+<footer class="main_footer main_footer_grades_certificate">
     <div class="signature"><span>F:</span></div>
     <p class="manager_name">@Model.Manager.Name @Model.Manager.Surname</p>
     <strong class="manager_role">@Model.Manager.Role.ToUpper()</strong>

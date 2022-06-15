@@ -104,20 +104,18 @@ public class CertificatesController : Controller
             var gradeViewModel = _mapper.Map<GradeViewModel>(enrollment.Grade);
             var sectionViewModel = _mapper.Map<SectionViewModel>(enrollment.Section);
 
-            var gradesCertificateInfo = new GradesCertificateInfoViewModel
-            {
-                Student = studentViewModel,
-                Grade = gradeViewModel,
-                Section = sectionViewModel,
-                Year = model.Year
-            };
-
             var viewModel = new GradesCertificateViewModel
             {
                 CurrentYear = DateTime.Now.Year,
                 ManagersList = managersViewModel,
-                GradesCertificateInfo = gradesCertificateInfo,
-                GradesCertificateType = 1
+                GradesCertificateType = gradeViewModel.Id >= 13 ? 2 : 1,
+                GradesCertificateInfo = new GradesCertificateInfoViewModel
+                {
+                    Student = studentViewModel,
+                    Grade = gradeViewModel,
+                    Section = sectionViewModel,
+                    Year = model.Year
+                }
             };
 
             return View("GradesCertificate", viewModel);
@@ -138,6 +136,10 @@ public class CertificatesController : Controller
             var managerViewModel = await GetManagerViewModel(model.ManagerId);
             var gradeViewModel = await GetGradeViewModel(model.GradeId);
 
+            var basicsSubjects = GetMarkedSubjects(model.Basics, model.NamesBasics);
+            var complementarySubjects = GetConceptSubjects(model.Complementary, model.NamesComplementary);
+            var competenciesSubjects = GetConceptSubjects(model.Competencies, model.NamesCompetencies);
+
             var viewModel = new GradesCertificateReportViewModel
             {
                 Student = studentViewModel,
@@ -145,7 +147,10 @@ public class CertificatesController : Controller
                 Grade = gradeViewModel,
                 Section = model.Section,
                 Year = model.Year,
-                CurrentDateInLetters = DateService.Convert(DateTime.Now, false)
+                CurrentDateInLetters = DateService.Convert(DateTime.Now, false),
+                BasicsSubjects = basicsSubjects,
+                ComplementarySubjects = complementarySubjects,
+                CompetenciesSubjects = competenciesSubjects
             };
 
             return new ViewAsPdf("Reports/GradesCertificate", viewModel);
@@ -210,5 +215,54 @@ public class CertificatesController : Controller
             throw new BusinessException("El estudiante no se encuentra matriculado en el año que ha ingresado.");
 
         return enrollment;
+    }
+
+    private List<SubjectViewModel> GetMarkedSubjects(int[] marks, string[] subjectNames)
+    {
+        var subjects = new List<SubjectViewModel>();
+
+        for (var index = 0; index < marks.Length; index++)
+        {
+            subjects.Add(new SubjectViewModel
+            {
+                Name = subjectNames[index],
+                Mark = marks[index].ToString(),
+                MarkInLetters = NumberToLettersService.Convert(marks[index], true),
+                IsApproved = marks[index] >= 5 ? "Aprobado" : "Reprobado"
+            });
+        }
+
+        return subjects;
+    }
+    
+    private List<SubjectViewModel> GetConceptSubjects(string[] concepts, string[] subjectNames)
+    {
+        var subjects = new List<SubjectViewModel>();
+
+        for (var index = 0; index < concepts.Length; index++)
+        {
+            var isMark = int.TryParse(concepts[index], out int mark);
+            
+            subjects.Add(new SubjectViewModel
+            {
+                Name = subjectNames[index],
+                Mark = concepts[index],
+                MarkInLetters = isMark ? NumberToLettersService.Convert(mark, true) : GetConceptInLetters(concepts[index]),
+                IsApproved = isMark ? (mark >= 5 ? "Aprobado" : "Reprobado") : ""
+            });
+        }
+
+        return subjects;
+    }
+
+    private string GetConceptInLetters(string concept)
+    {
+        return concept switch
+        {
+            "E" => "Excelente",
+            "MB" => "Muy Bueno",
+            "B" => "Bueno",
+            _ => ""
+        };
     }
 }

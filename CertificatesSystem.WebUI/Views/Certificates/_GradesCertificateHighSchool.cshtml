@@ -1,40 +1,47 @@
 ﻿@model GradesCertificateViewModel
 
-<form asp-controller="Certificates" asp-action="GradesCertificate" method="post" target="_blank" class="border border-2 border-primary rounded px-1 py-2 overflow-hidden text-nowrap mb-4">
+<form asp-controller="Certificates" asp-action="GradesCertificateBasic" method="post" target="_blank" class="border border-2 border-primary rounded px-1 py-2 overflow-hidden text-nowrap mb-4">
     <input type="hidden" name="Nie" value="@Model.GradesCertificateInfo.Student.Nie" />
     <input type="hidden" name="Year" value="@Model.GradesCertificateInfo.Year" />
     <input type="hidden" name="GradeId" value="@Model.GradesCertificateInfo.Grade.Id" />
-    <input type="hidden" name="SectionId" value="@Model.GradesCertificateInfo.Section.Id" />
+    <input type="hidden" name="Section" value="@Model.GradesCertificateInfo.Section.Name" />
     
     <div class="row p-2">
             <p class="col-form-label fw-bold">Notas de área básica:</p>
             
             <div class="col-6 col-md-3 form-group mb-3">
                 <label class="col-form-label ">Lenguaje:</label>
+                <input type="hidden" name="NamesBasics[]" value="Lenguaje y Literatura">
                 <input type="number" step="1" min="0" max="10" name="Basics[]" class="form-control input-create">
             </div>
             <div class="col-6 col-md-3 form-group mb-3">
                 <label class="col-form-label">Matemática:</label>
+                <input type="hidden" name="NamesBasics[]" value="Matemática">
                 <input type="number" step="1" min="0" max="10" name="Basics[]" class="form-control input-create">
             </div>
             <div class="col-6 col-md-3 form-group mb-3">
                 <label class="col-form-label">Ciencias:</label>
+                <input type="hidden" name="NamesBasics[]" value="Ciencias Naturales">
                 <input type="number" step="1" min="0" max="10" name="Basics[]" class="form-control input-create">
             </div>
             <div class="col-6 col-md-3 form-group mb-3">
                 <label class="col-form-label">Sociales:</label>
+                <input type="hidden" name="NamesBasics[]" value="Estudios Sociales y Cívica">
                 <input type="number" step="1" min="0" max="10" name="Basics[]" class="form-control input-create">
             </div>
             <div class="col-6 col-md-3 form-group mb-3">
                 <label class="col-form-label">Idioma extranjero:</label>
+                <input type="hidden" name="NamesBasics[]" value="Idioma Extranjero">
                 <input type="number" step="1" min="0" max="10" name="Basics[]" class="form-control input-create">
             </div>
             <div class="col-6 col-md-3 form-group mb-3">
                 <label class="col-form-label">Informática:</label>
+                <input type="hidden" name="NamesBasics[]" value="Informática">
                 <input type="number" step="1" min="0" max="10" name="Basics[]" class="form-control input-create">
             </div>
             <div class="col-6 col-md-3 form-group mb-3">
                 <label class="col-form-label">Orientación para la vida:</label>
+                <input type="hidden" name="NamesBasics[]" value="Orientación para la Vida">
                 <input type="number" step="1" min="0" max="10" name="Basics[]" class="form-control input-create">
             </div>
         </div>
@@ -44,6 +51,7 @@
                 
             <div class="col-6 col-md-4 form-group mb-3">
                 <label class="col-form-label">Moral:</label>
+                <input type="hidden" name="NamesComplementary[]" value="Moral, Urbanidad y Cívica">
                 <select name="Complementary[]" class="form-select input-create">
                     <option value="E">Excelente</option>
                     <option value="MB">Muy bueno</option>
@@ -52,6 +60,7 @@
             </div>
             <div class="col-6 col-md-4 form-group mb-3">
                 <label class="col-form-label">Seminarios:</label>
+                <input type="hidden" name="NamesComplementary[]" value="Seminarios">
                 <select name="Complementary[]" class="form-select input-create">
                     <option value="E">Excelente</option>
                     <option value="MB">Muy bueno</option>
@@ -60,6 +69,7 @@
             </div>
             <div class="col-6 col-md-4 form-group has-danger mb-3">
                 <label class="col-form-label">Curso de Hab. Laboral:</label>
+                <input type="hidden" name="NamesComplementary[]" value="Curso de Habilitación Laboral">
                 <select name="Complementary[]" class="form-select input-create">
                     <option value="E">Excelente</option>
                     <option value="MB">Muy bueno</option>
@@ -73,6 +83,7 @@
             
         <div class="col-6 col-md-4 form-group mb-3">
             <label class="col-form-label">Actitud:</label>
+            <input type="hidden" name="NamesCompetencies[]" value="Evidencia actitudes favorables para la convivencia y cultura de paz">
             <select name="Competencies[]" class="form-select input-create">
                 <option value="E">Excelente</option>
                 <option value="MB">Muy bueno</option>
@@ -81,6 +92,7 @@
         </div>
         <div class="col-6 col-md-4 form-group mb-3">
             <label class="col-form-label">Diversidad:</label>
+            <input type="hidden" name="NamesCompetencies[]" value="Acepta y valora la diversidad">
             <select name="Competencies[]" class="form-select input-create">
                 <option value="E">Excelente</option>
                 <option value="MB">Muy bueno</option>
@@ -89,6 +101,7 @@
         </div>
         <div class="col-6 col-md-4 form-group has-danger mb-3">
             <label class="col-form-label">Autonomía:</label>
+            <input type="hidden" name="NamesCompetencies[]" value="Toma decisiones de forma autónoma y responsable">
             <select name="Competencies[]" class="form-select input-create">
                 <option value="E">Excelente</option>
                 <option value="MB">Muy bueno</option>
@@ -97,6 +110,7 @@
         </div>
         <div class="col-6 col-md-4 form-group has-danger mb-3">
             <label class="col-form-label">Respeto:</label>
+            <input type="hidden" name="NamesCompetencies[]" value="Se expresa y participa con respeto">
             <select name="Competencies[]" class="form-select input-create">
                 <option value="E">Excelente</option>
                 <option value="MB">Muy bueno</option>
@@ -105,6 +119,7 @@
         </div>
         <div class="col-6 col-md-4 form-group has-danger mb-3">
             <label class="col-form-label">Cultura:</label>
+            <input type="hidden" name="NamesCompetencies[]" value="Muestra sentido de pertenencia y respeto por nuestra cultura">
             <select name="Competencies[]" class="form-select input-create">
                 <option value="E">Excelente</option>
                 <option value="MB">Muy bueno</option>

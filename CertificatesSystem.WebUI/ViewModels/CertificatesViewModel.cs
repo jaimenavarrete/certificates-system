@@ -63,8 +63,11 @@ public class GradesCertificateFormViewModel
     public int ManagerId { get; set; }
     public int GradeId { get; set; }
     public string Section { get; set; }
+    public string[] NamesBasics { get; set; }
     public int[] Basics { get; set; }
+    public string[] NamesComplementary { get; set; }
     public string[] Complementary { get; set; }
+    public string[] NamesCompetencies { get; set; }
     public string[] Competencies { get; set; }
 }
 
@@ -77,15 +80,21 @@ public class GradesCertificateReportViewModel
     public string Section { get; set; }
     public int Year { get; set; }
     public string CurrentDateInLetters { get; set; }
+    
+    public List<SubjectViewModel> BasicsSubjects { get; set; }
+    
+    public List<SubjectViewModel> ComplementarySubjects { get; set; }
+    
+    public List<SubjectViewModel> CompetenciesSubjects { get; set; }
 }
 
 public class SubjectViewModel
 {
     public string Name { get; set; }
 
-    public int Mark { get; set; }
+    public string Mark { get; set; }
 
     public string MarkInLetters { get; set; }
 
-    public bool IsApproved { get; set; }
+    public string IsApproved { get; set; }
 }
