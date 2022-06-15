@@ -100,7 +100,10 @@ public class CertificatesController : Controller
             
             var studentViewModel = await GetStudentViewModel(model.Nie);
             var enrollment = await GetEnrollment(studentViewModel.Id ?? 0, model.Year);
-            
+
+            if (enrollment.Grade.Id <= 3)
+                throw new BusinessException("No se pueden crear constancias de notas para parvularia.");
+
             var gradeViewModel = _mapper.Map<GradeViewModel>(enrollment.Grade);
             var sectionViewModel = _mapper.Map<SectionViewModel>(enrollment.Section);
 
