@@ -20,9 +20,10 @@ services.AddTransient<IEnrollmentService, EnrollmentService>();
 services.AddTransient<IMiscellanyService, MiscellanyService>();
 
 // Database context
-var connectionString = configuration.GetConnectionString("CertificatesSystem");
+var connectionString = configuration.GetConnectionString("CertificatesSystemPostgresql");
 
-services.AddDbContext<CertificatesSystemContext>(options => options.UseSqlServer(connectionString));
+// services.AddDbContext<CertificatesSystemContext>(options => options.UseSqlServer(connectionString));
+services.AddDbContext<CertificatesSystemContext>(options => options.UseNpgsql(connectionString));
 
 var app = builder.Build();
 

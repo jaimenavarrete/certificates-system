@@ -1,5 +1,8 @@
-﻿using CertificatesSystem.Models.DataModels;
+﻿using System;
+using System.Collections.Generic;
+using CertificatesSystem.Models.DataModels;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace CertificatesSystem.Models.Data.Database
 {
@@ -24,92 +27,120 @@ namespace CertificatesSystem.Models.Data.Database
         {
             modelBuilder.Entity<Enrollment>(entity =>
             {
-                entity.HasKey(e => e.Id);
+                entity.ToTable("enrollments");
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("id")
+                    .UseIdentityAlwaysColumn();
+
+                entity.Property(e => e.GradeId).HasColumnName("gradeid");
+
+                entity.Property(e => e.SectionId).HasColumnName("sectionid");
+
+                entity.Property(e => e.StudentId).HasColumnName("studentid");
+
+                entity.Property(e => e.Year).HasColumnName("year");
 
                 entity.HasOne(d => d.Grade)
                     .WithMany(p => p.Enrollments)
                     .HasForeignKey(d => d.GradeId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Grades");
+                    .HasConstraintName("fk_grades");
 
                 entity.HasOne(d => d.Section)
                     .WithMany(p => p.Enrollments)
                     .HasForeignKey(d => d.SectionId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Sections");
+                    .HasConstraintName("fk_sections");
 
                 entity.HasOne(d => d.Student)
                     .WithMany(p => p.Enrollments)
                     .HasForeignKey(d => d.StudentId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Students");
+                    .HasConstraintName("fk_students");
             });
-            
+
             modelBuilder.Entity<Grade>(entity =>
             {
-                entity.HasKey(e => e.Id);
-                
+                entity.ToTable("grades");
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("id")
+                    .UseIdentityAlwaysColumn();
+
                 entity.Property(e => e.Name)
                     .HasMaxLength(50)
-                    .IsUnicode(false);
+                    .HasColumnName("name");
             });
 
             modelBuilder.Entity<Manager>(entity =>
             {
-                entity.HasKey(e => e.Id);
-                
-                entity.Property(e => e.Name)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-                
-                entity.Property(e => e.Surname)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-                
-                entity.Property(e => e.Role)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-                
+                entity.ToTable("managers");
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("id")
+                    .UseIdentityAlwaysColumn();
+
                 entity.Property(e => e.Gender)
                     .HasMaxLength(1)
-                    .IsUnicode(false)
-                    .IsFixedLength();
+                    .HasColumnName("gender");
+
+                entity.Property(e => e.Name)
+                    .HasMaxLength(50)
+                    .HasColumnName("name");
+
+                entity.Property(e => e.Role)
+                    .HasMaxLength(50)
+                    .HasColumnName("role");
+
+                entity.Property(e => e.Surname)
+                    .HasMaxLength(50)
+                    .HasColumnName("surname");
             });
 
             modelBuilder.Entity<Section>(entity =>
             {
-                entity.HasKey(e => e.Id);
-                
+                entity.ToTable("sections");
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("id")
+                    .UseIdentityAlwaysColumn();
+
                 entity.Property(e => e.Name)
                     .HasMaxLength(1)
-                    .IsUnicode(false)
-                    .IsFixedLength();
+                    .HasColumnName("name");
             });
 
             modelBuilder.Entity<Student>(entity =>
             {
-                entity.HasIndex(e => e.Nie, "UQ_Nie_Students")
+                entity.ToTable("students");
+
+                entity.HasIndex(e => e.Nie, "uq_nie_students")
                     .IsUnique();
 
-                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id)
+                    .HasColumnName("id")
+                    .UseIdentityAlwaysColumn();
 
                 entity.Property(e => e.Address)
                     .HasMaxLength(100)
-                    .IsUnicode(false);
+                    .HasColumnName("address");
 
-                entity.Property(e => e.Birthdate).HasColumnType("datetime");
+                entity.Property(e => e.Birthdate).HasColumnName("birthdate");
 
                 entity.Property(e => e.Name)
                     .HasMaxLength(50)
-                    .IsUnicode(false);
+                    .HasColumnName("name");
+
+                entity.Property(e => e.Nie).HasColumnName("nie");
 
                 entity.Property(e => e.PhotoId)
                     .HasMaxLength(50)
-                    .IsUnicode(false);
+                    .HasColumnName("photoid");
 
                 entity.Property(e => e.Surname)
                     .HasMaxLength(50)
-                    .IsUnicode(false);
+                    .HasColumnName("surname");
             });
         }
     }

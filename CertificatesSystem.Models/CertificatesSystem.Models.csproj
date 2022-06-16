@@ -8,7 +8,7 @@
 
     <ItemGroup>
       <Folder Include="Data\Identity" />
-      <Folder Include="Data\Database\" />
+      <Folder Include="Data\Identity\" />
       <Folder Include="Responses" />
     </ItemGroup>
 
@@ -18,6 +18,7 @@
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
+      <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.4" />
       <PackageReference Include="Spire.PDF" Version="8.5.0" />
     </ItemGroup>
 
