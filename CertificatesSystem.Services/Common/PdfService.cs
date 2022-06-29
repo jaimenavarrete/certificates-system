@@ -36,19 +36,23 @@ public static class PdfService
 
         return studentsInfo.ToArray();
     }
-
+    
+    
+    // Get PDF text with Spire.PDF
+    // OTHER OPTIONS: PDFTron, PDFPig
+    
     private static string GetPdfText(Stream pdfStream)
     {
         var pdfDocument = new PdfDocument();
         pdfDocument.LoadFromStream(pdfStream);
-
+    
         var text = new StringBuilder();
         foreach (PdfPageBase page in pdfDocument.Pages)
         {
             text.Append(page.ExtractText());
         }
         pdfDocument.Close();
-
+    
         return text.ToString();
     }
 
