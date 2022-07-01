@@ -2,22 +2,23 @@
 using CertificatesSystem.Models.DataModels;
 using CertificatesSystem.WebUI.ViewModels;
 
-namespace CertificatesSystem.WebUI.Mappings;
-
-public class ManagerMapping : Profile
+namespace CertificatesSystem.WebUI.Mappings
 {
-    public ManagerMapping()
+    public class ManagerMapping : Profile
     {
-        CreateMap<Manager, ManagerViewModel>();
-        CreateMap<ManagerViewModel, Manager>();
+        public ManagerMapping()
+        {
+            CreateMap<Manager, ManagerViewModel>();
+            CreateMap<ManagerViewModel, Manager>();
+        }
     }
-}
 
-public class ManagerFormMapping : Profile
-{
-    public ManagerFormMapping()
+    public class ManagerFormMapping : Profile
     {
-        CreateMap<Manager, ManagerFormViewModel>();
-        CreateMap<ManagerFormViewModel, Manager>();
+        public ManagerFormMapping()
+        {
+            CreateMap<Manager, ManagerFormViewModel>();
+            CreateMap<ManagerFormViewModel, Manager>();
+        }
     }
 }

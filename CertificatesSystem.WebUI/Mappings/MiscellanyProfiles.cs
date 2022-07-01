@@ -2,22 +2,23 @@
 using CertificatesSystem.Models.DataModels;
 using CertificatesSystem.WebUI.ViewModels;
 
-namespace CertificatesSystem.WebUI.Mappings;
-
-public class GradeMapping : Profile
+namespace CertificatesSystem.WebUI.Mappings
 {
-    public GradeMapping()
+    public class GradeMapping : Profile
     {
-        CreateMap<Grade, GradeViewModel>();
-        CreateMap<GradeViewModel, Grade>();
+        public GradeMapping()
+        {
+            CreateMap<Grade, GradeViewModel>();
+            CreateMap<GradeViewModel, Grade>();
+        }
     }
-}
 
-public class SectionMapping : Profile
-{
-    public SectionMapping()
+    public class SectionMapping : Profile
     {
-        CreateMap<Section, SectionViewModel>();
-        CreateMap<SectionViewModel, Section>();
+        public SectionMapping()
+        {
+            CreateMap<Section, SectionViewModel>();
+            CreateMap<SectionViewModel, Section>();
+        }
     }
 }

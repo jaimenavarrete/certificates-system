@@ -1,8 +1,9 @@
-﻿namespace CertificatesSystem.Models.Exceptions;
-
-public class LogicException : Exception
+﻿namespace CertificatesSystem.Models.Exceptions
 {
-    public LogicException() {}
+    public class LogicException : Exception
+    {
+        public LogicException() {}
     
-    public LogicException(string message) : base(message) {}
+        public LogicException(string message) : base(message) {}
+    }
 }

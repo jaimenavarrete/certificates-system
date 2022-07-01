@@ -2,31 +2,32 @@
 using CertificatesSystem.Models.DataModels;
 using CertificatesSystem.WebUI.ViewModels;
 
-namespace CertificatesSystem.WebUI.Mappings;
-
-public class EnrollmentMapping : Profile
+namespace CertificatesSystem.WebUI.Mappings
 {
-    public EnrollmentMapping()
+    public class EnrollmentMapping : Profile
     {
-        CreateMap<Enrollment, EnrolledStudentsListViewModel>();
-        CreateMap<EnrolledStudentsListViewModel, Enrollment>();
+        public EnrollmentMapping()
+        {
+            CreateMap<Enrollment, EnrolledStudentsListViewModel>();
+            CreateMap<EnrolledStudentsListViewModel, Enrollment>();
+        }
     }
-}
 
-public class EnrollmentFormMapping : Profile
-{
-    public EnrollmentFormMapping()
+    public class EnrollmentFormMapping : Profile
     {
-        CreateMap<Enrollment, EnrollmentFormViewModel>();
-        CreateMap<EnrollmentFormViewModel, Enrollment>();
+        public EnrollmentFormMapping()
+        {
+            CreateMap<Enrollment, EnrollmentFormViewModel>();
+            CreateMap<EnrollmentFormViewModel, Enrollment>();
+        }
     }
-}
 
-public class EnrollmentByPdfFormMapping : Profile
-{
-    public EnrollmentByPdfFormMapping()
+    public class EnrollmentByPdfFormMapping : Profile
     {
-        CreateMap<Enrollment, EnrollmentByPdfFormViewModel>();
-        CreateMap<EnrollmentByPdfFormViewModel, Enrollment>();
+        public EnrollmentByPdfFormMapping()
+        {
+            CreateMap<Enrollment, EnrollmentByPdfFormViewModel>();
+            CreateMap<EnrollmentByPdfFormViewModel, Enrollment>();
+        }
     }
 }

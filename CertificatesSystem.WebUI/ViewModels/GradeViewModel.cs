@@ -1,7 +1,8 @@
-﻿namespace CertificatesSystem.WebUI.ViewModels;
-
-public class GradeViewModel
+﻿namespace CertificatesSystem.WebUI.ViewModels
 {
-    public int Id { get; set; }
-    public string Name { get; set; } = null!;
+    public class GradeViewModel
+    {
+        public int Id { get; set; }
+        public string Name { get; set; } = null!;
+    }
 }

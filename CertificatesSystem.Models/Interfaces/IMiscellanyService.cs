@@ -1,10 +1,11 @@
 ﻿using CertificatesSystem.Models.DataModels;
 
-namespace CertificatesSystem.Models.Interfaces;
-
-public interface IMiscellanyService
+namespace CertificatesSystem.Models.Interfaces
 {
-    Task<List<Grade>> GetGrades();
+    public interface IMiscellanyService
+    {
+        Task<List<Grade>> GetGrades();
 
-    Task<Grade?> GetGradeById(int id);
+        Task<Grade?> GetGradeById(int id);
+    }
 }

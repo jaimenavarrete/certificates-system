@@ -1,24 +1,25 @@
-﻿namespace CertificatesSystem.Services.Common;
-
-public static class DateService
+﻿namespace CertificatesSystem.Services.Common
 {
-    private static readonly string[] Months = { "enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre" };
-
-    public static string Convert(DateTime date, bool isUpper)
+    public static class DateService
     {
-        var dayInLetters = NumberToLettersService.Convert(date.Date.Day, false);
-        var monthInLetters = MonthToLetters(date.Date.Month);
-        var yearInLetters = NumberToLettersService.Convert(date.Date.Year, false);
+        private static readonly string[] Months = { "enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre" };
 
-        var dateInLetters = $"{dayInLetters} días del mes de {monthInLetters} del año {yearInLetters}";
-        var dateInLettersReplaced = dateInLetters.Replace("  ", " ").Trim();
+        public static string Convert(DateTime date, bool isUpper)
+        {
+            var dayInLetters = NumberToLettersService.Convert(date.Date.Day, false);
+            var monthInLetters = MonthToLetters(date.Date.Month);
+            var yearInLetters = NumberToLettersService.Convert(date.Date.Year, false);
 
-        return isUpper ? dateInLettersReplaced.ToUpper() : dateInLettersReplaced;
-    }
+            var dateInLetters = $"{dayInLetters} días del mes de {monthInLetters} del año {yearInLetters}";
+            var dateInLettersReplaced = dateInLetters.Replace("  ", " ").Trim();
 
-    private static string MonthToLetters(int num)
-    {
-        var monthInLetters = Months[num - 1];
-        return monthInLetters;
+            return isUpper ? dateInLettersReplaced.ToUpper() : dateInLettersReplaced;
+        }
+
+        private static string MonthToLetters(int num)
+        {
+            var monthInLetters = Months[num - 1];
+            return monthInLetters;
+        }
     }
 }
