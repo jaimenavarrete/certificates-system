@@ -2,6 +2,7 @@
 using CertificatesSystem.Models.DataModels;
 using CertificatesSystem.Models.Exceptions;
 using CertificatesSystem.Models.Interfaces;
+using CertificatesSystem.Models.QueryFilters;
 using CertificatesSystem.WebUI.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,19 +20,41 @@ namespace CertificatesSystem.WebUI.Controllers
         }
     
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int page)
         {
-            var studentsList = await _studentsService.GetAll();
-            var studentsListViewModel = _mapper.Map<List<StudentViewModel>>(studentsList);
-        
-            var viewModel = new StudentsListViewModel()
+            try
             {
-                StudentsList = studentsListViewModel
-            };
+                var pagination = await GetPagination(page);
+                var paginationViewModel = _mapper.Map<PaginationViewModel>(pagination);
+                var studentsList = await _studentsService.GetAll(pagination);
+                var studentsListViewModel = _mapper.Map<List<StudentViewModel>>(studentsList);
+
+                var viewModel = new StudentsListViewModel
+                {
+                    StudentsList = studentsListViewModel,
+                    Pagination = paginationViewModel
+                };
         
-            return View(viewModel);
+                return View(viewModel);
+            }
+            catch(BusinessException ex)
+            {
+                TempData["Error"] = ex.Message;
+                return RedirectToAction("Index", new { page = 1 });
+            }
         }
-    
+
+        private async Task<PaginationQueryFilter> GetPagination(int page)
+        {
+            var rowsAmount = await _studentsService.GetStudentsAmount();
+            var pagination = new PaginationQueryFilter(rowsAmount, page);
+
+            if (page > pagination.NumberOfPages || page < 1 )
+                throw new BusinessException("La página a la que está accediendo no existe");
+
+            return pagination;
+        }
+
         [HttpGet]
         public async Task<StudentViewModel?> GetByNie(int nie)
         {
@@ -62,7 +85,7 @@ namespace CertificatesSystem.WebUI.Controllers
             catch(BusinessException ex)
             {
                 TempData["Error"] = ex.Message;
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { page = 1 });
             }
         }
     
@@ -77,12 +100,12 @@ namespace CertificatesSystem.WebUI.Controllers
 
                 if (result) TempData["Success"] = "El estudiante se editó correctamente.";
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { page = 1 });
             }
             catch(BusinessException ex)
             {
                 TempData["Error"] = ex.Message;
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { page = 1 });
             }
         }
     
@@ -93,7 +116,7 @@ namespace CertificatesSystem.WebUI.Controllers
 
             if (result) TempData["Success"] = "El estudiante se borró correctamente.";
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { page = 1 });
         }
     }
 }

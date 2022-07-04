@@ -5,6 +5,8 @@
         public List<StudentViewModel> StudentsList { get; set; }
 
         public StudentFormViewModel StudentForm { get; set; }
+
+        public PaginationViewModel Pagination { get; set; }
     }
 
     public class StudentFormViewModel : StudentViewModel

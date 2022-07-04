@@ -2,16 +2,8 @@
 {
     public class StudentQueryFilter
     {
-        public string SearchText { get; set; }
-    
-        public OrderBy OrderBy { get; set; }
-    }
+        public int? Nie { get; set; }
 
-    public enum OrderBy
-    {
-        DateAsc = 1,
-        DateDesc = 2,
-        PopularityAsc = 3,
-        PopularityDesc = 4
+        public int Page { get; set; } = 1;
     }
 }

@@ -19,6 +19,46 @@
     <i class="las la-plus fs-4"></i> Agregar estudiante
 </button>
 
+<nav class="d-flex justify-content-center mb-3" aria-label="pagination-menu">
+    <ul class="pagination">
+        <li class="page-item @(Model.Pagination.IsFirstPage ? "disabled" : "")">
+            <a asp-controller="Students" asp-action="Index" asp-route-page="1" class="page-link">Primera</a>
+        </li>
+        <li class="page-item @(Model.Pagination.IsFirstPage ? "disabled" : "")">
+            <a asp-controller="Students" asp-action="Index" asp-route-page="@(Model.Pagination.CurrentPage - 1)" class="page-link">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        
+        @for (var index = Model.Pagination.CurrentPage - 2; index <= Model.Pagination.CurrentPage + 2; index++)
+        {
+            @if (index > Model.Pagination.NumberOfPages || index < 1) continue;
+            
+            @if (index == Model.Pagination.CurrentPage)
+            {
+                <li class="page-item active" aria-current="page">
+                    <span class="page-link">@index</span>
+                </li>
+            }
+            else
+            {
+                <li class="page-item">
+                    <a asp-controller="Students" asp-action="Index" asp-route-page="@index" class="page-link">@index</a>
+                </li>
+            }
+        }
+        
+        <li class="page-item @(Model.Pagination.IsLastPage ? "disabled" : "")">
+            <a asp-controller="Students" asp-action="Index" asp-route-page="@(Model.Pagination.CurrentPage + 1)" class="page-link">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+        <li class="page-item @(Model.Pagination.IsLastPage ? "disabled" : "")">
+            <a asp-controller="Students" asp-action="Index" asp-route-page="@Model.Pagination.NumberOfPages" class="page-link">Última</a>
+        </li>
+    </ul>
+</nav>
+
 <div class="table-responsive">
     <table class="table table-hover table-striped">
         <thead>

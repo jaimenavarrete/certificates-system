@@ -48,6 +48,11 @@ app.MapControllerRoute(
     defaults: new { controller = "Enrollment", action = "Index", year = DateTime.Now.Year, grade = 1 });
 
 app.MapControllerRoute(
+    name: "students",
+    pattern: "Students/{page}",
+    defaults: new { controller = "Students", action = "Index", page = 1 });
+
+app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 

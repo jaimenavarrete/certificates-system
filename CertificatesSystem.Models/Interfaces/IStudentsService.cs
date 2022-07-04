@@ -5,11 +5,11 @@ namespace CertificatesSystem.Models.Interfaces
 {
     public interface IStudentsService
     {
-        Task<List<Student>> GetAll();
+        Task<List<Student>> GetAll(PaginationQueryFilter pagination);
 
-        Task<Student> GetSearch(StudentQueryFilter filters);
+        Task<int> GetStudentsAmount();
 
-        Task<Student?> GetById(int id);
+        Task<Student> GetSearch(int nie);
 
         Task<Student?> GetByNie(int nie);
 

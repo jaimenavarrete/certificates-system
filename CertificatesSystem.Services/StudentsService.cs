@@ -16,10 +16,18 @@ namespace CertificatesSystem.Services
         {
             _context = context;
         }
-    
-        public async Task<List<Student>> GetAll() => await _context.Students.ToListAsync();
 
-        public Task<Student> GetSearch(StudentQueryFilter filters) => throw new NotImplementedException();
+        public async Task<List<Student>> GetAll(PaginationQueryFilter pagination)
+        {
+            return await _context.Students
+                .OrderBy(s => s.Id)
+                .Skip(pagination.StartPosition - 1)
+                .Take(pagination.RowsPerPage).ToListAsync();
+        }
+
+        public async Task<int> GetStudentsAmount() => await _context.Students.CountAsync();
+
+        public Task<Student> GetSearch(int nie) => throw new NotImplementedException();
 
         public async Task<Student?> GetById(int id) => await _context.Students.FindAsync(id);
 
