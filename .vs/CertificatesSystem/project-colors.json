@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "641c2c84-7687-449f-a83a-208af7c4ccca": {
+      "ProjectGuid": "641c2c84-7687-449f-a83a-208af7c4ccca",
+      "DisplayName": "CertificatesSystem.WebUI",
+      "ColorIndex": 0
+    }
+  },
+  "NextColorIndex": 1
+}

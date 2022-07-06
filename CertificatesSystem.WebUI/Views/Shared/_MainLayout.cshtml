@@ -1,0 +1,18 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+<h2 class="card-title h4 text-primary fw-bold border-bottom border-2 border-primary mb-2">Panel de administración</h2>
+
+<div class="row py-4">
+    <div class="col-md-3 mb-4 mb-md-0">
+        <partial name="_ManageNavMenu"/>
+    </div>
+    <div class="col-md-9">
+        @RenderBody()
+    </div>
+</div>
+
+@section Scripts {
+    @await RenderSectionAsync("Scripts", required: false)
+}

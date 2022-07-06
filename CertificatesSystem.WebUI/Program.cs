@@ -1,8 +1,9 @@
-using CertificatesSystem.Models.Data.Database;
+﻿using CertificatesSystem.Models.Data.Database;
 using CertificatesSystem.Models.Interfaces;
 using CertificatesSystem.Services;
 using Microsoft.EntityFrameworkCore;
 using Rotativa.AspNetCore;
+using CertificatesSystem.Models.Data.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 var env = builder.Environment;
@@ -19,11 +20,41 @@ services.AddTransient<IManagersService, ManagersService>();
 services.AddTransient<IEnrollmentService, EnrollmentService>();
 services.AddTransient<IMiscellanyService, MiscellanyService>();
 
-// Database context
 var connectionString = configuration.GetConnectionString("CertificatesSystemPostgresql");
 
+// Database context
 // services.AddDbContext<CertificatesSystemContext>(options => options.UseSqlServer(connectionString));
 services.AddDbContext<CertificatesSystemContext>(options => options.UseNpgsql(connectionString));
+
+// Identity context
+services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(connectionString));
+
+// Identity implementation and configuration
+services.AddDefaultIdentity<ApplicationUser>(options =>
+{
+    options.SignIn.RequireConfirmedAccount = true;
+
+    options.Password.RequireDigit = true;
+    options.Password.RequireLowercase = true;
+    options.Password.RequireNonAlphanumeric = true;
+    options.Password.RequireUppercase = true;
+    options.Password.RequiredLength = 6;
+    options.Password.RequiredUniqueChars = 1;
+
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(60);
+    options.Lockout.MaxFailedAccessAttempts = 5;
+    options.Lockout.AllowedForNewUsers = true;
+
+    options.User.AllowedUserNameCharacters = "abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ0123456789-._@+";
+    options.User.RequireUniqueEmail = true;
+})
+.AddEntityFrameworkStores<ApplicationDbContext>();
+
+//services.ConfigureApplicationCookie(config =>
+//{
+//    config.Cookie.Name = "Identity.Cookie";
+//    config.LoginPath = "/Account/Login";
+//});
 
 var app = builder.Build();
 
@@ -39,17 +70,23 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllerRoute(
-    name: "enrollment",
-    pattern: "Enrollment/{year}/{grade}",
-    defaults: new { controller = "Enrollment", action = "Index", year = DateTime.Now.Year, grade = 1 });
+app.UseEndpoints(endpoint =>
+{
+    endpoint.MapControllerRoute(
+        name: "enrollment",
+        pattern: "Enrollment/{year}/{grade}",
+        defaults: new { controller = "Enrollment", action = "Index", year = DateTime.Now.Year, grade = 1 });
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    endpoint.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Home}/{action=Index}/{id?}");
+
+    // Map Identity Razor Pages
+    endpoint.MapRazorPages();
+});
 
 // Rotativa configuration
 RotativaConfiguration.Setup(env.WebRootPath,"../Rotativa");
