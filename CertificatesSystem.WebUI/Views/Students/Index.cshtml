@@ -132,7 +132,7 @@
         const getStudentInfo = (e) => {
             const studentRow = e.currentTarget.closest('tr').children;
             const nie = studentRow[1].outerText;
-            const url = `${baseUrl}/Students/GetByNie?nie=${nie}`;
+            const url = `${baseUrl}/Students/GetByNie/?nie=${nie}`;
             
             fetch(url)
                 .then(data => data.json())

@@ -61,6 +61,7 @@ namespace CertificatesSystem.Services
             student.PhotoId = await PhotoService.SavePhotoAsFile(photoBase64);
             student.Name = MakeFirstWordLetterUppercase(student.Name);
             student.Surname = MakeFirstWordLetterUppercase(student.Surname);
+            student.Birthdate = student.Birthdate?.ToUniversalTime();
 
             _context.Add(student);
             var rows = await _context.SaveChangesAsync();
@@ -91,7 +92,7 @@ namespace CertificatesSystem.Services
             oldStudent.Nie = student.Nie;
             oldStudent.Name = MakeFirstWordLetterUppercase(student.Name);
             oldStudent.Surname = MakeFirstWordLetterUppercase(student.Surname);
-            oldStudent.Birthdate = student.Birthdate;
+            oldStudent.Birthdate = student.Birthdate?.ToUniversalTime();
             oldStudent.Address = student.Address;
 
             _context.Update(oldStudent);
