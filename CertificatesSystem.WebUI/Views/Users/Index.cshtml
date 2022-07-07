@@ -1,0 +1,116 @@
+﻿@model UsersListViewModel
+@{
+    Layout = "_MainLayout";
+
+    ViewData["Title"] = "Lista de usuarios";
+    ViewData["ActivePage"] = ManageNavPages.UsersList;
+}
+
+<!-- Modal -->
+<partial name="_UsersListModal" model="Model" />
+
+<h3 class="fw-bold display-6 mb-4 border-bottom border-3 border-dark text-center">Listado de usuarios</h3>
+
+<!-- Status message alert -->
+<partial name="_StatusMessage" />
+
+<section class="d-flex justify-content-between">
+    <button type="button" id="button-create" class="btn btn-success mb-4" data-bs-toggle="modal" data-bs-target="#form-user-modal">
+        <i class="las la-plus fs-4"></i> Agregar usuario
+    </button>
+</section>
+
+<div class="table-responsive">
+    <table class="table table-hover table-striped">
+        <thead>
+            <tr class="table-primary">
+                <th scope="col">Nombre de usuario</th>
+                <th scope="col">Email</th>
+                <th scope="col">Rol</th>
+                <th scope="col">Verificado</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var user in Model.UsersList)
+            {
+                <tr>
+                    <td>@user.UserName</td>
+                    <td>@user.Email</td>
+                    <td class="@(user.Role == "Admin" ? "fw-bold text-danger" : "")">@user.Role</td>
+
+                    @if(user.EmailConfirmed)
+                    {
+                        <td class="fw-bold text-success">Si</td>
+                    }
+                    else
+                    {
+                        <td class="fw-bold text-danger">No</td>
+                    }
+
+                    @if(user.LockedOut)
+                    {
+                        <td class="fw-bold text-danger">Bloqueado</td>
+                    }
+                    else
+                    {
+                        <td>Desbloqueado</td>
+                    }
+
+                    <td>
+                        <div class="d-flex">
+                            <form asp-controller="Users" asp-action="ChangeUserLockState" method="post" class="button-block-user">
+                                <input type="hidden" value="@user.Id" name="userId" />
+                                <button class="bg-transparent border-0 p-0"><i class="las la-lock text-warning fs-3 px-1"></i></button>
+                            </form>
+                            <form asp-controller="Users" asp-action="DeleteUser" method="post" class="delete-element-form">
+                                <input type="hidden" value="@user.Id" name="userId" />
+                                <button class="bg-transparent border-0 p-0"><i class="las la-trash text-danger fs-3 px-1"></i></button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+    <script>
+        // Block user button confirm dialog
+        const btnCreate = document.getElementById('button-create');
+        const formCreate = document.getElementById('form-create');        
+        const btnBlockUser = document.querySelectorAll('.button-block-user');
+        
+        btnCreate.addEventListener('click', () => clearInputs());
+
+        btnBlockUser.forEach((form) => {
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+
+                Swal.fire({
+                    title: '¿Está seguro?',
+                    text: 'Cambiará el estado de bloqueo del usuario.',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, cambiar',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                });
+            });
+        });
+        
+        formCreate.addEventListener('submit', (e) => {
+            e.preventDefault();
+    
+            // if (validateForm()) {
+                formCreate.submit();
+            // }
+        });
+    </script>
+}

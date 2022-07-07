@@ -20,6 +20,7 @@ services.AddTransient<IStudentsService, StudentsService>();
 services.AddTransient<IManagersService, ManagersService>();
 services.AddTransient<IEnrollmentService, EnrollmentService>();
 services.AddTransient<IMiscellanyService, MiscellanyService>();
+services.AddTransient<IUsersService, UsersService>();
 
 var connectionString = configuration.GetConnectionString("CertificatesSystemPostgresqlHeroku");
 
