@@ -12,6 +12,7 @@ var configuration = builder.Configuration;
 
 // Add services to the container.
 services.AddControllersWithViews().AddRazorRuntimeCompilation();
+services.AddRazorPages();
 
 // Dependency Injection - Services
 services.AddAutoMapper(typeof(Program));
@@ -20,7 +21,7 @@ services.AddTransient<IManagersService, ManagersService>();
 services.AddTransient<IEnrollmentService, EnrollmentService>();
 services.AddTransient<IMiscellanyService, MiscellanyService>();
 
-var connectionString = configuration.GetConnectionString("CertificatesSystemPostgresql");
+var connectionString = configuration.GetConnectionString("CertificatesSystemPostgresqlHeroku");
 
 // Database context
 // services.AddDbContext<CertificatesSystemContext>(options => options.UseSqlServer(connectionString));
@@ -48,13 +49,16 @@ services.AddDefaultIdentity<ApplicationUser>(options =>
     options.User.AllowedUserNameCharacters = "abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ0123456789-._@+";
     options.User.RequireUniqueEmail = true;
 })
+.AddRoles<ApplicationRole>()
 .AddEntityFrameworkStores<ApplicationDbContext>();
 
-//services.ConfigureApplicationCookie(config =>
-//{
-//    config.Cookie.Name = "Identity.Cookie";
-//    config.LoginPath = "/Account/Login";
-//});
+services.ConfigureApplicationCookie(config =>
+{
+    config.Cookie.Name = "Identity.Cookie";
+    config.LoginPath = "/Identity/Account/Login";
+    config.AccessDeniedPath = "/Identity/Account/AccessDenied";
+    config.SlidingExpiration = true;
+});
 
 var app = builder.Build();
 

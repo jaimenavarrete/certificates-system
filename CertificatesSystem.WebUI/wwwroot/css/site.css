@@ -20,6 +20,7 @@ body {
 
   min-height: 100vh;
   position: relative;
+  padding-bottom: 4em;
 }
 
 body::after {
@@ -35,4 +36,10 @@ body::after {
 
 .form-check-input {
   cursor: pointer;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
 }
