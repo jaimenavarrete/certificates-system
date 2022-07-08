@@ -8,6 +8,7 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using CertificatesSystem.Models.Data.Identity;
+using CertificatesSystem.Models.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -20,16 +21,16 @@ namespace CertificatesSystem.WebUI.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly IEmailSender _emailSender;
+        private readonly IEmailService _emailService;
 
         public EmailModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            IEmailSender emailSender)
+            IEmailService emailService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _emailSender = emailSender;
+            _emailService = emailService;
         }
 
         /// <summary>
@@ -70,7 +71,7 @@ namespace CertificatesSystem.WebUI.Areas.Identity.Pages.Account.Manage
             /// </summary>
             [Required]
             [EmailAddress]
-            [Display(Name = "New email")]
+            [Display(Name = "Nuevo email")]
             public string NewEmail { get; set; }
         }
 
@@ -92,7 +93,7 @@ namespace CertificatesSystem.WebUI.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound($"No fue posible cargar el usuario con el ID: '{_userManager.GetUserId(User)}'.");
             }
 
             await LoadAsync(user);
@@ -104,7 +105,7 @@ namespace CertificatesSystem.WebUI.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound($"No fue posible cargar el usuario con el ID: '{_userManager.GetUserId(User)}'.");
             }
 
             if (!ModelState.IsValid)
@@ -124,16 +125,16 @@ namespace CertificatesSystem.WebUI.Areas.Identity.Pages.Account.Manage
                     pageHandler: null,
                     values: new { area = "Identity", userId = userId, email = Input.NewEmail, code = code },
                     protocol: Request.Scheme);
-                await _emailSender.SendEmailAsync(
+                await _emailService.SendEmailAsync(
                     Input.NewEmail,
-                    "Confirm your email",
-                    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    "Confirmación de Email - Sistema de Constancias René Valle",
+                    $"Por favor confirme su cuenta dando <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>click aquí</a>.");
 
-                StatusMessage = "Confirmation link to change email sent. Please check your email.";
+                StatusMessage = "El enlace de confirmación para cambiar el email, ha sido enviado de forma exitosa. Por favor revise su correo.";
                 return RedirectToPage();
             }
 
-            StatusMessage = "Your email is unchanged.";
+            StatusMessage = "Su email no ha podido ser cambiado.";
             return RedirectToPage();
         }
 
@@ -142,7 +143,7 @@ namespace CertificatesSystem.WebUI.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound($"No fue posible cargar el usuario con el ID: '{_userManager.GetUserId(User)}'.");
             }
 
             if (!ModelState.IsValid)
@@ -160,12 +161,12 @@ namespace CertificatesSystem.WebUI.Areas.Identity.Pages.Account.Manage
                 pageHandler: null,
                 values: new { area = "Identity", userId = userId, code = code },
                 protocol: Request.Scheme);
-            await _emailSender.SendEmailAsync(
+            await _emailService.SendEmailAsync(
                 email,
-                "Confirm your email",
-                $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                "Confirmación de Email - Sistema de Constancias René Valle",
+                $"Por favor confirme su cuenta dando <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>click aquí</a>.");
 
-            StatusMessage = "Verification email sent. Please check your email.";
+            StatusMessage = "El enlace de confirmación para cambiar el email, ha sido enviado de forma exitosa. Por favor revise su correo.";
             return RedirectToPage();
         }
     }

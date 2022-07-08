@@ -13,8 +13,8 @@
             <form id="account" method="post">
                 
                 <h2 class="text-center">Use su cuenta para ingresar</h2>
-
                 <hr />
+                
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-floating mb-3">
                     <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" />
@@ -35,14 +35,11 @@
                     </div>
                 </div>
                 <div>
-                    <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary mb-3">Ingresar</button>
+                    <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary mb-3"><i class="las la-sign-in-alt fs-4"></i> Ingresar</button>
                 </div>
                 <div class="text-center">
                     <p>
-                        <a id="forgot-password" asp-page="./ForgotPassword">Olvidó su contraseña?</a>
-                    </p>
-                    <p>
-                        <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Reenviar email de confirmación</a>
+                        <a id="forgot-password" asp-page="./ForgotPassword">¿Olvidó su contraseña?</a>
                     </p>
                 </div>
             </form>

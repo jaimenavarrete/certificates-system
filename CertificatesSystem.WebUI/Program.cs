@@ -21,6 +21,7 @@ services.AddTransient<IManagersService, ManagersService>();
 services.AddTransient<IEnrollmentService, EnrollmentService>();
 services.AddTransient<IMiscellanyService, MiscellanyService>();
 services.AddTransient<IUsersService, UsersService>();
+services.AddTransient<IEmailService, EmailService>();
 
 var connectionString = configuration.GetConnectionString("CertificatesSystemPostgresqlHeroku");
 

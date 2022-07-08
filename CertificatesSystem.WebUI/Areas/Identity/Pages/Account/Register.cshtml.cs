@@ -9,11 +9,6 @@ namespace CertificatesSystem.WebUI.Areas.Identity.Pages.Account
 {
     public class RegisterModel : PageModel
     {
-        public RegisterModel()
-        {
-
-        }
-
         public IActionResult OnGetAsync()
         {
             return NotFound();

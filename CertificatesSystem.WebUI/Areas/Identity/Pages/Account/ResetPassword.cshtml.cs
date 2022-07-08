@@ -76,7 +76,7 @@ namespace CertificatesSystem.WebUI.Areas.Identity.Pages.Account
         {
             if (code == null)
             {
-                return BadRequest("A code must be supplied for password reset.");
+                return BadRequest("Se debe colocar un código para poder cambiar la contraseña.");
             }
             else
             {
