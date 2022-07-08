@@ -78,6 +78,53 @@ namespace CertificatesSystem.WebUI.Controllers
                 return RedirectToAction("Index");
             }
         }
+        
+        [HttpGet]
+        public async Task<IActionResult> EnrollmentCertificate()
+        {
+            var managers = await _managersService.GetAll();
+            var managersViewModel = _mapper.Map<List<ManagerViewModel>>(managers);
+
+            var viewModel = new CertificateViewModel
+            {
+                CurrentYear = DateTime.Now.Year,
+                ManagersList = managersViewModel
+            };
+        
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EnrollmentCertificate(StudyCertificateFormViewModel model)
+        {
+            try
+            {
+                var studentViewModel = await GetStudentViewModel(model.Nie);
+                var managerViewModel = await GetManagerViewModel(model.ManagerId);
+                var enrollment = await GetEnrollment(studentViewModel.Id ?? 0, model.Year);
+                var gradeViewModel = _mapper.Map<GradeViewModel>(enrollment.Grade);
+
+                var viewModel = new StudyCertificateReportViewModel
+                {
+                    Student = studentViewModel,
+                    AcademicPerformance = model.AcademicPerformance,
+                    Behaviour = model.Behaviour,
+                    Manager = managerViewModel,
+                    Grade = gradeViewModel,
+                    Section = enrollment.Section.Name,
+                    Year = model.Year,
+                    IsCurrentYear = model.Year >= DateTime.Now.Year,
+                    CurrentDateInLetters = DateService.Convert(DateTime.Now, false)
+                };
+
+                return new ViewAsPdf("Reports/EnrollmentCertificate", viewModel);
+            }
+            catch (BusinessException ex)
+            {
+                TempData["Error"] = ex.Message;
+                return RedirectToAction("Index");
+            }
+        }
     
         [HttpGet]
         public IActionResult GradesCertificate()

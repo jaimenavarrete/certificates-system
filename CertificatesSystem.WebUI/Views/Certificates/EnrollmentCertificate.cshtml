@@ -1,0 +1,60 @@
+﻿@model CertificateViewModel
+@{
+    ViewData["ActivePage"] = ManageNavPages.Certificates;
+    ViewData["CertificateMenu"] = "EnrollmentCertificate";
+}
+
+<partial name="_CertificatesMenu"/>
+
+<form asp-controller="Certificates" asp-action="EnrollmentCertificate" method="post" target="_blank" class="border border-2 border-primary rounded px-1 py-2 overflow-auto text-nowrap mb-4">
+    <!-- Status message alert -->
+    <partial name="_StatusMessage" />
+    
+    <div class="form-group has-danger p-2 mb-3">
+        <label class="col-form-label fw-bold" for="input-nie">NIE:</label>
+        <input type="number" name="Nie" id="input-nie" class="form-control input-create">
+        <div id="feedback-nie" class="invalid-feedback"></div>
+    </div>
+    
+    <div class="form-group has-danger p-2 mb-3">
+        <label class="col-form-label fw-bold" for="input-behaviour">Conducta:</label>
+        <select name="Behaviour" id="input-behaviour" class="form-select input-create">
+            <option value="Excelente">Excelente</option>
+            <option value="Muy buena">Muy buena</option>
+            <option value="Buena">Buena</option>
+        </select>
+        <div id="feedback-behaviour" class="invalid-feedback"></div>
+    </div>
+    
+    <div class="form-group has-danger p-2 mb-3">
+        <label class="col-form-label fw-bold" for="input-manager">Rendimiento académico:</label>
+        <select name="AcademicPerformance" id="input-academic-performance" class="form-select input-create">
+            <option value="Excelente">Excelente</option>
+            <option value="Muy bueno">Muy bueno</option>
+            <option value="Bueno">Bueno</option>
+            <option value="Aceptable">Aceptable</option>
+        </select>
+        <div id="feedback-academic-performance" class="invalid-feedback"></div>
+    </div>
+
+    <div class="form-group has-danger p-2 mb-3">
+        <label class="col-form-label fw-bold" for="input-year">Año de estudio:</label>
+        <input type="number" name="Year" id="input-year" class="form-control input-create" value="@Model.CurrentYear">
+        <div id="feedback-year" class="invalid-feedback"></div>
+    </div>
+
+    <div class="form-group has-danger p-2 mb-3">
+        <label class="col-form-label fw-bold" for="input-manager">Directivo que firmará:</label>
+        <select name="ManagerId" id="input-manager" class="form-select input-create">
+            @foreach (var manager in Model.ManagersList)
+            {
+                <option value="@manager.Id">@manager.Name @manager.Surname</option>
+            }
+        </select>
+        <div id="feedback-manager" class="invalid-feedback"></div>
+    </div>
+    
+    <div class="d-flex justify-content-end">
+        <button type="submit" class="btn btn-success m-2"><i class="las la-folder-plus fs-4"></i> Crear constancia</button>
+    </div>
+</form>

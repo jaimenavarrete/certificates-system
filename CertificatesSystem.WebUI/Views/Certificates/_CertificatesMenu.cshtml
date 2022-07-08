@@ -6,7 +6,7 @@
     <a asp-controller="Certificates" asp-action="Index" class="btn btn-outline-primary rounded px-5 fw-bold @((string?)ViewData["CertificateMenu"] == "StudyCertificate" ? "active" : "")">
         Constancia de estudio
     </a>
-    <a asp-controller="Certificates" asp-action="Index" class="btn btn-outline-primary rounded px-5 fw-bold @((string?)ViewData["CertificateMenu"] == "EnrollmentCertificate" ? "active" : "")">
+    <a asp-controller="Certificates" asp-action="EnrollmentCertificate" class="btn btn-outline-primary rounded px-5 fw-bold @((string?)ViewData["CertificateMenu"] == "EnrollmentCertificate" ? "active" : "")">
         Constancia de matrícula
     </a>
     <a asp-controller="Certificates" asp-action="GradesCertificate" class="btn btn-outline-primary rounded px-5 fw-bold @((string?)ViewData["CertificateMenu"] == "GradesCertificate" ? "active" : "")">
