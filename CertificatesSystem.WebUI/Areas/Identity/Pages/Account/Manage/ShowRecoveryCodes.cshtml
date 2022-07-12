@@ -1,18 +1,20 @@
 ﻿@page
 @model ShowRecoveryCodesModel
 @{
-    ViewData["Title"] = "Recovery codes";
+    ViewData["Title"] = "Códigos de recuperación";
     ViewData["ActivePage"] = "TwoFactorAuthentication";
 }
 
 <partial name="_StatusMessage" for="StatusMessage" />
 <h3>@ViewData["Title"]</h3>
+<hr/>
+
 <div class="alert alert-warning" role="alert">
     <p>
-        <strong>Put these codes in a safe place.</strong>
+        <strong>Coloque estos códigos en un lugar seguro.</strong>
     </p>
     <p>
-        If you lose your device and don't have the recovery codes you will lose access to your account.
+        Si usted pierde su dispositivo y no tiene sus códigos de recuperación, perderá el acceso a su cuenta.
     </p>
 </div>
 <div class="row">

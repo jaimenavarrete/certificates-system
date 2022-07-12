@@ -1,26 +1,28 @@
 ﻿@page
 @model LoginWithRecoveryCodeModel
 @{
-    ViewData["Title"] = "Recovery code verification";
+    ViewData["Title"] = "Verificación de código de recuperación";
 }
 
-<h1>@ViewData["Title"]</h1>
-<hr />
-<p>
-    You have requested to log in with a recovery code. This login will not be remembered until you provide
-    an authenticator app code at log in or disable 2FA and log in again.
-</p>
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-floating">
-                <input asp-for="Input.RecoveryCode" class="form-control" autocomplete="off" />
-                <label asp-for="Input.RecoveryCode" class="form-label"></label>
-                <span asp-validation-for="Input.RecoveryCode" class="text-danger"></span>
-            </div>
-            <button type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
-        </form>
+<h2 class="card-title h4 text-primary fw-bold border-bottom border-2 border-primary mb-2">@ViewData["Title"]</h2>
+
+<div class="text-center py-4">
+    <p>
+        Usted ha solicitado el ingreso con un código de recuperación. Este inicio de sesión no será recordado hasta 
+        que provea un código de app de autenticación o deshabilite el 2FA e ingrese de nuevo.
+    </p>
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-4">
+            <form method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.RecoveryCode" class="form-control" autocomplete="off" />
+                    <label asp-for="Input.RecoveryCode" class="form-label"></label>
+                    <span asp-validation-for="Input.RecoveryCode" class="text-danger"></span>
+                </div>
+                <button type="submit" class="w-100 btn btn-lg btn-primary"><i class="las la-sign-in-alt fs-4"></i> Ingresar</button>
+            </form>
+        </div>
     </div>
 </div>
 

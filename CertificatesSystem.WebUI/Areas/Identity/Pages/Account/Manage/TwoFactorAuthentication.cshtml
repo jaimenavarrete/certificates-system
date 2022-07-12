@@ -2,12 +2,14 @@
 @using Microsoft.AspNetCore.Http.Features
 @model TwoFactorAuthenticationModel
 @{
-    ViewData["Title"] = "Two-factor authentication (2FA)";
+    ViewData["Title"] = "Autenticación en dos pasos (2FA)";
     ViewData["ActivePage"] = ManageNavPages.TwoFactorAuthentication;
 }
 
 <partial name="_StatusMessage" for="StatusMessage" />
 <h3>@ViewData["Title"]</h3>
+<hr>
+
 @{
     var consentFeature = HttpContext.Features.Get<ITrackingConsentFeature>();
     @if (consentFeature?.CanTrack ?? true)
@@ -17,51 +19,60 @@
             if (Model.RecoveryCodesLeft == 0)
             {
                 <div class="alert alert-danger">
-                    <strong>You have no recovery codes left.</strong>
-                    <p>You must <a asp-page="./GenerateRecoveryCodes">generate a new set of recovery codes</a> before you can log in with a recovery code.</p>
+                    <strong>Usted ya no posee códigos de recuperación.</strong>
+                    <p>Deberá <a asp-page="./GenerateRecoveryCodes">generar un nuevo conjunto de códigos de recuperación</a> antes de iniciar sesión con dicho código.</p>
                 </div>
             }
             else if (Model.RecoveryCodesLeft == 1)
             {
                 <div class="alert alert-danger">
-                    <strong>You have 1 recovery code left.</strong>
-                    <p>You can <a asp-page="./GenerateRecoveryCodes">generate a new set of recovery codes</a>.</p>
+                    <strong>Le quedan 1 código de recuperación.</strong>
+                    <p>Puede <a asp-page="./GenerateRecoveryCodes">generar un nuevo conjunto de códigos de recuperación</a>.</p>
                 </div>
             }
             else if (Model.RecoveryCodesLeft <= 3)
             {
                 <div class="alert alert-warning">
-                    <strong>You have @Model.RecoveryCodesLeft recovery codes left.</strong>
-                    <p>You should <a asp-page="./GenerateRecoveryCodes">generate a new set of recovery codes</a>.</p>
+                    <strong>Le quedan @Model.RecoveryCodesLeft códigos de recuperación.</strong>
+                    <p>Debería <a asp-page="./GenerateRecoveryCodes">generar un nuevo conjunto de códigos de recuperación</a>.</p>
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-success">
+                    <strong>Le quedan @Model.RecoveryCodesLeft códigos de recuperación.</strong>
+                    <p>Puede <a asp-page="./GenerateRecoveryCodes">generar un nuevo conjunto de códigos de recuperación</a>.</p>
                 </div>
             }
 
             if (Model.IsMachineRemembered)
             {
                 <form method="post" style="display: inline-block">
-                    <button type="submit" class="btn btn-primary">Forget this browser</button>
+                    <button type="submit" class="btn btn-primary">Olvidar este navegador</button>
                 </form>
             }
-            <a asp-page="./Disable2fa" class="btn btn-primary">Disable 2FA</a>
-            <a asp-page="./GenerateRecoveryCodes" class="btn btn-primary">Reset recovery codes</a>
+            <div class="mb-4 mt-4">
+                <a asp-page="./Disable2fa" class="btn btn-danger"><i class="las la-trash fs-4"></i> Deshabilitar 2FA</a>
+                <a asp-page="./GenerateRecoveryCodes" class="btn btn-outline-warning"><i class="las la-redo-alt fs-4"></i> Reiniciar códigos de recuperación</a>
+            </div>
         }
 
-        <h4>Authenticator app</h4>
+        <h4 class="mb-4">App de autenticación</h4>
         @if (!Model.HasAuthenticator)
         {
-            <a id="enable-authenticator" asp-page="./EnableAuthenticator" class="btn btn-primary">Add authenticator app</a>
+            <a id="enable-authenticator" asp-page="./EnableAuthenticator" class="btn btn-primary"><i class="las la-plus fs-4"></i> Agregar app de autenticación</a>
         }
         else
         {
-            <a id="enable-authenticator" asp-page="./EnableAuthenticator" class="btn btn-primary">Set up authenticator app</a>
-            <a id="reset-authenticator" asp-page="./ResetAuthenticator" class="btn btn-primary">Reset authenticator app</a>
+            <a id="enable-authenticator" asp-page="./EnableAuthenticator" class="btn btn-secondary"><i class="las la-cog fs-4"></i> Configurar app de autenticación</a>
+            <a id="reset-authenticator" asp-page="./ResetAuthenticator" class="btn btn-outline-warning"><i class="las la-redo-alt fs-4"></i> Reiniciar clave de autenticación</a>
         }
     }
     else
     {
         <div class="alert alert-danger">
-            <strong>Privacy and cookie policy have not been accepted.</strong>
-            <p>You must accept the policy before you can enable two factor authentication.</p>
+            <strong>No se ha aceptado la política de privacidad y cookies.</strong>
+            <p>Debe aceptar la política antes de habilitar la autenticación en dos pasos.</p>
         </div>
     }
 }

@@ -9,10 +9,6 @@ namespace CertificatesSystem.WebUI.Areas.Identity.Pages.Account
 {
     public class ExternalLoginModel : PageModel
     {
-        public ExternalLoginModel()
-        {
-        }
-
         public IActionResult OnGet()
         {
             return NotFound();

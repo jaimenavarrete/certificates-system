@@ -55,7 +55,7 @@ namespace CertificatesSystem.WebUI.Areas.Identity.Pages.Account
             [BindProperty]
             [Required]
             [DataType(DataType.Text)]
-            [Display(Name = "Recovery Code")]
+            [Display(Name = "Código de recuperación")]
             public string RecoveryCode { get; set; }
         }
 
@@ -65,7 +65,7 @@ namespace CertificatesSystem.WebUI.Areas.Identity.Pages.Account
             var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
             if (user == null)
             {
-                throw new InvalidOperationException($"Unable to load two-factor authentication user.");
+                throw new InvalidOperationException($"No se pudo cargar el usuario de autenticación en dos pasos.");
             }
 
             ReturnUrl = returnUrl;
@@ -83,7 +83,7 @@ namespace CertificatesSystem.WebUI.Areas.Identity.Pages.Account
             var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
             if (user == null)
             {
-                throw new InvalidOperationException($"Unable to load two-factor authentication user.");
+                throw new InvalidOperationException($"No se pudo cargar el usuario de autenticación en dos pasos.");
             }
 
             var recoveryCode = Input.RecoveryCode.Replace(" ", string.Empty);
@@ -105,7 +105,7 @@ namespace CertificatesSystem.WebUI.Areas.Identity.Pages.Account
             else
             {
                 _logger.LogWarning("Invalid recovery code entered for user with ID '{UserId}' ", user.Id);
-                ModelState.AddModelError(string.Empty, "Invalid recovery code entered.");
+                ModelState.AddModelError(string.Empty, "El código de recuperación ingresado es inválido.");
                 return Page();
             }
         }

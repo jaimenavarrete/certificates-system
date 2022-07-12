@@ -4,8 +4,6 @@ namespace CertificatesSystem.Services.Common
 {
     public static class PhotoService
     {
-        private const string BasePhotoPath = @"C:\Documentos";
-
         public static async Task<string?> SavePhotoAsFile(string photoBase64)
         {
             try
@@ -13,12 +11,14 @@ namespace CertificatesSystem.Services.Common
                 if (string.IsNullOrEmpty(photoBase64)) return null;
 
                 var photoId = Guid.NewGuid().ToString();
-                var photoPath = $@"{BasePhotoPath}\{photoId}.png";
+                var photoName = $@"{photoId}.png";
 
                 var base64Data = Regex.Match(photoBase64, @"data:image/(?<type>.+?),(?<data>.+)").Groups["data"].Value;
                 var binData = Convert.FromBase64String(base64Data);
 
-                await File.WriteAllBytesAsync(photoPath, binData);
+                var photoStream = new MemoryStream(binData);
+
+                await FirebaseService.UploadFile(photoStream, photoName);
 
                 return photoId;
             }
@@ -30,26 +30,29 @@ namespace CertificatesSystem.Services.Common
 
         public static async Task<string?> GetPhotoAsBase64(string? photoId)
         {
-            var photoPath = $@"{BasePhotoPath}\{photoId}.png";
+            var photoName = $@"{photoId}.png";
 
-            if (string.IsNullOrEmpty(photoId) || !File.Exists(photoPath))
+            if (string.IsNullOrEmpty(photoId))
                 return null;
 
-            var binData = await File.ReadAllBytesAsync(photoPath);
-            var base64Data = Convert.ToBase64String(binData);
+            // Get image and transforms to Base64
+            using var client = new HttpClient();
+            var url = await FirebaseService.GetFileDownloadUrl(photoName);
+            var bytes = await client.GetByteArrayAsync(url);
+            var base64Data = Convert.ToBase64String(bytes);
             var base64Image = $"data:image/png;base64,{base64Data}";
 
             return base64Image;
         }
 
-        public static void DeletePhoto(string? photoId)
+        public static async void DeletePhoto(string? photoId)
         {
-            var photoPath = $@"{BasePhotoPath}\{photoId}.png";
+            var photoName = $@"{photoId}.png";
 
             if (string.IsNullOrEmpty(photoId)) 
                 return;
-        
-            File.Delete(photoPath);
+
+            await FirebaseService.DeleteFile(photoName);
         }
     }
 }

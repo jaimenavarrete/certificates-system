@@ -80,7 +80,7 @@ namespace CertificatesSystem.WebUI.Controllers
 
                 if (result) TempData["Success"] = "El estudiante se creó correctamente.";
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { page = 1 });
             }
             catch(BusinessException ex)
             {

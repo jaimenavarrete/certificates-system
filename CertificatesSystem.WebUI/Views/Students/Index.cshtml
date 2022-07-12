@@ -128,6 +128,7 @@
         const btnSavePhoto = document.getElementById('save-photo');
         const photoPreview = document.getElementById('photo-preview');
         const inputPhotoFile = formCreate.elements['PhotoFile'];
+        const loadingSpinner = document.getElementById('loading-spinner');
         
         const getStudentInfo = (e) => {
             const studentRow = e.currentTarget.closest('tr').children;
@@ -147,6 +148,8 @@
                     formCreate.elements['Address'].value = res.address;
                     formCreate.elements['Photo'].value = res.photoId;
                     photoPreview.src = res.photoId != null ? res.photoId : "/img/unknown.png";
+                    
+                    loadingSpinner.classList.add('d-none');
                 });
         }
         
@@ -185,8 +188,11 @@
             modalLabel.innerHTML = `<i class="las la-plus-circle fs-4"></i> Crear estudiante`;
         });
 
-        btnEdit.forEach((btn) => {
-            btn.addEventListener('click', (e) => getStudentInfo(e));
+        btnEdit.forEach((btn) => {            
+            btn.addEventListener('click', (e) => {
+                loadingSpinner.classList.remove('d-none');
+                getStudentInfo(e);
+            });
         });
         
         formCreate.addEventListener('submit', (e) => {

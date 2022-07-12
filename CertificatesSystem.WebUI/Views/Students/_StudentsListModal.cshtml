@@ -12,8 +12,13 @@
                 <input type="hidden" asp-for="Id" id="input-id" class="input-create" />
 
                 <div class="form-group mb-3">
-                    <input type="hidden" asp-for="Photo" id="input-photo" class="input-create" />
-                    <img src="~/img/unknown.png" alt="Foto de estudiante" id="photo-preview" class="text-primary d-flex justify-content-center align-items-center border border-2 border-primary rounded d-block mx-auto" width="150" height="125"/>
+                    <input type="hidden" asp-for="Photo" id="input-photo" class="input-create"/>
+                    <img src="~/img/unknown.png" alt="Foto de estudiante" id="photo-preview" class="text-primary d-flex justify-content-center align-items-center border border-2 border-primary rounded d-block mx-auto mb-3" width="150" height="125"/>
+                    <div class="d-flex justify-content-center">
+                        <div id="loading-spinner" class="d-none spinner-border" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="form-group has-danger mb-3">
