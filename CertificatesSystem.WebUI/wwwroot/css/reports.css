@@ -16,10 +16,15 @@ body {
 }
 
 .letterhead {
-    margin-bottom: 40px;
+    margin-bottom: 60px;
 }
 
-.letterhead p {
+.letterhead_grades_certificate {
+    margin-bottom: 20px;
+}
+
+.letterhead p,
+.letterhead_grades_certificate p {
     margin: 0;
 }
 
@@ -45,7 +50,7 @@ body {
 
 .main_content_grades_certificate .table {
     border-collapse: collapse;
-    font-size: 15px;
+    font-size: 14px;
     text-align: center;
     width: 100%;
 }
@@ -71,13 +76,17 @@ body {
     text-align: left;
 }
 
+.main_content_grades_certificate .table .letters {
+    white-space: nowrap;
+}
+
 .main_footer {
-    margin-top: 150px;
+    margin-top: 200px;
     font-size: 18px;
 }
 
 .main_footer_grades_certificate {
-    margin-top: 100px;
+    margin-top: 60px;
 }
 
 .main_footer .signature {

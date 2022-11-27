@@ -2,9 +2,11 @@
 using CertificatesSystem.Services;
 using Microsoft.AspNetCore.Mvc;
 using CertificatesSystem.WebUI.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CertificatesSystem.WebUI.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

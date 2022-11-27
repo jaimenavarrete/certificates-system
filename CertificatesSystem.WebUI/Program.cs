@@ -23,10 +23,11 @@ services.AddTransient<IMiscellanyService, MiscellanyService>();
 services.AddTransient<IUsersService, UsersService>();
 services.AddTransient<IEmailService, EmailService>();
 
-var connectionString = configuration.GetConnectionString("CertificatesSystemPostgresqlHeroku");
+//var connectionString = configuration.GetConnectionString("CertificatesSystemPostgresql");
+var connectionString = Environment.GetEnvironmentVariable("DATABASE_URL") ?? "";
 
 // Database context
-// services.AddDbContext<CertificatesSystemContext>(options => options.UseSqlServer(connectionString));
+//services.AddDbContext<CertificatesSystemContext>(options => options.UseSqlServer(connectionString));
 services.AddDbContext<CertificatesSystemContext>(options => options.UseNpgsql(connectionString));
 
 // Identity context

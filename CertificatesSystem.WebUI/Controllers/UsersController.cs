@@ -3,10 +3,12 @@ using CertificatesSystem.Models.Data.Identity;
 using CertificatesSystem.Models.Exceptions;
 using CertificatesSystem.Models.Interfaces;
 using CertificatesSystem.WebUI.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CertificatesSystem.WebUI.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class UsersController : Controller
     {
         private readonly IUsersService _usersService;

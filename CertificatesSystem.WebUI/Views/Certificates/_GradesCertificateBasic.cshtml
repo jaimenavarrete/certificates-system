@@ -43,12 +43,25 @@
         
         <div class="row p-2">
             <p class="col-form-label fw-bold">Notas de área complementaria:</p>
-                
+            
+            <div class="col-6 col-md-3 form-group mb-3">
+                <label class="col-form-label">Religión:</label>
+                <input type="hidden" name="NamesComplementary[]" value="Religión">
+                <input type="number" step="1" min="0" max="10" name="Complementary[]" class="form-control input-create" required>
+            </div>
+
             <div class="col-6 col-md-3 form-group mb-3">
                 <label class="col-form-label">Moral:</label>
                 <input type="hidden" name="NamesComplementary[]" value="Moral, Urbanidad y Cívica">
                 <input type="number" step="1" min="0" max="10" name="Complementary[]" class="form-control input-create" required>
             </div>
+            
+            <div class="col-6 col-md-3 form-group mb-3">
+                <label class="col-form-label">Conducta:</label>
+                <input type="hidden" name="NamesComplementary[]" value="Conducta">
+                <input type="number" step="1" min="0" max="10" name="Complementary[]" class="form-control input-create" required>
+            </div>
+            
         </div>
     
     <div class="row p-2">

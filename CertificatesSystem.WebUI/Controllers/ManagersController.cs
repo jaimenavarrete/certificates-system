@@ -2,10 +2,12 @@
 using CertificatesSystem.Models.DataModels;
 using CertificatesSystem.Models.Interfaces;
 using CertificatesSystem.WebUI.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CertificatesSystem.WebUI.Controllers
 {
+    [Authorize]
     public class ManagersController : Controller
     {
         private readonly IManagersService _managersService;

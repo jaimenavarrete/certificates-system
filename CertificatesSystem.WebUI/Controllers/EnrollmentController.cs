@@ -5,11 +5,13 @@ using CertificatesSystem.Models.Exceptions;
 using CertificatesSystem.Models.Interfaces;
 using CertificatesSystem.Services.Common;
 using CertificatesSystem.WebUI.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Spire.Pdf;
 
 namespace CertificatesSystem.WebUI.Controllers
 {
+    [Authorize]
     public class EnrollmentController : Controller
     {
         private readonly IEnrollmentService _enrollmentService;
